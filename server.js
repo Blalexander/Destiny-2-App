@@ -1,14 +1,14 @@
-const express = require("express");
-const morgan = require("morgan");
+"use strict";
 
-const router1 = require("./router1"); 
+const express = require('express');
 const app = express();
+app.use(express.static('public'));
+app.listen(process.env.PORT || 8080);
 
-app.use(morgan("common"));
-app.use(express.json());
+if (require.main === module) {
+  app.listen(process.env.PORT || 8080, function() {
+    console.info(`App listening on ${this.address().port}`);
+  });
+}
 
-app.use("/loadout", router1); 
-
-app.listen(process.env.PORT || 8080, () => {
-  console.log(`Your app is listening on port ${process.env.PORT || 8080}`);
-});
+module.exports = app;
