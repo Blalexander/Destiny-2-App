@@ -1,0 +1,43 @@
+* {
+    box-sizing: border-box;
+}
+
+div {
+    display: inline;
+}
+
+#subclassDropdown {
+    float: right;
+}
+
+#classDropdown {
+    float: left;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.kinetic {
+    margin-top: 10vh;
+}
+
+.energy {
+    margin-top: 20vh;
+}
+
+.power {
+    margin-top: 30vh;
+}
+
+.class-symbol {
+    margin-top: 15vh;
+}
+
+.subclass {
+    margin-top: 30vh;
+}

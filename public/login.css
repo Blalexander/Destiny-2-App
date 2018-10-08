@@ -1,0 +1,32 @@
+* {
+    box-sizing: border-box;
+}
+
+#login {
+    margin-top: 20vh;
+    display: flex;
+    justify-content: center;
+}
+
+#signup {
+    display: flex;
+    justify-content: center;
+}
+
+#loginFieldset {
+    height: 30vh;
+    width: 40vw;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-flow: column wrap;
+}
+
+#signupFieldset {
+    height: 30vh;
+    width: 40vw;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-flow: column wrap;
+}
