@@ -1,20 +1,19 @@
-"use strict";
-
 const chai = require("chai");
 const chaiHttp = require("chai-http");
-const app = require("../server.js");
+const expect = require("chai").expect;
 
-const expect = chai.expect;
+const { app, runServer, closeServer } = require("../server");
 
-Chai.use(chaiHttp);
+describe("Web Page", function() {
+  //test strategy:
+  // 1. check to see if the webpage is loading
 
-describe("index page", function() {
-    it("should exist", function() {
-        return chai
-            .request(app)
-            .get("/")
-            .then(function(res) {
-                expect(res).to.have.status(200);
-            });
-    });
+  it("should load page upon GET", function() {
+    return chai
+      .request(app)
+      .get("/index.html")
+      .then(function(res) {
+        expect(res).to.have.status(200);
+      });
+  });
 });
