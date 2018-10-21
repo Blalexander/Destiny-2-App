@@ -1,54 +1,34 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>My Loadouts</title>
+    <title>My Stats</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="character.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="index.css" />
     <script src="main.js"></script>
 </head>
 
 <body>
+    <header>
+        <h1>Stats</h1>
+    </header>
+
     <main>
-
-        <div id="classDropdown">
-            <select id="classOptions">
-                <option value ="">Select your class</option>
-                <option value="Titan">Titan</option>
-                <option value="Hunter">Hunter</option>
-                <option value="Warlock">Warlock</option>
-            </select>
+        <div id="accountSelector">
+            <p>Get overall stats for your account or select a character</p>
+            <form method="get" id="submitText">
+                <label>Type in your Xbox, Playstation, or Battlenet ID here</label>
+                <input type="text" name="textSubmit">
+                <input type="submit" value="Submit">
+            </form>
         </div>
 
-        <div id="subclassDropdown">
-            <select id="subclassOptions">
-                <option value ="">Select your subclass</option>
-                <option value="Solar">Solar</option>
-                <option value="Arc">Arc</option>
-                <option value="Void">Void</option>
-            </select>
-        </div>
-
-        <div class="kinetic left">
-            <p>Kinetic</p>
-        </div>
-
-        <div class="energy left">
-            <p>Energy</p>
-        </div>
-
-        <div class="power left">
-            <p>Power</p>
-        </div>
-
-        <div class="class-symbol right">
-            <p>Class Symbol</p>
-        </div>
-
-        <div class="subclass right">
-            <p>Subclass</p>
+        <div id="characteristics">
+            <p>Details</p>
         </div>
     </main>
 </body>
+
 </html>

@@ -13,25 +13,13 @@ const UserSchema = mongoose.Schema({
   password: {
     type: String,
     required: true
-  },
-  cardlists: [{ type: mongoose.Schema.Types.ObjectId, ref: "cardlist" }]
+  }
 });
-
-// UserSchema.pre("findOne", function(next) {
-//   this.populate("cardlists");
-//   next();
-// });
-
-// UserSchema.pre("find", function(next) {
-//   this.populate("cardlists");
-//   next();
-// });
 
 UserSchema.methods.serialize = function() {
   return {
     id: this._id,
-    email: this.email,
-    cardlists: this.cardlists
+    email: this.email
   };
 };
 
