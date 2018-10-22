@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const morgan = require("morgan");
+const cors = require("cors");
 
 //Routes
 const bungieRoute = require("./routers/bungieRouter");
