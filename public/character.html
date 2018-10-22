@@ -8,6 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
     <link href="index.css" rel="stylesheet" type="text/css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -19,15 +20,8 @@
         <form action="#" class="js-search-form">
             <label>Type in your Xbox, Playstation, or Battlenet ID here</label>
             <input type="text" class="js-query" value="Girthquake#11226">
-            <select name="characterDrop" id="characterSelect">
-            </select>
             <button type="submit">Search</button>
         </form>
-
-        <!-- <form>
-        <select name="characterDrop" id="characterSelect">
-        </select> 
-      </form> -->
 
         <section class="js-search-results" aria-live="assertive">
         </section>
