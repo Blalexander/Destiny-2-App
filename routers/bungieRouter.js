@@ -8,11 +8,11 @@ router.get("/", (req, res) => {
     .get(
       `https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/4/${
         req.query.input
-      }/`,
+      }`,
       {
-        params: {
-          input: req.query.input
-        },
+        // params: {
+        //   input: req.query.input
+        // },
         headers: {
           "Content-Type": "application/json",
           "X-API-Key": "62261ab05c7b4f078c05a94f18124761"
@@ -30,20 +30,20 @@ router.get("/", (req, res) => {
     });
 });
 
-function searchByUsername(searchTerm, callback) {
-  var searchTerm = searchTerm.replace("#", "%23");
-  let bungieEP = `https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/4/${searchTerm}/ `;
+// function searchByUsername(searchTerm, callback) {
+//   var searchTerm = searchTerm.replace("#", "%23");
+//   let bungieEP = `https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/4/${searchTerm}/ `;
 
-  $.ajax({
-    url: bungieEP,
-    type: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "X-API-Key": "62261ab05c7b4f078c05a94f18124761"
-    },
-    success: callback
-  });
-}
+//   $.ajax({
+//     url: bungieEP,
+//     type: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "X-API-Key": "62261ab05c7b4f078c05a94f18124761"
+//     },
+//     success: callback
+//   });
+// }
 
 // function displayFromUsername(data) {
 //   console.log("displayFromUsername functioning");
