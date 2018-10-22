@@ -5,7 +5,7 @@ function searchByUsername(searchTerm, callback) {
   console.log("Hello from SearchByUsername!");
 
   let url = `/bungie?input=${searchTerm}`;
-  $.getJSON(searchTerm, function(data) {
+  $.getJSON(url, function(data) {
     console.log(data);
   });
 

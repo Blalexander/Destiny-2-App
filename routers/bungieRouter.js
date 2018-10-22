@@ -6,8 +6,13 @@ router.get("/", (req, res) => {
   console.log("Here at Bungie Router....");
   axios
     .get(
-      `https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/4/${searchTerm}/`,
+      `https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/4/${
+        req.query.input
+      }/`,
       {
+        params: {
+          input: req.query.input
+        },
         headers: {
           "Content-Type": "application/json",
           "X-API-Key": "62261ab05c7b4f078c05a94f18124761"
