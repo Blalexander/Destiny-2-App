@@ -1,9 +1,9 @@
 const axios = require("axios");
 const express = require("express");
 const router = express.Router();
+const qs = require("querystring");
 
 router.get("/", (req, res) => {
-  console.log("Here at Bungie Router....");
   axios
     .get(
       `https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/4/${
