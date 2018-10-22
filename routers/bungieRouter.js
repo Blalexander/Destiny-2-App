@@ -21,6 +21,8 @@ router.get("/", (req, res) => {
     )
     .then(payload => {
       res.json(payload.data);
+      console.log(payload);
+      console.log(payload.data);
     })
     .catch(err => {
       console.error(err);

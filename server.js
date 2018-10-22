@@ -12,7 +12,6 @@ const morgan = require("morgan");
 const bungieRoute = require("./routers/bungieRouter");
 const { router: usersRouter } = require("./users");
 const { router: authRouter, localStrategy, jwtStrategy } = require("./auth");
-// const ibmRouter = require("./users/ibm");
 const jwtAuth = passport.authenticate("jwt", { session: false });
 const { PORT, DATABASE_URL, TEST_DATABASE_URL } = require("./config");
 const app = express();
@@ -21,12 +20,13 @@ const app = express();
 app.use(morgan("common"));
 passport.use(localStrategy);
 passport.use(jwtStrategy);
+app.use(bodyParser.json());
+app.use(cors());
 app.use("/bungie", bungieRoute);
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 app.use(express.json());
 app.use(express.static("public"));
-// app.use("/ibm", ibmRouter);
 mongoose.Promise = global.Promise;
 
 //CORS
