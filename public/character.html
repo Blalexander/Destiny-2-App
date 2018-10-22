@@ -1,34 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>My Stats</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="index.css" />
-    <script src="main.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>repl.it</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    <link href="index.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-    <header>
-        <h1>Stats</h1>
+    <header role="banner">
+        <h1>Character Stats</h1>
     </header>
 
-    <main>
-        <div id="accountSelector">
-            <p>Get overall stats for your account or select a character</p>
-            <form method="get" id="submitText">
-                <label>Type in your Xbox, Playstation, or Battlenet ID here</label>
-                <input type="text" name="textSubmit">
-                <input type="submit" value="Submit">
-            </form>
-        </div>
+    <main role="main">
+        <form action="#" class="js-search-form">
+            <label>Type in your Xbox, Playstation, or Battlenet ID here</label>
+            <input type="text" class="js-query" value="Girthquake#11226">
+            <select name="characterDrop" id="characterSelect">
+            </select>
+            <button type="submit">Search</button>
+        </form>
 
-        <div id="characteristics">
-            <p>Details</p>
-        </div>
+        <!-- <form>
+        <select name="characterDrop" id="characterSelect">
+        </select> 
+      </form> -->
+
+        <section class="js-search-results" aria-live="assertive">
+        </section>
+
+        <section class="js-search-results2" aria-live="assertive">
+        </section>
+
     </main>
+    <script src="character.js"></script>
 </body>
 
 </html>
