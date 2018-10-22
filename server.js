@@ -9,6 +9,7 @@ const passport = require("passport");
 const morgan = require("morgan");
 
 //Routes
+const bungieRoute = require("./routers/bungieRouter");
 const { router: usersRouter } = require("./users");
 const { router: authRouter, localStrategy, jwtStrategy } = require("./auth");
 // const ibmRouter = require("./users/ibm");
@@ -20,6 +21,7 @@ const app = express();
 app.use(morgan("common"));
 passport.use(localStrategy);
 passport.use(jwtStrategy);
+app.use("/bungie", bungieRoute);
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 app.use(express.json());

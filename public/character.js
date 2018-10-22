@@ -4,21 +4,22 @@ function searchByUsername(searchTerm, callback) {
   var searchTerm = searchTerm.replace("#", "%23");
   console.log("Hello from SearchByUsername!");
 
-  // $.getJSON(searchTerm, function(data) {
-  //   console.log(data);
-  // });
+  let url = `/bungie?input=${searchTerm}`;
+  $.getJSON(searchTerm, function(data) {
+    console.log(data);
+  });
 
   // let bungieEP = `https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/4/${searchTerm}/ `;
 
-  $.ajax({
-    url: `/bungieRouter`,
-    type: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "X-API-Key": "62261ab05c7b4f078c05a94f18124761"
-    },
-    success: callback
-  });
+  // $.ajax({
+  //   url: `/bungie?input=${searchTerm}`,
+  //   type: "GET",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     "X-API-Key": "62261ab05c7b4f078c05a94f18124761"
+  //   },
+  //   success: callback
+  // });
 }
 
 function displayFromUsername(data) {
