@@ -11,7 +11,7 @@ function searchByUsername(searchTerm, callback) {
   // let bungieEP = `https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/4/${searchTerm}/ `;
 
   $.ajax({
-    url: `/.bungieRouter`,
+    url: `/bungieRouter`,
     type: "GET",
     headers: {
       "Content-Type": "application/json",
