@@ -7,11 +7,11 @@ router.get("/", (req, res) => {
   axios
     .get(
       `https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/4/${
-        req.query.input
+        req.query.displayName
       }`,
       {
         // params: {
-        //   input: req.query.input
+        //   displayName: req.query.displayName
         // },
         headers: {
           "Content-Type": "application/json",

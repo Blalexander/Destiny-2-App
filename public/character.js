@@ -4,28 +4,26 @@ function searchByUsername(searchTerm, callback) {
   var searchTerm = searchTerm.replace("#", "%23");
   console.log("Hello from SearchByUsername!");
 
-  let url = `/bungie?input=${searchTerm}`;
-  $.getJSON(url, function(data) {
-    console.log(data.Response);
-  });
+  // let url = `/bungie?displayName=${searchTerm}`;
+  // $.getJSON(url, function(data) {
+  //   console.log(data);
+  // });
 
   // let bungieEP = `https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/4/${searchTerm}/ `;
 
-  // $.ajax({
-  //   url: `/bungie?input=${searchTerm}`,
-  //   type: "GET",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     "X-API-Key": "62261ab05c7b4f078c05a94f18124761"
-  //   },
-  //   success: callback
-  // });
+  $.ajax({
+    url: "/bungie",
+    displayName: searchTerm,
+    type: "GET",
+    success: callback,
+    error: console.log("Errorzzzzz")
+  });
 }
 
 function displayFromUsername(data) {
   console.log("displayFromUsername functioning");
   console.log(data);
-  let destinyMembershipId = data.Response[0].membershipId;
+  // let destinyMembershipId = data.Response[0].membershipId;
   // searchByBungieId(destinyMembershipId, displayFromBungieId);
   // let name = data.Response;
   // let dropDown = {};
