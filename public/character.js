@@ -22,7 +22,12 @@ function displayFromUsername(data) {
   console.log("displayFromUsername functioning");
   console.log(data);
   let destinyMembershipId = data.Response[0].membershipId;
-  searchByDestinyId(destinyMembershipId, displayFromDestinyId);
+  let destinyMembershipType = data.Response[0].membershipType;
+  searchByDestinyId(
+    destinyMembershipId,
+    destinyMembershipType,
+    displayFromDestinyId
+  );
   // let name = data.Response;
   // let dropDown = {};
   // for(i=0;i<name.length;i++) {
