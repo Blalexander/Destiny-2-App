@@ -13,18 +13,16 @@ function searchByUsername(searchTerm, callback) {
 
   $.ajax({
     url: "/bungie",
-    displayName: searchTerm,
     type: "GET",
-    success: callback,
-    error: console.log("Errorzzzzz")
+    success: callback
   });
 }
 
 function displayFromUsername(data) {
   console.log("displayFromUsername functioning");
   console.log(data);
-  // let destinyMembershipId = data.Response[0].membershipId;
-  // searchByBungieId(destinyMembershipId, displayFromBungieId);
+  let destinyMembershipId = data.Response[0].membershipId;
+  searchByBungieId(destinyMembershipId, displayFromBungieId);
   // let name = data.Response;
   // let dropDown = {};
   // for(i=0;i<name.length;i++) {
@@ -45,27 +43,27 @@ function displayFromUsername(data) {
   // })
 }
 
-// function searchByBungieId(membId, callback) {
-//   let bungieEP = `https://www.bungie.net/Platform/User/GetMembershipsById/${membId}/0/`;
+function searchByBungieId(membId, callback) {
+  let bungieEP = `https://www.bungie.net/Platform/User/GetMembershipsById/${membId}/0/`;
 
-//   $.ajax({
-//     url: bungieEP,
-//     type: "GET",
-//     headers: {
-//       "Content-Type": "application/json",
-//       "X-API-Key": "62261ab05c7b4f078c05a94f18124761"
-//     },
-//     success: callback
-//   });
-// }
+  $.ajax({
+    url: "/bungie2",
+    type: "GET",
+    // headers: {
+    //   "Content-Type": "application/json",
+    //   "X-API-Key": "62261ab05c7b4f078c05a94f18124761"
+    // },
+    success: callback
+  });
+}
 
-// function displayFromBungieId(info) {
-//   console.log(info);
-//   let membsId = info.Response.destinyMemberships[0].membershipId;
-//   let membsType = info.Response.destinyMemberships[0].membershipType;
-//   console.log(membsId);
-//   searchByDestinyId(membsId, membsType, displayFromDestinyId);
-// }
+function displayFromBungieId(info) {
+  console.log(info);
+  // let membsId = info.Response.destinyMemberships[0].membershipId;
+  // let membsType = info.Response.destinyMemberships[0].membershipType;
+  // console.log(membsId);
+  // searchByDestinyId(membsId, membsType, displayFromDestinyId);
+}
 
 // function searchByDestinyId(membsId, membsType, callback) {
 //   let bungieEP = `https://www.bungie.net/Platform/Destiny2/${membsType}/Account/${membsId}/Stats/?components=205`;
