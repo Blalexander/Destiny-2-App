@@ -6,7 +6,7 @@ const qs = require("querystring");
 router.get("/", (req, res) => {
   axios
     .get(
-      `https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/4/Girthquake%2311226`,
+      `https://www.bungie.net/Platform/Destiny2/4/Account/4611686018470723268/Stats/?components=205`,
       {
         // params: {
         //   displayName: req.query.displayName
