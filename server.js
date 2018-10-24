@@ -12,6 +12,7 @@ const cors = require("cors");
 //Routes
 const bungieRoute = require("./routers/bungieRouter");
 const bungieRoute2 = require("./routers/bungieRouter2");
+const bungieRoute3 = require("./routers/bungieRouter3");
 const { router: usersRouter } = require("./users");
 const { router: authRouter, localStrategy, jwtStrategy } = require("./auth");
 const jwtAuth = passport.authenticate("jwt", { session: false });
@@ -26,6 +27,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use("/bungie", bungieRoute);
 app.use("/bungie2", bungieRoute2);
+app.use("/bungie3", bungieRoute3);
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 app.use(express.json());
