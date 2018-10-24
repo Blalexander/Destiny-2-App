@@ -2,13 +2,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const passport = require("passport");
-
 const { User } = require("./models");
-
 const router = express.Router();
-
 const jsonParser = bodyParser.json();
-
 const jwtAuth = passport.authenticate("jwt", { session: false });
 
 // Post to register a new user
@@ -118,15 +114,13 @@ router.post("/", jsonParser, (req, res) => {
 });
 
 router.get("/:id", jwtAuth, (req, res) => {
-  User.findById(req.params.id)
-    .populate("cardlists")
-    .exec(function(err, user) {
-      if (err) {
-        console.error(err);
-        res.status(500).json({ message: "Internal server error" });
-      }
-      res.status(200).json(user.serialize());
-    });
+  User.findById(req.params.id).exec(function(err, user) {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
+    }
+    res.status(200).json(user.serialize());
+  });
 });
 
 module.exports = { router };

@@ -98,8 +98,19 @@ function watchSubmit() {
     let queryTarget = $(event.currentTarget).find(".js-query");
     let query = queryTarget.val();
     console.log(query);
+    saveProfile(query);
     searchByUsername(query, displayFromUsername);
   });
 }
 
+function saveProfile(userName) {
+  let name = userName;
+  console.log(name);
+  $("#saveUser").click(event => {
+    event.preventDefault();
+    console.log(name);
+  });
+}
+
 $(watchSubmit);
+$(saveProfile);

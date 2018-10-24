@@ -22,7 +22,7 @@ $("#login").submit(e => {
         password
       })
     });
-    console.log(token.authToken);
+    // console.log(token.authToken);
     localStorage.setItem("token", token.authToken);
     localStorage.setItem("user_id", token.user);
     window.location.replace("/character.html");
@@ -74,22 +74,4 @@ $("#signup").submit(e => {
     localStorage.setItem("user_id", token.user);
     window.location.replace("/character.html");
   })();
-});
-
-$("#submitText").click(e => {
-  e.preventDefault();
-  // let submission = $('[name="textSubmit"]').val();
-  $.ajax({
-    url:
-      "https://www.bungie.net/Platform/Destiny2/4/Profile/4611686018470723268/Character/2305843009301006557/?components=205",
-    type: "GET",
-    contentType: "application/json",
-    headers: {
-      "Content-Type": "application/json",
-      "X-API-Key": "62261ab05c7b4f078c05a94f18124761"
-    },
-    error: function(err) {
-      console.log(`Error!`, err);
-    }
-  });
 });
