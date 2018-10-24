@@ -2,13 +2,6 @@ function searchByUsername(searchTerm, callback) {
   var searchTerm = searchTerm.replace("#", "%23");
   console.log("Hello from SearchByUsername!");
 
-  // let url = `/bungie?displayName=${searchTerm}`;
-  // $.getJSON(url, function(data) {
-  //   console.log(data);
-  // });
-
-  // let bungieEP = `https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/4/${searchTerm}/ `;
-
   $.ajax({
     url: "/bungie",
     type: "GET",
@@ -35,10 +28,6 @@ function searchByDestinyId(membsId, membsType, callback) {
   $.ajax({
     url: "/bungie2",
     type: "GET",
-    // headers: {
-    //   "Content-Type": "application/json",
-    //   "X-API-Key": "62261ab05c7b4f078c05a94f18124761"
-    // },
     success: callback
   });
 }
@@ -52,19 +41,26 @@ function displayFromDestinyId(data) {
   $(".js-search-results2").html(`<p>Total Kills: ${
     mergedAllTime.kills.basic.displayValue
   }</p><br>
+  <p>Kills per game: ${mergedAllTime.kills.pga.displayValue}</p><br>
   <p>Total Deaths: ${mergedAllTime.deaths.basic.displayValue}</p><br>
+  <p>Deaths per game: ${mergedAllTime.deaths.pga.displayValue}</p><br>
   <p>K/D ratio: ${mergedAllTime.killsDeathsRatio.basic.displayValue}</p><br>
-  <p>KA/D ratio: ${mergedAllTime.killsDeathsAssists.basic.displayValue}</p>`);
+  <p>KA/D ratio: ${mergedAllTime.killsDeathsAssists.basic.displayValue}</p><br>
+  <p>Average kill distance: ${
+    mergedAllTime.averageKillDistance.basic.displayValue
+  }m</p><br>
+  <p>Average lifespan: ${
+    mergedAllTime.averageLifespan.basic.displayValue
+  }</p><br>
+  <p>Efficiency: ${mergedAllTime.efficiency.basic.displayValue}</p><br>
+  <p>Best weapon: ${mergedAllTime.weaponBestType.basic.displayValue}</p><br>
+  <p>Win/Loss ratio: ${mergedAllTime.winLossRatio.basic.displayValue}</p><br>`);
 }
 
 function getProfiles(data, callback) {
   $.ajax({
     url: "/bungie3",
     type: "GET",
-    // headers: {
-    //   "Content-Type": "application/json",
-    //   "X-API-Key": "62261ab05c7b4f078c05a94f18124761"
-    // },
     success: callback
   });
 }
