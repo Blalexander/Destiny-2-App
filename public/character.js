@@ -22,7 +22,7 @@ function displayFromUsername(data) {
   console.log("displayFromUsername functioning");
   console.log(data);
   let destinyMembershipId = data.Response[0].membershipId;
-  searchByBungieId(destinyMembershipId, displayFromBungieId);
+  searchByDestinyId(destinyMembershipId, displayFromDestinyId);
   // let name = data.Response;
   // let dropDown = {};
   // for(i=0;i<name.length;i++) {
@@ -43,8 +43,30 @@ function displayFromUsername(data) {
   // })
 }
 
-function searchByBungieId(membId, callback) {
-  let bungieEP = `https://www.bungie.net/Platform/User/GetMembershipsById/${membId}/0/`;
+// function searchByBungieId(membId, callback) {
+//   let bungieEP = `https://www.bungie.net/Platform/User/GetMembershipsById/${membId}/0/`;
+
+//   $.ajax({
+//     url: "/bungie2",
+//     type: "GET",
+//     // headers: {
+//     //   "Content-Type": "application/json",
+//     //   "X-API-Key": "62261ab05c7b4f078c05a94f18124761"
+//     // },
+//     success: callback
+//   });
+// }
+
+// function displayFromBungieId(info) {
+//   console.log(info);
+//   // let membsId = info.Response.destinyMemberships[0].membershipId;
+//   // let membsType = info.Response.destinyMemberships[0].membershipType;
+//   // console.log(membsId);
+//   // searchByDestinyId(membsId, membsType, displayFromDestinyId);
+// }
+
+function searchByDestinyId(membsId, membsType, callback) {
+  let bungieEP = `https://www.bungie.net/Platform/Destiny2/${membsType}/Account/${membsId}/Stats/?components=205`;
 
   $.ajax({
     url: "/bungie2",
@@ -57,46 +79,24 @@ function searchByBungieId(membId, callback) {
   });
 }
 
-function displayFromBungieId(info) {
-  console.log(info);
-  // let membsId = info.Response.destinyMemberships[0].membershipId;
-  // let membsType = info.Response.destinyMemberships[0].membershipType;
-  // console.log(membsId);
-  // searchByDestinyId(membsId, membsType, displayFromDestinyId);
+function displayFromDestinyId(data) {
+  console.log("displayFromDestinyId functioning");
+  console.log(data);
+  let character = data.Response.characters;
+  let mergedAll = data.Response.mergedAllCharacters;
+  let mergedAllTime = mergedAll.results.allPvP.allTime;
+  console.log(character);
+  console.log(mergedAll);
+  for (i = 0; i < character.length; i++) {
+    $(".js-search-results").append(`<p>${character[i].characterId}</p>`);
+  }
+  $(".js-search-results2").html(`<p>Total Kills: ${
+    mergedAllTime.kills.basic.displayValue
+  }</p><br>
+  <p>Total Deaths: ${mergedAllTime.deaths.basic.displayValue}</p><br>
+  <p>K/D ratio: ${mergedAllTime.killsDeathsRatio.basic.displayValue}</p><br>
+  <p>KA/D ratio: ${mergedAllTime.killsDeathsAssists.basic.displayValue}</p>`);
 }
-
-// function searchByDestinyId(membsId, membsType, callback) {
-//   let bungieEP = `https://www.bungie.net/Platform/Destiny2/${membsType}/Account/${membsId}/Stats/?components=205`;
-
-//   $.ajax({
-//     url: bungieEP,
-//     type: "GET",
-//     headers: {
-//       "Content-Type": "application/json",
-//       "X-API-Key": "62261ab05c7b4f078c05a94f18124761"
-//     },
-//     success: callback
-//   });
-// }
-
-// function displayFromDestinyId(data) {
-//   console.log("displayFromDestinyId functioning");
-//   console.log(data);
-//   let character = data.Response.characters;
-//   let mergedAll = data.Response.mergedAllCharacters;
-//   let mergedAllTime = mergedAll.results.allPvP.allTime;
-//   console.log(character);
-//   console.log(mergedAll);
-//   for (i = 0; i < character.length; i++) {
-//     $(".js-search-results").append(`<p>${character[i].characterId}</p>`);
-//   }
-//   $(".js-search-results2").html(`<p>Total Kills: ${
-//     mergedAllTime.kills.basic.displayValue
-//   }</p><br>
-//   <p>Total Deaths: ${mergedAllTime.deaths.basic.displayValue}</p><br>
-//   <p>K/D ratio: ${mergedAllTime.killsDeathsRatio.basic.displayValue}</p><br>
-//   <p>KA/D ratio: ${mergedAllTime.killsDeathsAssists.basic.displayValue}</p>`);
-// }
 
 function watchSubmit() {
   $(".js-search-form").submit(event => {
