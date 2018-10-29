@@ -10,7 +10,8 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  profiles: [ProfileSchema]
 });
 
 module.exports = User = mongoose.model("users", UserSchema);
