@@ -4,9 +4,11 @@ const router = express.Router();
 const qs = require("querystring");
 
 router.get("/", (req, res) => {
+  console.log(req.query.search)
   axios
     .get(
-      `https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/4/Girthquake%2311226`,
+      `https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/${req.query.membsType}/${req.query.search}`,
+      // `https://www.bungie.net/Platform/Destiny2/SearchDestinyPlayer/4/Girthquake%2311226`,
       {
         headers: {
           "Content-Type": "application/json",

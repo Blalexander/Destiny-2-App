@@ -1,3 +1,14 @@
+let queryTarget2 = $(".js-search-form").find("#type");
+let membsType = queryTarget2.val();
+// console.log(membsType);
+
+$("#type").click(event => {
+  event.preventDefault();
+  membsType = queryTarget2.val();
+  console.log(membsType);
+})
+
+
 function searchByUsername(searchTerm, callback) {
   var searchTerm = searchTerm.replace("#", "%23");
   console.log("Hello from SearchByUsername!");
@@ -5,9 +16,10 @@ function searchByUsername(searchTerm, callback) {
   $.ajax({
     url: `/bungie`,
     type: "GET",
-    // data: {
-    //   search: searchTerm
-    // },
+    data: {
+      membsType: membsType, 
+      search: searchTerm
+    },
     success: callback
   });
 }
@@ -16,38 +28,19 @@ function displayFromUsername(data) {
   console.log("displayFromUsername functioning");
   console.log(data);
   let destinyMembershipId = data.Response[0].membershipId;
-  let destinyMembershipType = data.Response[0].membershipType;
-  searchByDestinyId(
-    destinyMembershipId,
-    destinyMembershipType,
-    displayFromDestinyId
-  );
   getProfiles(destinyMembershipId, displayProfiles);
 }
 
-function searchByDestinyId(membsId, membsType, callback) {
-  // let bungieEP = `https://www.bungie.net/Platform/Destiny2/${membsType}/Account/${membsId}/Stats/?components=205`;
+function getProfiles(data, callback) {
+  // let destinyMembershipId = data.Response[0].membershipId;
 
   $.ajax({
     url: "/bungie2",
     type: "GET",
-    success: callback
-  });
-}
-
-function displayFromDestinyId(data) {
-  console.log("displayFromDestinyId functioning");
-  console.log(data);
-  let mergedAll = data.Response.mergedAllCharacters;
-  let mergedAllTime = mergedAll.results.allPvP.allTime;
-  console.log(mergedAll);
-  $(".js-search-results2").html(`<div>`);
-}
-
-function getProfiles(data, callback) {
-  $.ajax({
-    url: "/bungie3",
-    type: "GET",
+    data: {
+      membsId: data,
+      membsType: membsType
+    },
     success: callback
   });
 }
@@ -78,36 +71,53 @@ function displayProfiles(data) {
     );
   }
 
-  getStats(displayStats);
+  // getStats(displayStats);
 }
 
-function getStats(callback) {
+function callLoadout(membsId, membsType, callback) {
+  // let bungieEP = `https://www.bungie.net/Platform/Destiny2/${membsType}/Account/${membsId}/Stats/?components=205`;
+
   $.ajax({
-    url: "/bungie4",
+    url: "/bungie2",
     type: "GET",
     success: callback
   });
 }
 
-function displayStats(info) {
-  let data = info.Response.activities;
-
-  for (i = 0; i < data.length; i++) {
-    $(".js-search-results3").append(
-      `<p>Date: ${data[i].period}</p><p>score: ${
-        data[i].values.score.basic.displayValue
-      }</p><p>kills: ${data[i].values.kills.basic.displayValue}</p><p>deaths: ${
-        data[i].values.deaths.basic.displayValue
-      }</p><p>assists: ${
-        data[i].values.assists.basic.displayValue
-      }</p><p>K/D: ${
-        data[i].values.killsDeathsRatio.basic.displayValue
-      }</p><p>KA/D: ${
-        data[i].values.killsDeathsAssists.basic.displayValue
-      }</p><p>efficiency: ${data[i].values.efficiency.basic.displayValue}</p>`
-    );
-  }
+function displayLoadout(data) {
+  console.log("displayLoadout functioning");
+  console.log(data);
+  $(".js-search-results2").html(`<div class="kinetic weapon">Kinetic</div><div class="energy weapon">Energy</div><div class="power weapon">Power</div>
+  <div class="head armor">Head</div><div class="shoulder armor">Shoulder</div><div class="chest armor">Chest</div><div class="leg armor">Legs</div><div class="class armor">Class</div>`);
 }
+
+// function getStats(callback) {
+//   $.ajax({
+//     url: "/bungie4",
+//     type: "GET",
+//     success: callback
+//   });
+// }
+
+// function displayStats(info) {
+//   let data = info.Response.activities;
+
+//   for (i = 0; i < data.length; i++) {
+//     $(".js-search-results3").append(
+//       `<p>Date: ${data[i].period}</p><p>score: ${
+//         data[i].values.score.basic.displayValue
+//       }</p><p>kills: ${data[i].values.kills.basic.displayValue}</p><p>deaths: ${
+//         data[i].values.deaths.basic.displayValue
+//       }</p><p>assists: ${
+//         data[i].values.assists.basic.displayValue
+//       }</p><p>K/D: ${
+//         data[i].values.killsDeathsRatio.basic.displayValue
+//       }</p><p>KA/D: ${
+//         data[i].values.killsDeathsAssists.basic.displayValue
+//       }</p><p>efficiency: ${data[i].values.efficiency.basic.displayValue}</p>`
+//     );
+//   }
+// }
 
 function watchSubmit() {
   $(".js-search-form").submit(event => {
@@ -115,6 +125,9 @@ function watchSubmit() {
     let queryTarget = $(event.currentTarget).find(".js-query");
     let query = queryTarget.val();
     console.log(query);
+    membsType = queryTarget2.val();
+    $(".js-search-results").html("");
+    $(".js-search-results2").html("");
     // saveProfile(query);
     searchByUsername(query, displayFromUsername);
   });
