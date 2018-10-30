@@ -45,11 +45,12 @@
   border: 1px solid black;
 }
 
-.js-search-results3 {
+.weapon {
   float: left;
-  height: 80vh;
-  width: 45vw;
-  border: 1px solid black;
+}
+
+.armor {
+  float: right;
 }
 
 /* runescape-y color theme */
