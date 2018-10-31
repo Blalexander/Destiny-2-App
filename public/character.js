@@ -11,6 +11,11 @@ $("#type").click(event => {
   console.log(membsType);
 });
 
+// $(".characterButton").click(event => {
+//   event.preventDefault();
+//   console.log(characterId);
+// });
+
 function searchByUsername(searchTerm, callback) {
   var searchTerm = searchTerm.replace("#", "%23");
   console.log("Hello from SearchByUsername!");
@@ -67,11 +72,16 @@ function displayProfiles(data) {
     let charLevel = character[characterId].baseCharacterLevel;
     let lightLevel = character[characterId].light;
 
-    console.log(emblem);
     $(".js-search-results").append(
-      `<button><img src="https://www.bungie.net${emblem}" alt="characterEmblem"><p class="classy">Character level: ${charLevel} </p><p class="classy">Light level: ${lightLevel} </p></button>`
+      `<button class="characterButton${i}" type="submit" value="${characterId}"><img src="https://www.bungie.net${emblem}" alt="characterEmblem"><p class="classy">Character level: ${charLevel} </p><p class="classy">Light level: ${lightLevel} </p></button>`
     );
   }
+  $(".characterButton").click(event => {
+    event.preventDefault();
+    let buttVal = $(event.currentTarget).find(".characterButton");
+    let butVal = buttVal.val();
+    console.log(butVal);
+  });
 
   callLoadout(displayLoadout);
 }
@@ -139,7 +149,7 @@ function printFunc(data) {
   console.log(data);
   let props = data.Response.displayProperties;
   $(".js-search-results2").append(
-    `<button><img src="https://www.bungie.net${props.icon}" alt="weaponIcon"><p class="wepName">${props.name}</p></button>`
+    `<button class="weaponButton" type="submit"><img src="https://www.bungie.net${props.icon}" alt="weaponIcon"><p class="wepName">${props.name}</p></button>`
   );
 }
 
