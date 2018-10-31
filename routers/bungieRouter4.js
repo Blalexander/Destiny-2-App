@@ -6,13 +6,8 @@ const qs = require("querystring");
 router.get("/", (req, res) => {
   axios
     .get(
-      `https://www.bungie.net/Platform/Destiny2/4/Account/4611686018470723268/Character/2305843009301006557/Stats/Activities/`,
+      `https://www.bungie.net/Platform/Destiny2/Manifest/DestinyInventoryItemDefinition/${req.query.wepHash}/`,
       {
-        params: {
-          count: 25,
-          mode: 5,
-          page: 0
-        },
         headers: {
           "Content-Type": "application/json",
           "X-API-Key": "62261ab05c7b4f078c05a94f18124761"

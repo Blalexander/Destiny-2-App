@@ -96,9 +96,51 @@ function displayLoadout(data) {
   let character3 = newArray[2];
   let equipment = data.Response.characterEquipment.data;
   let char1 = equipment[character1];
-  console.log(char1.items[0].itemHash);
+  let char2 = equipment[character2];
+  let char3 = equipment[character3];
 
+  let wepArray1 = [];
+  let wepArray2 = [];
+  let wepArray3 = [];
+
+  
+  for(i=0;i<3;i++) {
+    wepArray1.push(char1.items[i].itemHash);
+  }
+  for(i=0;i<3;i++) {
+    wepArray2.push(char2.items[i].itemHash);
+  }
+  for(i=0;i<3;i++) {
+    wepArray3.push(char3.items[i].itemHash);
+  }
+  
+  console.log(wepArray1, wepArray2, wepArray3);
+
+  for(i=0;i<3;i++) {
+    let wepHash = wepArray1[i];
+    console.log(wepHash);
+    getWepVals(wepHash, printFunc);
+  }
   // $(".js-search-results2").html(``);
+}
+
+function getWepVals(wepArray, callback) {
+  $.ajax({
+    url: "/bungie4",
+    type: "GET",
+    data: {
+      wepHash: wepArray
+    },
+    success: callback
+  });
+}
+
+function printFunc(data) {
+  console.log(data);
+  let props = data.Response.displayProperties;
+  $(".js-search-results2").append(
+    `<button><img src="https://www.bungie.net${props.icon}" alt="weaponIcon"><p class="wepName">${props.name}</p></button>`
+  );
 }
 
 function watchSubmit() {
