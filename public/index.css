@@ -40,7 +40,21 @@
 
 .js-search-results2 {
   float: right;
-  height: 80vh;
+  height: 20vh;
+  width: 45vw;
+  border: 1px solid black;
+}
+
+.js-search-results3 {
+  float: right;
+  height: 20vh;
+  width: 45vw;
+  border: 1px solid black;
+}
+
+.js-search-results4 {
+  float: right;
+  height: 20vh;
   width: 45vw;
   border: 1px solid black;
 }

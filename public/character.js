@@ -2,6 +2,11 @@ let queryTarget2 = $(".js-search-form").find("#type");
 let membsType = queryTarget2.val();
 let membsId = 0;
 let newArray = [];
+let wepArray1 = [];
+let wepArray2 = [];
+let wepArray3 = [];
+let clickedChar = 0;
+let activeChar = 0;
 
 // console.log(membsType);
 
@@ -19,6 +24,7 @@ $("#type").click(event => {
 function searchByUsername(searchTerm, callback) {
   var searchTerm = searchTerm.replace("#", "%23");
   console.log("Hello from SearchByUsername!");
+  membsId = 0;
 
   $.ajax({
     url: `/bungie`,
@@ -73,14 +79,14 @@ function displayProfiles(data) {
     let lightLevel = character[characterId].light;
 
     $(".js-search-results").append(
-      `<button class="characterButton${i}" type="submit" value="${characterId}"><img src="https://www.bungie.net${emblem}" alt="characterEmblem"><p class="classy">Character level: ${charLevel} </p><p class="classy">Light level: ${lightLevel} </p></button>`
+      `<form class="characterForm"><button class="characterButton" type="submit" value="${characterId}"><img src="https://www.bungie.net${emblem}" alt="characterEmblem"><p class="classy">Character level: ${charLevel} </p><p class="classy">Light level: ${lightLevel} </p><p>ID: ${characterId}</p></button></form>`
     );
   }
-  $(".characterButton").click(event => {
+  $(".characterForm").submit(event => {
     event.preventDefault();
-    let buttVal = $(event.currentTarget).find(".characterButton");
-    let butVal = buttVal.val();
-    console.log(butVal);
+    let buttonVal = $(event.currentTarget).find(".characterButton");
+    clickedChar = buttonVal.val();
+    console.log(clickedChar);
   });
 
   callLoadout(displayLoadout);
@@ -109,48 +115,73 @@ function displayLoadout(data) {
   let char2 = equipment[character2];
   let char3 = equipment[character3];
 
-  let wepArray1 = [];
-  let wepArray2 = [];
-  let wepArray3 = [];
+  wepArray1 = [];
+  wepArray2 = [];
+  wepArray3 = [];
 
-  
-  for(i=0;i<3;i++) {
+  // if(clickedChar == )
+
+  for (i = 0; i < 3; i++) {
     wepArray1.push(char1.items[i].itemHash);
   }
-  for(i=0;i<3;i++) {
+  for (i = 0; i < 3; i++) {
     wepArray2.push(char2.items[i].itemHash);
   }
-  for(i=0;i<3;i++) {
+  for (i = 0; i < 3; i++) {
     wepArray3.push(char3.items[i].itemHash);
   }
-  
-  console.log(wepArray1, wepArray2, wepArray3);
 
-  for(i=0;i<3;i++) {
+  // console.log(wepArray1, wepArray2, wepArray3);
+
+  for (i = 0; i < 3; i++) {
     let wepHash = wepArray1[i];
     console.log(wepHash);
-    getWepVals(wepHash, printFunc);
+    getWepVals(wepHash, displayWepVals);
   }
   // $(".js-search-results2").html(``);
 }
 
-function getWepVals(wepArray, callback) {
+function getWepVals(wepHash, callback) {
   $.ajax({
     url: "/bungie4",
     type: "GET",
     data: {
-      wepHash: wepArray
+      wepHash: wepHash
     },
     success: callback
   });
 }
 
-function printFunc(data) {
+function displayWepVals(data) {
   console.log(data);
   let props = data.Response.displayProperties;
-  $(".js-search-results2").append(
-    `<button class="weaponButton" type="submit"><img src="https://www.bungie.net${props.icon}" alt="weaponIcon"><p class="wepName">${props.name}</p></button>`
-  );
+  if (data.Response.itemCategoryHashes[0] == 2) {
+    $(".js-search-results2").html(
+      `<button class="weaponButton" type="submit" value="kinetic"><img src="https://www.bungie.net${
+        props.icon
+      }" alt="weaponIcon"><p class="wepName">${
+        props.name
+      }</p><p>Kinetic</p></button>`
+    );
+  }
+  if (data.Response.itemCategoryHashes[0] == 3) {
+    $(".js-search-results3").html(
+      `<button class="weaponButton" type="submit" value="energy"><img src="https://www.bungie.net${
+        props.icon
+      }" alt="weaponIcon"><p class="wepName">${
+        props.name
+      }</p><p>Energy</p></button>`
+    );
+  }
+  if (data.Response.itemCategoryHashes[0] == 4) {
+    $(".js-search-results4").html(
+      `<button class="weaponButton" type="submit" value="power"><img src="https://www.bungie.net${
+        props.icon
+      }" alt="weaponIcon"><p class="wepName">${
+        props.name
+      }</p><p>Power</p></button>`
+    );
+  }
 }
 
 function watchSubmit() {
@@ -162,6 +193,7 @@ function watchSubmit() {
     membsType = queryTarget2.val();
     $(".js-search-results").html("");
     $(".js-search-results2").html("");
+    newArray = [];
     // saveProfile(query);
     searchByUsername(query, displayFromUsername);
   });
