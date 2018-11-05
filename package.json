@@ -2,7 +2,7 @@
   "name": "destinyapp",
   "version": "1.0.0",
   "description": "capstone project",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "mocha"
   },
