@@ -172,26 +172,20 @@ function displayProfiles(data) {
 
   $(".characterForm").submit(event => {
     event.preventDefault();
+    $(".js-search-results2").html("");
+    $(".js-search-results3").html("");
+    $(".js-search-results4").html("");
+
     let buttonVal = $(event.currentTarget).find(".characterButton");
     clickedChar = buttonVal.val();
     console.log(clickedChar);
 
-    for (i = 0; i < 3; i++) {
-      if (charTab == 0) {
-        let wepHash = wepArray1[i];
-        console.log(wepHash);
-        getWepVals(wepHash, displayWepVals);
-      }
-      if (charTab == 1) {
-        let wepHash = wepArray2[i];
-        console.log(wepHash);
-        getWepVals(wepHash, displayWepVals);
-      }
-      if (charTab == 2) {
-        let wepHash = wepArray3[i];
-        console.log(wepHash);
-        getWepVals(wepHash, displayWepVals);
-      }
+    if (clickedChar == 0) {
+      displayWepVals(account.character1.weapons);
+    } else if (clickedChar == 1) {
+      displayWepVals(account.character2.weapons);
+    } else if (clickedChar == 2) {
+      displayWepVals(account.character3.weapons);
     }
   });
 
@@ -292,37 +286,30 @@ function getWepVals(wepHash, callback) {
 }
 
 //creates the weapon tabs
-function displayWepVals(data) {
-  console.log(data);
-  $(".js-search-results2").html("");
-  let props = data.Response.displayProperties;
-  if (data.Response.itemCategoryHashes[0] == 2) {
-    $(".js-search-results2").html(
-      `<button class="weaponButton" type="submit" value="kinetic"><img src="https://www.bungie.net${
-        props.icon
-      }" alt="weaponIcon"><p class="wepName">${
-        props.name
-      }</p><p>Kinetic</p></button>`
-    );
-  }
-  if (data.Response.itemCategoryHashes[0] == 3) {
-    $(".js-search-results3").html(
-      `<button class="weaponButton" type="submit" value="energy"><img src="https://www.bungie.net${
-        props.icon
-      }" alt="weaponIcon"><p class="wepName">${
-        props.name
-      }</p><p>Energy</p></button>`
-    );
-  }
-  if (data.Response.itemCategoryHashes[0] == 4) {
-    $(".js-search-results4").html(
-      `<button class="weaponButton" type="submit" value="power"><img src="https://www.bungie.net${
-        props.icon
-      }" alt="weaponIcon"><p class="wepName">${
-        props.name
-      }</p><p>Power</p></button>`
-    );
-  }
+function displayWepVals(currentWeps) {
+  $(".js-search-results2").html(
+    `<button class="weaponButton" type="submit" value="kinetic"><img src="https://www.bungie.net${
+      currentWeps.kinetic.details[1]
+    }" alt="weaponIcon"><p class="wepName">${
+      currentWeps.kinetic.details[0]
+    }</p><p>Kinetic</p></button>`
+  );
+
+  $(".js-search-results3").html(
+    `<button class="weaponButton" type="submit" value="energy"><img src="https://www.bungie.net${
+      currentWeps.energy.details[1]
+    }" alt="weaponIcon"><p class="wepName">${
+      currentWeps.energy.details[0]
+    }</p><p>Energy</p></button>`
+  );
+
+  $(".js-search-results4").html(
+    `<button class="weaponButton" type="submit" value="power"><img src="https://www.bungie.net${
+      currentWeps.power.details[1]
+    }" alt="weaponIcon"><p class="wepName">${
+      currentWeps.power.details[0]
+    }</p><p>Power</p></button>`
+  );
 }
 
 function watchSubmit() {
@@ -334,6 +321,8 @@ function watchSubmit() {
     membsType = queryTarget2.val();
     $(".js-search-results").html("");
     $(".js-search-results2").html("");
+    $(".js-search-results3").html("");
+    $(".js-search-results4").html("");
     newArray = [];
     searchByUsername(query, displayFromUsername);
   });
