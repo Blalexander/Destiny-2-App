@@ -2,13 +2,19 @@
   box-sizing: border-box;
 }
 
+#loginSignupContainer {
+  display: flex;
+  justify-content: center;
+}
+
 #login {
-  margin-top: 20vh;
+  /* margin-top: 20vh; */
   display: flex;
   justify-content: center;
 }
 
 #signup {
+  /* margin-top: 20vh; */
   display: flex;
   justify-content: center;
 }
@@ -40,23 +46,38 @@
 
 .js-search-results2 {
   float: right;
-  height: 20vh;
-  width: 45vw;
+  width: 10vw;
   border: 1px solid black;
 }
 
 .js-search-results3 {
   float: right;
-  height: 20vh;
-  width: 45vw;
+  width: 10vw;
   border: 1px solid black;
 }
 
 .js-search-results4 {
   float: right;
-  height: 20vh;
-  width: 45vw;
+  width: 10vw;
   border: 1px solid black;
+}
+
+.js-search-results22 {
+  float: right;
+  width: 10vw;
+  border: 1px solid green;
+}
+
+.js-search-results33 {
+  float: right;
+  width: 10vw;
+  border: 1px solid green;
+}
+
+.js-search-results44 {
+  float: right;
+  width: 10vw;
+  border: 1px solid green;
 }
 
 .weapon {
@@ -67,4 +88,18 @@
   float: right;
 }
 
-/* runescape-y color theme */
+#indexSearchForm {
+  text-align: center;
+  margin-top: 35vh;
+}
+
+.weaponSuggestion {
+  display: inline-block;
+  border: 1px solid black;
+  background-color: lightgreen;
+  text-align: center;
+}
+
+.weaponForm {
+  display: flex;
+}

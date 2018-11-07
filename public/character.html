@@ -8,6 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
     <link href="index.css" rel="stylesheet" type="text/css" />
+    <script src="wepManifest.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
@@ -19,7 +20,7 @@
     <main role="main">
         <form action="#" class="js-search-form">
             <label>Type in your Xbox, Playstation, or Battlenet ID here</label>
-            <input type="text" class="js-query">
+            <input type="text" class="js-query" value="mallard42#1742">
             <select id="type">
                 <option value="1">Xbox</option>
                 <option value="2">PSN</option>
@@ -31,13 +32,24 @@
         <section class="js-search-results" aria-live="assertive">
         </section>
 
-        <section class="js-search-results2" aria-live="assertive">
-        </section>
-        <section class="js-search-results3" aria-live="assertive">
-        </section>
-        <section class="js-search-results4" aria-live="assertive">
-        </section>
-
+        <form class="weaponForm" action="#">
+            <section class="js-search-results2" aria-live="assertive">
+            </section>
+            <section class="js-search-results22" aria-live="assertive">
+            </section>
+        </form>
+        <form class="weaponForm" action="#">
+            <section class="js-search-results3" aria-live="assertive">
+            </section>
+            <section class="js-search-results33" aria-live="assertive">
+            </section>
+        </form>
+        <form class="weaponForm" action="#">
+            <section class="js-search-results4" aria-live="assertive">
+            </section>
+            <section class="js-search-results44" aria-live="assertive">
+            </section>
+        </form>
 
     </main>
     <script src="character.js"></script>
