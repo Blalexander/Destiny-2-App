@@ -6,6 +6,8 @@ let clickedChar = 0;
 let clickedWep = 0;
 let activeChar = 0;
 let charTab = 0;
+
+//placeholders for real suggestions
 let goodKHC = manifest[153979397];
 let goodKSG = manifest[636912560];
 let goodEHC = manifest[153979396];
@@ -38,8 +40,8 @@ function searchByUsername(searchTerm, callback) {
 }
 
 //sets the Bungie ID
-function displayFromUsername(data) {
-  console.log("displayFromUsername functioning");
+function setIdFromUsername(data) {
+  console.log("setIdFromUsername functioning");
   console.log(data);
   membsId = data.Response[0].membershipId;
   getProfiles(membsId, displayProfiles);
@@ -102,6 +104,7 @@ function displayProfiles(data) {
     }
   };
 
+  //i know this is horrific looking, but for now it did what i wanted it to do (which is set values from API call#2 and manifest definitions into each character object)
   for (index in character) {
     account.character1.id = character[Object.keys(character)[0]].characterId;
     account.character1.level =
@@ -163,6 +166,7 @@ function displayProfiles(data) {
 
   console.log(account);
 
+  //for loop that sends information to character tabs
   for (i = 0; i < 3; i++) {
     let characterId = account[Object.keys(account)[i]].id;
     let emblem = account[Object.keys(account)[i]].emblemB;
@@ -173,6 +177,7 @@ function displayProfiles(data) {
     createCharacterTabs(emblem, lightLevel, characterId, charLevel, charTab);
   }
 
+  //the character tabs created ^ are buttons with unique values.  this watches from button presses and updates what weapons are shown in response.
   $(".characterForm").submit(event => {
     event.preventDefault();
     $(".js-search-results2").html("");
@@ -241,8 +246,14 @@ function displayWepVals(currentWeps) {
     }</p><p>Power</p></button>`
   );
 
+  //each of the weapon tabs created ^ are buttons with unique values.  this watches for button submissions and updates recommended gear in response.
   $(".weaponForm").submit(event => {
     event.preventDefault();
+
+    //creates the save button
+    $("#saveLoadout").html(
+      `<button type="Submit" id="saveButton">Save loadout</button>`
+    );
 
     $(".js-search-results22").html("");
     $(".js-search-results33").html("");
@@ -259,9 +270,8 @@ function displayWepVals(currentWeps) {
 
     let suggestionTab1 = 0;
     let suggestionTab2 = 0;
-    let wepSuggestion1 = 0;
-    let wepSuggestion2 = 0;
 
+    //considers if the weapon is Kinetic, Energy, or Power, and then assigns the proper containers based on that
     if (wepSlot == 2) {
       suggestionTab1 = ".js-search-results33";
       suggestionTab2 = ".js-search-results44";
@@ -275,6 +285,7 @@ function displayWepVals(currentWeps) {
       suggestionTab2 = ".js-search-results33";
     }
 
+    //can be read as "if weapon == kinetic, show Energy and Power suggestions"
     if (wepSlot == 2) {
       $(suggestionTab1).html(
         `<div class="weaponSuggestion"><img src="https://www.bungie.net${
@@ -293,6 +304,7 @@ function displayWepVals(currentWeps) {
       );
     }
 
+    //can be read as "if weapon == energy, show Kinetic and Power suggestions"
     if (wepSlot == 3) {
       $(suggestionTab1).html(
         `<div class="weaponSuggestion"><img src="https://www.bungie.net${
@@ -311,6 +323,7 @@ function displayWepVals(currentWeps) {
       );
     }
 
+    //same as the last two, but for "Power" ^
     if (wepSlot == 4) {
       $(suggestionTab1).html(
         `<div class="weaponSuggestion"><img src="https://www.bungie.net${
@@ -342,7 +355,7 @@ function watchSubmit() {
     $(".js-search-results2").html("");
     $(".js-search-results3").html("");
     $(".js-search-results4").html("");
-    searchByUsername(query, displayFromUsername);
+    searchByUsername(query, setIdFromUsername);
   });
 }
 

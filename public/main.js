@@ -22,7 +22,6 @@ $("#login").submit(e => {
         password
       })
     });
-    // console.log(token.authToken);
     localStorage.setItem("token", token.authToken);
     localStorage.setItem("user_id", token.user);
     window.location.replace("/character.html");
