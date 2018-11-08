@@ -177,7 +177,7 @@ function displayProfiles(data) {
     createCharacterTabs(emblem, lightLevel, characterId, charLevel, charTab);
   }
 
-  //the character tabs created ^ are buttons with unique values.  this watches from button presses and updates what weapons are shown in response.
+  //the character tabs created ^ are buttons with unique values.  this watches for button submissions and updates what weapons are shown in response.
   $(".characterForm").submit(event => {
     event.preventDefault();
     $(".js-search-results2").html("");
