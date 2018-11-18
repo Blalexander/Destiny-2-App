@@ -7,6 +7,14 @@ let clickedWep = 0;
 let activeChar = 0;
 let charTab = 0;
 
+const titanBackground = "https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-titan-4k.jpg";
+const hunterBackground = "https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-Hunter-4k.jpg";
+const warlockBackground = "https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-warlock-4k.jpg";
+
+
+//if classType == 0 == Titan ...... if classType == 1 == Hunter ...... if classType == 2 == Warlock
+
+
 //placeholders for real suggestions
 let goodKHC = manifest[153979397];
 let goodKSG = manifest[636912560];
@@ -24,6 +32,7 @@ $("#type").click(event => {
 
 //first API query that gathers Bungie ID
 function searchByUsername(searchTerm, callback) {
+  // window.location.replace("/character.html");
   var searchTerm = searchTerm.replace("#", "%23");
   console.log("Hello from SearchByUsername!");
   membsId = 0;
@@ -73,6 +82,7 @@ function displayProfiles(data) {
       id: "",
       level: "",
       light: "",
+      classType: "",
       emblemB: "",
       weapons: {
         kinetic: { kHash: "", details: "" },
@@ -84,6 +94,7 @@ function displayProfiles(data) {
       id: "",
       level: "",
       light: "",
+      classType: "",
       emblemB: "",
       weapons: {
         kinetic: { kHash: "", details: "" },
@@ -95,6 +106,7 @@ function displayProfiles(data) {
       id: "",
       level: "",
       light: "",
+      classType: "",
       emblemB: "",
       weapons: {
         kinetic: { kHash: "", details: "" },
@@ -110,6 +122,7 @@ function displayProfiles(data) {
     account.character1.level =
       character[Object.keys(character)[0]].baseCharacterLevel;
     account.character1.light = character[Object.keys(character)[0]].light;
+    account.character1.classType = character[Object.keys(character)[0]].classType;
     account.character1.emblemB =
       character[Object.keys(character)[0]].emblemBackgroundPath;
     account.character1.weapons.kinetic.kHash =
@@ -129,6 +142,7 @@ function displayProfiles(data) {
     account.character2.level =
       character[Object.keys(character)[1]].baseCharacterLevel;
     account.character2.light = character[Object.keys(character)[1]].light;
+    account.character2.classType = character[Object.keys(character)[1]].classType;
     account.character2.emblemB =
       character[Object.keys(character)[1]].emblemBackgroundPath;
     account.character2.weapons.kinetic.kHash =
@@ -148,6 +162,7 @@ function displayProfiles(data) {
     account.character3.level =
       character[Object.keys(character)[2]].baseCharacterLevel;
     account.character3.light = character[Object.keys(character)[2]].light;
+    account.character3.classType = character[Object.keys(character)[2]].classType;
     account.character3.emblemB =
       character[Object.keys(character)[2]].emblemBackgroundPath;
     account.character3.weapons.kinetic.kHash =
@@ -172,9 +187,10 @@ function displayProfiles(data) {
     let emblem = account[Object.keys(account)[i]].emblemB;
     let lightLevel = account[Object.keys(account)[i]].light;
     let charLevel = account[Object.keys(account)[i]].level;
+    let charType = account[Object.keys(account)[i]].classType;
     charTab = i;
 
-    createCharacterTabs(emblem, lightLevel, characterId, charLevel, charTab);
+    createCharacterTabs(emblem, lightLevel, characterId, charLevel, charType, charTab);
   }
 
   //the character tabs created ^ are buttons with unique values.  this watches for button submissions and updates what weapons are shown in response.
@@ -193,12 +209,30 @@ function displayProfiles(data) {
 
     if (clickedChar == 0) {
       displayWepVals(account.character1.weapons);
+      setBackground(titanBackground);
     } else if (clickedChar == 1) {
       displayWepVals(account.character2.weapons);
+      setBackground(hunterBackground);
     } else if (clickedChar == 2) {
       displayWepVals(account.character3.weapons);
+      setBackground(warlockBackground);
     }
   });
+}
+
+function setBackground(bGround) {
+  if (bGround == titanBackground) {
+    document.body.style.backgroundImage = "url('https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-titan-4k.jpg')";
+  }
+  else if (bGround == hunterBackground) {
+    document.body.style.backgroundImage = "url('https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-Hunter-4k.jpg')";
+  }
+  else if (bGround == warlockBackground) {
+    document.body.style.backgroundImage = "url('https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-warlock-4k.jpg')";
+  }
+  else {
+    document.body.style.backgroundImage = "url('https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-Guardians-4k.jpg')";
+  }
 }
 
 //creates the character tabs
@@ -207,11 +241,24 @@ function createCharacterTabs(
   lightLevel,
   characterId,
   charLevel,
+  charType,
   charTab
 ) {
-  $(".js-search-results").append(
-    `<form class="characterForm" action="#"><button class="characterButton" type="submit" value="${charTab}"><img src="https://www.bungie.net${emblem}" alt="characterEmblem"><p class="classy">Character level: ${charLevel} </p><p class="classy">Light level: ${lightLevel} </p><p>ID: ${characterId}</p></button></form>`
-  );
+  if(charType == 0) {
+    $(".js-search-results").append(
+      `<form class="characterForm" action="#"><button class="titan characterButton" type="submit" value="${charTab}"><img src="https://www.bungie.net${emblem}" alt="characterEmblem"><p class="classy">Character level: ${charLevel} </p><p class="classy">Light level: ${lightLevel} </p><p>ID: ${characterId}</p></button></form>`
+    );
+  }
+  else if(charType == 1) {
+    $(".js-search-results").append(
+      `<form class="characterForm" action="#"><button class="hunter characterButton" type="submit" value="${charTab}"><img src="https://www.bungie.net${emblem}" alt="characterEmblem"><p class="classy">Character level: ${charLevel} </p><p class="classy">Light level: ${lightLevel} </p><p>ID: ${characterId}</p></button></form>`
+    );
+  }
+  else if(charType == 2) {
+    $(".js-search-results").append(
+      `<form class="characterForm" action="#"><button class="warlock characterButton" type="submit" value="${charTab}"><img src="https://www.bungie.net${emblem}" alt="characterEmblem"><p class="classy">Character level: ${charLevel} </p><p class="classy">Light level: ${lightLevel} </p><p>ID: ${characterId}</p></button></form>`
+    );
+  }
 }
 
 //creates the weapon tabs
@@ -356,6 +403,11 @@ function watchSubmit() {
     $(".js-search-results3").html("");
     $(".js-search-results4").html("");
     searchByUsername(query, setIdFromUsername);
+    // window.location.replace("/character.html");
+    //if input box != empty, pass info
+    //have watchsubmit check value of inout box and if it is not an empty string, take value and pass as a request paramter in an ajax request
+    //on route that handles route, route that handles optional parameter, and if exists do whatever
+    //set value in response header.  res.set   
   });
 }
 
