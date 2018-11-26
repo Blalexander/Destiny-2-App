@@ -34,7 +34,7 @@ $("#signup").submit(e => {
   let password = $('[name="pass"]').val();
   let cpassword = $('[name="cpass"]').val();
   if (password !== cpassword) {
-    alert(`Please match sure your passwords match!`);
+    alert(`Please make sure your passwords match!`);
     return;
   }
   if (password === "" || cpassword === "") {

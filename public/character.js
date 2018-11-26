@@ -2,10 +2,16 @@ let queryTarget2 = $(".js-search-form").find("#type");
 let membsType = queryTarget2.val();
 let membsId = 0;
 let account = {};
+let overall = {};
+let objVals = [];
+let objKeys = [];
+let wepCountObj = {};
 let clickedChar = 0;
 let clickedWep = 0;
 let activeChar = 0;
 let charTab = 0;
+let count = 0;
+
 
 const titanBackground = "https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-titan-4k.jpg";
 const hunterBackground = "https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-Hunter-4k.jpg";
@@ -28,6 +34,21 @@ $("#type").click(event => {
   event.preventDefault();
   membsType = queryTarget2.val();
   console.log(membsType);
+});
+
+$("#displayWepTrends").submit(event => {
+  event.preventDefault();
+  console.log(wepCountObj);
+
+  Object.values(wepCountObj).sort().forEach(function(a,b) {
+    objKeys.push(a,b)
+  })
+
+  Object.keys(wepCountObj).sort().forEach(function(a,b) {
+    objKeys.push(a,b)
+  })
+
+  console.log(objKeys, objVals);
 });
 
 //first API query that gathers Bungie ID
@@ -218,6 +239,95 @@ function displayProfiles(data) {
       setBackground(warlockBackground);
     }
   });
+
+  getActivityStats(processActivityStats);
+}
+
+function getActivityStats(callback) {
+  let charaId = account.character1.id;
+  console.log(charaId, membsType, membsId);
+  $.ajax({
+    url: "/bungie3",
+    type: "GET",
+    data: {
+      membsType: membsType,
+      membsId: membsId,
+      characterId: charaId
+    },
+    success: callback
+  });
+}
+
+function processActivityStats(dataA) {
+  console.log(dataA);
+  let activityArray = [];
+  for(i=0;i<dataA.Response.activities.length;i++) {
+    activityArray.push(dataA.Response.activities[i].activityDetails.instanceId);
+  }
+  console.log(activityArray);
+
+  // activityArray.forEach(forEachInstanceId());
+
+  // for(entry in activityArray) {
+  //   let realEntry = entry[entry];
+  //   forEachInstanceId(realEntry, printFunc);
+  // }
+
+  for(i=0;i<activityArray.length;i++) {
+    let realEntry = activityArray[i];
+    forEachInstanceId(realEntry, printFunc);
+  }
+}
+
+function forEachInstanceId(entry, callback) {
+  $.ajax({
+    url: "/bungie4",
+    type: "GET",
+    data: {
+      instId: entry
+    },
+    success: callback
+  });
+}
+
+function printFunc(data) {
+  console.log(data);
+  let players = data.Response.entries;
+  for(i=0;i<players.length;i++) {
+    if(players[i].extended.weapons) {
+      storePlayerInfo(players[i]);
+    }
+  }
+  // console.log(wepCountObj);
+}
+
+function storePlayerInfo(data) {
+  let primaryWepCounter = data.extended.weapons[0].referenceId;
+  // let secondaryWepCounter = data.extended.weapons[1].referenceId;
+  // let tertiaryWepCounter = data.extended.weapons[2].referenceId;
+  
+  if(primaryWepCounter in wepCountObj) {
+    wepCountObj[primaryWepCounter] += 1;
+  }
+  else {
+    wepCountObj[primaryWepCounter] = 1;
+  }
+
+  // if(secondaryWepCounter in wepCountObj) {
+  //   wepCountObj[secondaryWepCounter] += 1;
+  // }
+  // else {
+  //   wepCountObj[secondaryWepCounter] = 1;
+  // }
+
+  // if(tertiaryWepCounter in wepCountObj) {
+  //   wepCountObj[tertiaryWepCounter] += 1;
+  // }
+  // else {
+  //   wepCountObj[tertiaryWepCounter] = 1;
+  // }
+  // count += 1;
+  // console.log(wepCountObj);
 }
 
 function setBackground(bGround) {
@@ -300,6 +410,10 @@ function displayWepVals(currentWeps) {
     //creates the save button
     $("#saveLoadout").html(
       `<button type="Submit" id="saveButton">Save loadout</button>`
+    );
+
+    $("#displayWepTrends").html(
+      `<button type="Submit" id="wepTrendsButton">Display Weapon Trends</button>`
     );
 
     $(".js-search-results22").html("");
