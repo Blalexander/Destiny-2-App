@@ -39,16 +39,42 @@ $("#type").click(event => {
 $("#displayWepTrends").submit(event => {
   event.preventDefault();
   console.log(wepCountObj);
+  let highestWepVal = 0;
+  let highestWepName = 0;
+  let middleWepVal = 0;
+  let middleWepName = 0;
+  let lowestWepVal = 0;
+  let lowestWepName = 0;
 
-  Object.values(wepCountObj).sort().forEach(function(a,b) {
-    objKeys.push(a,b)
+  Object.keys(wepCountObj).forEach(function(a,b) {
+    if(wepCountObj[a] > highestWepVal) {
+      highestWepVal = wepCountObj[a];
+      highestWepName = a;
+    }
   })
 
-  Object.keys(wepCountObj).sort().forEach(function(a,b) {
-    objKeys.push(a,b)
+  Object.keys(wepCountObj).forEach(function(a,b) {
+    if(wepCountObj[a] > middleWepVal && wepCountObj[a] < highestWepVal) {
+      middleWepVal = wepCountObj[a];
+      middleWepName = a;
+    }
   })
 
-  console.log(objKeys, objVals);
+  Object.keys(wepCountObj).forEach(function(a,b) {
+    if(wepCountObj[a] > lowestWepVal && wepCountObj[a] < middleWepVal) {
+      lowestWepVal = wepCountObj[a];
+      lowestWepName = a;
+    }
+  })
+
+  console.log(highestWepName, highestWepVal);
+  console.log(middleWepName, middleWepVal);
+  console.log(lowestWepName, lowestWepVal);
+
+  let highWepIcon = manifest[highestWepName];
+
+  $('#weaponClusters').html(`<div><img src="https://www.bungie.net${highWepIcon[1]
+  }"></div>`)
 });
 
 //first API query that gathers Bungie ID
