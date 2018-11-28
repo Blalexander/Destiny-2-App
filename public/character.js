@@ -6,6 +6,7 @@ let overall = {};
 let objVals = [];
 let objKeys = [];
 let wepCountObj = {};
+let wepClusterObj = {};
 let clickedChar = 0;
 let clickedWep = 0;
 let activeChar = 0;
@@ -70,6 +71,7 @@ $("#displayWepTrends").submit(event => {
   console.log(highestWepName, highestWepVal);
   console.log(middleWepName, middleWepVal);
   console.log(lowestWepName, lowestWepVal);
+  console.log(wepClusterObj);
 
   let highWepIcon = manifest[highestWepName];
   let midWepIcon = manifest[middleWepName];
@@ -340,31 +342,21 @@ function printFunc(data) {
 
 function storePlayerInfo(data) {
   let primaryWepCounter = data.extended.weapons[0].referenceId;
-  // let secondaryWepCounter = data.extended.weapons[1].referenceId;
-  // let tertiaryWepCounter = data.extended.weapons[2].referenceId;
-  
+
+  if(wepClusterObj[primaryWepCounter] != null && wepClusterObj[primaryWepCounter].seco != null) {
+      wepClusterObj[primaryWepCounter].occurances++;
+  }
+
+  else if(data.extended.weapons.length == 2) {
+    wepClusterObj[primaryWepCounter] = {seco: data.extended.weapons[1].referenceId, occurances: 1};
+  }
+
   if(primaryWepCounter in wepCountObj) {
     wepCountObj[primaryWepCounter] += 1;
   }
   else {
     wepCountObj[primaryWepCounter] = 1;
   }
-
-  // if(secondaryWepCounter in wepCountObj) {
-  //   wepCountObj[secondaryWepCounter] += 1;
-  // }
-  // else {
-  //   wepCountObj[secondaryWepCounter] = 1;
-  // }
-
-  // if(tertiaryWepCounter in wepCountObj) {
-  //   wepCountObj[tertiaryWepCounter] += 1;
-  // }
-  // else {
-  //   wepCountObj[tertiaryWepCounter] = 1;
-  // }
-  // count += 1;
-  // console.log(wepCountObj);
 }
 
 function setBackground(bGround) {
