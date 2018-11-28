@@ -72,9 +72,20 @@ $("#displayWepTrends").submit(event => {
   console.log(lowestWepName, lowestWepVal);
 
   let highWepIcon = manifest[highestWepName];
+  let midWepIcon = manifest[middleWepName];
+  let lowWepIcon = manifest[lowestWepName];
+
 
   $('#weaponClusters').html(`<div><img src="https://www.bungie.net${highWepIcon[1]
-  }"></div>`)
+  }"></div><p class="wepName">${
+    highWepIcon[0]
+  }</p><div><img src="https://www.bungie.net${midWepIcon[1]
+  }"></div><p class="wepName">${
+    midWepIcon[0]
+  }</p><div><img src="https://www.bungie.net${lowWepIcon[1]
+  }"></div><p class="wepName">${
+    lowWepIcon[0]
+  }</p>`)
 });
 
 //first API query that gathers Bungie ID
