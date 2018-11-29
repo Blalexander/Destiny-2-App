@@ -130,3 +130,18 @@ button {
 .warlock:hover, .warlock:focus {
   background-color: lightgoldenrodyellow;
 }
+
+.highWepDiv, .midWepDiv, .lowWepDiv {
+  border: 1px solid black;
+  text-align: center;
+  height: 20vh;
+  width: 10vw;
+}
+
+#weaponClusters {
+  display: flex;
+}
+
+#displayWepTrends, #saveLoadout {
+  display: inline;
+}

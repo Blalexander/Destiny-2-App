@@ -5,8 +5,8 @@ let account = {};
 let overall = {};
 let objVals = [];
 let objKeys = [];
-let wepCountObj = {};
-let wepClusterObj = {};
+let occuranceOfSingleWep = {};
+let occuranceOfTwoWeps = {};
 let clickedChar = 0;
 let clickedWep = 0;
 let activeChar = 0;
@@ -17,9 +17,6 @@ let count = 0;
 const titanBackground = "https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-titan-4k.jpg";
 const hunterBackground = "https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-Hunter-4k.jpg";
 const warlockBackground = "https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-warlock-4k.jpg";
-
-
-//if classType == 0 == Titan ...... if classType == 1 == Hunter ...... if classType == 2 == Warlock
 
 
 //placeholders for real suggestions
@@ -39,7 +36,7 @@ $("#type").click(event => {
 
 $("#displayWepTrends").submit(event => {
   event.preventDefault();
-  console.log(wepCountObj);
+  console.log(occuranceOfSingleWep);
   let highestWepVal = 0;
   let highestWepName = 0;
   let middleWepVal = 0;
@@ -47,23 +44,23 @@ $("#displayWepTrends").submit(event => {
   let lowestWepVal = 0;
   let lowestWepName = 0;
 
-  Object.keys(wepCountObj).forEach(function(a,b) {
-    if(wepCountObj[a] > highestWepVal) {
-      highestWepVal = wepCountObj[a];
+  Object.keys(occuranceOfSingleWep).forEach(function(a,b) {
+    if(occuranceOfSingleWep[a] > highestWepVal) {
+      highestWepVal = occuranceOfSingleWep[a];
       highestWepName = a;
     }
   })
 
-  Object.keys(wepCountObj).forEach(function(a,b) {
-    if(wepCountObj[a] > middleWepVal && wepCountObj[a] < highestWepVal) {
-      middleWepVal = wepCountObj[a];
+  Object.keys(occuranceOfSingleWep).forEach(function(a,b) {
+    if(occuranceOfSingleWep[a] > middleWepVal && occuranceOfSingleWep[a] < highestWepVal) {
+      middleWepVal = occuranceOfSingleWep[a];
       middleWepName = a;
     }
   })
 
-  Object.keys(wepCountObj).forEach(function(a,b) {
-    if(wepCountObj[a] > lowestWepVal && wepCountObj[a] < middleWepVal) {
-      lowestWepVal = wepCountObj[a];
+  Object.keys(occuranceOfSingleWep).forEach(function(a,b) {
+    if(occuranceOfSingleWep[a] > lowestWepVal && occuranceOfSingleWep[a] < middleWepVal) {
+      lowestWepVal = occuranceOfSingleWep[a];
       lowestWepName = a;
     }
   })
@@ -71,28 +68,27 @@ $("#displayWepTrends").submit(event => {
   console.log(highestWepName, highestWepVal);
   console.log(middleWepName, middleWepVal);
   console.log(lowestWepName, lowestWepVal);
-  console.log(wepClusterObj);
+  console.log(occuranceOfTwoWeps);
 
   let highWepIcon = manifest[highestWepName];
   let midWepIcon = manifest[middleWepName];
   let lowWepIcon = manifest[lowestWepName];
 
 
-  $('#weaponClusters').html(`<div class="highWepPic"><img src="https://www.bungie.net${highWepIcon[1]
+  $('#weaponClusters').html(`<div class="highWepDiv"><img src="https://www.bungie.net${highWepIcon[1]
   }"><p class="highWepName">${
     highWepIcon[0]
-  }</p></div><div class="midWepPic"><img src="https://www.bungie.net${midWepIcon[1]
+  }</p><p>${highestWepVal}</div><div class="midWepDiv"><img src="https://www.bungie.net${midWepIcon[1]
   }"><p class="midWepName">${
     midWepIcon[0]
-  }</p></div><div class="lowWepPic"><img src="https://www.bungie.net${lowWepIcon[1]
+  }</p><p>${middleWepVal}</div><div class="lowWepDiv"><img src="https://www.bungie.net${lowWepIcon[1]
   }"><p class="lowWepName">${
     lowWepIcon[0]
-  }</p></div>`)
+  }</p><p>${lowestWepVal}</div>`)
 });
 
 //first API query that gathers Bungie ID
 function searchByUsername(searchTerm, callback) {
-  // window.location.replace("/character.html");
   var searchTerm = searchTerm.replace("#", "%23");
   console.log("Hello from SearchByUsername!");
   membsId = 0;
@@ -305,13 +301,6 @@ function processActivityStats(dataA) {
   }
   console.log(activityArray);
 
-  // activityArray.forEach(forEachInstanceId());
-
-  // for(entry in activityArray) {
-  //   let realEntry = entry[entry];
-  //   forEachInstanceId(realEntry, printFunc);
-  // }
-
   for(i=0;i<activityArray.length;i++) {
     let realEntry = activityArray[i];
     forEachInstanceId(realEntry, printFunc);
@@ -337,27 +326,29 @@ function printFunc(data) {
       storePlayerInfo(players[i]);
     }
   }
-  // console.log(wepCountObj);
 }
 
+//creates weapon cluster object for seeing how many times two weapons are used in tandem with each other and weapon counter object to keep track of individual weapon occurances
 function storePlayerInfo(data) {
-  let primaryWepCounter = data.extended.weapons[0].referenceId;
+  let primaryWepKey = data.extended.weapons[0].referenceId;
 
-  if(wepClusterObj[primaryWepCounter] != null && wepClusterObj[primaryWepCounter].seco != null) {
-      wepClusterObj[primaryWepCounter].occurances++;
-  }
-
-  else if(data.extended.weapons.length == 2) {
-    wepClusterObj[primaryWepCounter] = {seco: data.extended.weapons[1].referenceId, occurances: 1};
-  }
-
-  if(primaryWepCounter in wepCountObj) {
-    wepCountObj[primaryWepCounter] += 1;
+  if(primaryWepKey in occuranceOfSingleWep) {
+    occuranceOfSingleWep[primaryWepKey] += 1;
   }
   else {
-    wepCountObj[primaryWepCounter] = 1;
+    occuranceOfSingleWep[primaryWepKey] = 1;
+  }
+
+  if(occuranceOfTwoWeps[primaryWepKey] != null && occuranceOfTwoWeps[primaryWepKey].secondaryWepKey != null) {
+    occuranceOfTwoWeps[primaryWepKey].occurances++;
+  } //ASK JASON WHY ^^ IS NEEDED
+
+  else if(data.extended.weapons.length == 2) {
+    occuranceOfTwoWeps[primaryWepKey] = {secondaryWepKey: data.extended.weapons[1].referenceId, occurances: 1};
   }
 }
+
+//FIND WAY TO POST TO DB
 
 function setBackground(bGround) {
   if (bGround == titanBackground) {
@@ -436,13 +427,14 @@ function displayWepVals(currentWeps) {
   $(".weaponForm").submit(event => {
     event.preventDefault();
 
+    //creates display weapon trends button
+    $("#displayWepTrends").html(
+      `<button type="Submit" id="wepTrendsButton">Display Weapon Trends</button>`
+    );
+
     //creates the save button
     $("#saveLoadout").html(
       `<button type="Submit" id="saveButton">Save loadout</button>`
-    );
-
-    $("#displayWepTrends").html(
-      `<button type="Submit" id="wepTrendsButton">Display Weapon Trends</button>`
     );
 
     $(".js-search-results22").html("");
