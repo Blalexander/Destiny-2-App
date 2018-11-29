@@ -303,7 +303,7 @@ function processActivityStats(dataA) {
 
   for(i=0;i<activityArray.length;i++) {
     let realEntry = activityArray[i];
-    forEachInstanceId(realEntry, printFunc);
+    forEachInstanceId(realEntry, sortThroughGamesPlayed);
   }
 }
 
@@ -318,8 +318,8 @@ function forEachInstanceId(entry, callback) {
   });
 }
 
-function printFunc(data) {
-  console.log(data);
+function sortThroughGamesPlayed(data) {
+  // console.log(data);
   let players = data.Response.entries;
   for(i=0;i<players.length;i++) {
     if(players[i].extended.weapons) {
@@ -347,8 +347,6 @@ function storePlayerInfo(data) {
     occuranceOfTwoWeps[primaryWepKey] = {secondaryWepKey: data.extended.weapons[1].referenceId, occurances: 1};
   }
 }
-
-//FIND WAY TO POST TO DB
 
 function setBackground(bGround) {
   if (bGround == titanBackground) {
