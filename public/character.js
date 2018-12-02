@@ -7,6 +7,7 @@ let objVals = [];
 let objKeys = [];
 let occuranceOfSingleWep = {};
 let occuranceOfTwoWeps = {};
+let occuranceOfThreeWeps = {};
 let clickedChar = 0;
 let clickedWep = 0;
 let activeChar = 0;
@@ -69,6 +70,7 @@ $("#displayWepTrends").submit(event => {
   console.log(middleWepName, middleWepVal);
   console.log(lowestWepName, lowestWepVal);
   console.log(occuranceOfTwoWeps);
+  console.log(occuranceOfThreeWeps);
 
   let highWepIcon = manifest[highestWepName];
   let midWepIcon = manifest[middleWepName];
@@ -345,6 +347,14 @@ function storePlayerInfo(data) {
 
   else if(data.extended.weapons.length == 2) {
     occuranceOfTwoWeps[primaryWepKey] = {secondaryWepKey: data.extended.weapons[1].referenceId, occurances: 1};
+  }
+
+  if(occuranceOfThreeWeps[primaryWepKey] != null && occuranceOfThreeWeps[primaryWepKey].secondaryWepKey != null && occuranceOfThreeWeps[primaryWepKey].tertiaryWepKey) {
+    occuranceOfThreeWeps[primaryWepKey].occurances++;
+  } 
+
+  else if(data.extended.weapons.length == 3) {
+    occuranceOfThreeWeps[primaryWepKey] = {secondaryWepKey: data.extended.weapons[1].referenceId, tertiaryWepKey: data.extended.weapons[2].referenceId, occurances: 1};
   }
 }
 
