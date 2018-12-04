@@ -54,36 +54,42 @@ body {
 .js-search-results2 {
   float: right;
   width: 10vw;
+  height: 15vh;
   border: 1px solid black;
 }
 
 .js-search-results3 {
   float: right;
   width: 10vw;
+  height: 15vh;
   border: 1px solid black;
 }
 
 .js-search-results4 {
   float: right;
   width: 10vw;
+  height: 15vh;
   border: 1px solid black;
 }
 
 .js-search-results22 {
   float: right;
   width: 10vw;
+  height: 15vh;
   border: 1px solid green;
 }
 
 .js-search-results33 {
   float: right;
   width: 10vw;
+  height: 15vh;
   border: 1px solid green;
 }
 
 .js-search-results44 {
   float: right;
   width: 10vw;
+  height: 15vh;
   border: 1px solid green;
 }
 
@@ -117,6 +123,21 @@ button {
 
 .characterButton {
   transition: .5s;
+}
+
+.weaponButton {
+  height: 20vh;
+  width: 15vw;
+}
+
+.weaponSuggestion {
+  height: 20vh;
+  width: 15vw;
+}
+
+.weaponHolder {
+  height: 20vh;
+  width: 15vw;
 }
 
 .titan:hover, .titan:focus {

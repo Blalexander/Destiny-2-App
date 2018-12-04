@@ -406,7 +406,7 @@ function displayWepVals(currentWeps) {
       currentWeps.kinetic.kHash
     }><img src="https://www.bungie.net${
       currentWeps.kinetic.details[1]
-    }" alt="weaponIcon"><p class="wepName">${
+    }"  alt="weaponIcon"><p class="wepName">${
       currentWeps.kinetic.details[0]
     }</p><p>Kinetic</p></button>`
   );
@@ -416,7 +416,7 @@ function displayWepVals(currentWeps) {
       currentWeps.energy.eHash
     }><img src="https://www.bungie.net${
       currentWeps.energy.details[1]
-    }" alt="weaponIcon"><p class="wepName">${
+    }"  alt="weaponIcon"><p class="wepName">${
       currentWeps.energy.details[0]
     }</p><p>Energy</p></button>`
   );
@@ -426,7 +426,7 @@ function displayWepVals(currentWeps) {
       currentWeps.power.pHash
     }><img src="https://www.bungie.net${
       currentWeps.power.details[1]
-    }" alt="weaponIcon"><p class="wepName">${
+    }"  alt="weaponIcon"><p class="wepName">${
       currentWeps.power.details[0]
     }</p><p>Power</p></button>`
   );
@@ -460,19 +460,23 @@ function displayWepVals(currentWeps) {
 
     let suggestionTab1 = 0;
     let suggestionTab2 = 0;
+    let suggestionTab3 = 0;
 
     //considers if the weapon is Kinetic, Energy, or Power, and then assigns the proper containers based on that
     if (wepSlot == 2) {
       suggestionTab1 = ".js-search-results33";
       suggestionTab2 = ".js-search-results44";
+      suggestionTab3 = ".js-search-results22";
     }
     if (wepSlot == 3) {
       suggestionTab1 = ".js-search-results22";
       suggestionTab2 = ".js-search-results44";
+      suggestionTab3 = ".js-search-results33";
     }
     if (wepSlot == 4) {
       suggestionTab1 = ".js-search-results22";
       suggestionTab2 = ".js-search-results33";
+      suggestionTab3 = ".js-search-results44";
     }
 
     //can be read as "if weapon == kinetic, show Energy and Power suggestions"
@@ -480,7 +484,7 @@ function displayWepVals(currentWeps) {
       $(suggestionTab1).html(
         `<div class="weaponSuggestion"><img src="https://www.bungie.net${
           goodEHC[1]
-        }" alt="weaponIcon"><p class="wepName">${
+        }"  alt="weaponIcon" class="suggestionIcon"><p class="wepName">${
           goodEHC[0]
         }</p><p>Energy</p></div>`
       );
@@ -488,10 +492,16 @@ function displayWepVals(currentWeps) {
       $(suggestionTab2).html(
         `<div class="weaponSuggestion"><img src="https://www.bungie.net${
           goodRL[1]
-        }" alt="weaponIcon"><p class="wepName">${
+        }"  alt="weaponIcon" class="suggestionIcon"><p class="wepName">${
           goodRL[0]
         }</p><p>Power</p></div>`
       );
+
+      $(suggestionTab3).html(`<div class="weaponHolder"><img src="https://www.bungie.net${
+        currentWeps.kinetic.details[1]
+      }"  alt="weaponIcon"><p class="wepName">${
+        currentWeps.kinetic.details[0]
+      }</p><p>Kinetic</p></div>`)
     }
 
     //can be read as "if weapon == energy, show Kinetic and Power suggestions"
@@ -499,7 +509,7 @@ function displayWepVals(currentWeps) {
       $(suggestionTab1).html(
         `<div class="weaponSuggestion"><img src="https://www.bungie.net${
           goodKHC[1]
-        }" alt="weaponIcon"><p class="wepName">${
+        }"  alt="weaponIcon" class="suggestionIcon"><p class="wepName">${
           goodKHC[0]
         }</p><p>Kinetic</p></div>`
       );
@@ -507,10 +517,16 @@ function displayWepVals(currentWeps) {
       $(suggestionTab2).html(
         `<div class="weaponSuggestion"><img src="https://www.bungie.net${
           goodRL[1]
-        }" alt="weaponIcon"><p class="wepName">${
+        }"  alt="weaponIcon" class="suggestionIcon"><p class="wepName">${
           goodRL[0]
         }</p><p>Power</p></div>`
       );
+
+      $(suggestionTab3).html(`<div class="weaponHolder"><img src="https://www.bungie.net${
+        currentWeps.energy.details[1]
+      }"  alt="weaponIcon"><p class="wepName">${
+        currentWeps.energy.details[0]
+      }</p><p>Energy</p></div>`)
     }
 
     //same as the last two, but for "Power" ^
@@ -518,7 +534,7 @@ function displayWepVals(currentWeps) {
       $(suggestionTab1).html(
         `<div class="weaponSuggestion"><img src="https://www.bungie.net${
           goodKSG[1]
-        }" alt="weaponIcon"><p class="wepName">${
+        }"  alt="weaponIcon" class="suggestionIcon"><p class="wepName">${
           goodKSG[0]
         }</p><p>Kinetic</p></div>`
       );
@@ -526,10 +542,16 @@ function displayWepVals(currentWeps) {
       $(suggestionTab2).html(
         `<div class="weaponSuggestion"><img src="https://www.bungie.net${
           goodEHC[1]
-        }" alt="weaponIcon"><p class="wepName">${
+        }"  alt="weaponIcon" class="suggestionIcon"><p class="wepName">${
           goodEHC[0]
         }</p><p>Energy</p></div>`
       );
+
+      $(suggestionTab3).html(`<div class="weaponHolder"><img src="https://www.bungie.net${
+        currentWeps.power.details[1]
+      }"  alt="weaponIcon"><p class="wepName">${
+        currentWeps.power.details[0]
+      }</p><p>Power</p></div>`)
     }
   });
 }
