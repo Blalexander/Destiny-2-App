@@ -38,55 +38,76 @@ $("#type").click(event => {
 $("#displayWepTrends").submit(event => {
   event.preventDefault();
   console.log(occuranceOfSingleWep);
-  let highestWepVal = 0;
-  let highestWepName = 0;
-  let middleWepVal = 0;
-  let middleWepName = 0;
-  let lowestWepVal = 0;
-  let lowestWepName = 0;
+  let highestSingleWep = 0;
+  let highestSingleWepName = 0;
+  let highestDoubleWep = 0;
+  let firstDoubleWepName = 0;
+  let highestTripleWep = 0;
+  let firstTripleWepName = 0;
 
   Object.keys(occuranceOfSingleWep).forEach(function(a,b) {
-    if(occuranceOfSingleWep[a] > highestWepVal) {
-      highestWepVal = occuranceOfSingleWep[a];
-      highestWepName = a;
+    if(occuranceOfSingleWep[a] > highestSingleWep) {
+      highestSingleWep = occuranceOfSingleWep[a];
+      highestSingleWepName = a;
     }
   })
 
-  Object.keys(occuranceOfSingleWep).forEach(function(a,b) {
-    if(occuranceOfSingleWep[a] > middleWepVal && occuranceOfSingleWep[a] < highestWepVal) {
-      middleWepVal = occuranceOfSingleWep[a];
-      middleWepName = a;
+  Object.keys(occuranceOfTwoWeps).forEach(function(a,b) {
+    if(occuranceOfTwoWeps[a].occurances > highestDoubleWep) {
+      highestDoubleWep = occuranceOfTwoWeps[a].occurances;
+      firstDoubleWepName = a;
+      secondDoubleWepName = occuranceOfTwoWeps[a].secondaryWepKey;
     }
   })
 
-  Object.keys(occuranceOfSingleWep).forEach(function(a,b) {
-    if(occuranceOfSingleWep[a] > lowestWepVal && occuranceOfSingleWep[a] < middleWepVal) {
-      lowestWepVal = occuranceOfSingleWep[a];
-      lowestWepName = a;
+  Object.keys(occuranceOfThreeWeps).forEach(function(a,b) {
+    if(occuranceOfThreeWeps[a].occurances > highestTripleWep) {
+      highestTripleWep = occuranceOfThreeWeps[a].occurances;
+      firstTripleWepName = a;
+      secondTripleWepName = occuranceOfThreeWeps[a].secondaryWepKey;
+      thirdTripleWepName = occuranceOfThreeWeps[a].tertiaryWepKey;
     }
   })
 
-  console.log(highestWepName, highestWepVal);
-  console.log(middleWepName, middleWepVal);
-  console.log(lowestWepName, lowestWepVal);
+  console.log(highestSingleWepName, highestSingleWep);
+  console.log(firstDoubleWepName, secondDoubleWepName);
+  console.log(firstTripleWepName, secondTripleWepName, thirdTripleWepName);
   console.log(occuranceOfTwoWeps);
   console.log(occuranceOfThreeWeps);
 
-  let highWepIcon = manifest[highestWepName];
-  let midWepIcon = manifest[middleWepName];
-  let lowWepIcon = manifest[lowestWepName];
+  let singleWepIcon = manifest[highestSingleWepName];
+  let firstDoubleWepIcon = manifest[firstDoubleWepName];
+  let secondDoubleWepIcon = manifest[secondDoubleWepName];
+  let firstTripleWepIcon = manifest[firstTripleWepName];
+  let secondTripleWepIcon = manifest[secondTripleWepName];
+  let thirdTripleWepIcon = manifest[thirdTripleWepName];
 
 
-  $('#weaponClusters').html(`<div class="highWepDiv"><img src="https://www.bungie.net${highWepIcon[1]
-  }"><p class="highWepName">${
-    highWepIcon[0]
-  }</p><p>${highestWepVal}</div><div class="midWepDiv"><img src="https://www.bungie.net${midWepIcon[1]
-  }"><p class="midWepName">${
-    midWepIcon[0]
-  }</p><p>${middleWepVal}</div><div class="lowWepDiv"><img src="https://www.bungie.net${lowWepIcon[1]
-  }"><p class="lowWepName">${
-    lowWepIcon[0]
-  }</p><p>${lowestWepVal}</div>`)
+  $('#weaponClusters').html(`
+  <div class="singleWepDiv">Most Common Primary Weapon<img src="https://www.bungie.net${singleWepIcon[1]
+  }"><p class="singleWepName">${
+    singleWepIcon[0]
+  }</p></div>
+  
+  <div class="doubleWepDiv">Most Common Weapon Duo<img src="https://www.bungie.net${firstDoubleWepIcon[1]
+  }"><p class="firstDoubleWepName">${
+    firstDoubleWepIcon[0]
+  }</p>
+  <img src="https://www.bungie.net${secondDoubleWepIcon[1]
+  }"><p class="secondDoubleWepName">${
+    secondDoubleWepIcon[0]
+  }</p></div>
+  
+  <div class="tripleWepDiv">Most Common Weapon Loadout<img src="https://www.bungie.net${firstTripleWepIcon[1]
+  }"><p class="firstTripleWepName">${
+    firstTripleWepIcon[0]
+  }</p><img src="https://www.bungie.net${secondTripleWepIcon[1]
+  }"><p class="secondTripleWepName">${
+    secondTripleWepIcon[0]
+  }</p><img src="https://www.bungie.net${thirdTripleWepIcon[1]
+  }"><p class="thirdTripleWepName">${
+    thirdTripleWepIcon[0]
+  }</p></div>`)
 });
 
 //first API query that gathers Bungie ID

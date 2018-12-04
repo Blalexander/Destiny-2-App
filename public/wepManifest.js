@@ -3316,5 +3316,11 @@ const manifest = {
     "/common/destiny2_content/icons/2847efc7413f6cce903c52bcf8ceaa37.jpg",
     "Sword",
     4
+  ],
+  3325463374: [
+    "Thunderlord",
+    "/common/destiny2_content/icons/1e462b9c959a13b270e8bef3f307a0d4.jpg",
+    "Machine Gun",
+    4
   ]
 };
