@@ -1,6 +1,6 @@
 "use strict";
 
-$("#login").submit(e => {
+$('#login').submit(e => {
   e.preventDefault();
   let email = $('[name="logemail"]').val();
   let password = $('[name="logpass"]').val();
@@ -28,7 +28,7 @@ $("#login").submit(e => {
   })();
 });
 
-$("#signup").submit(e => {
+$('#signup').submit(e => {
   e.preventDefault();
   let email = $('[name="email"]').val();
   let password = $('[name="pass"]').val();
@@ -74,3 +74,8 @@ $("#signup").submit(e => {
     window.location.replace("/character.html");
   })();
 });
+
+// $('#saveButton').submit(e => {
+//   e.preventDefault();
+
+// })

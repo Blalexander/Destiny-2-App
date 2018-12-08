@@ -84,30 +84,30 @@ $("#displayWepTrends").submit(event => {
 
 
   $('#weaponClusters').html(`
-  <div class="singleWepDiv">Most Common Primary Weapon<img src="https://www.bungie.net${singleWepIcon[1]
+  <div class="singleWepDiv">Most Common Primary Weapon<div class="weaponDiv"><img src="https://www.bungie.net${singleWepIcon[1]
   }"><p class="singleWepName">${
     singleWepIcon[0]
-  }</p></div>
+  }</p></div><</div>
   
-  <div class="doubleWepDiv">Most Common Weapon Duo<img src="https://www.bungie.net${firstDoubleWepIcon[1]
+  <div class="doubleWepDiv">Most Common Weapon Duo<div class="weaponDiv"><img src="https://www.bungie.net${firstDoubleWepIcon[1]
   }"><p class="firstDoubleWepName">${
     firstDoubleWepIcon[0]
-  }</p>
-  <img src="https://www.bungie.net${secondDoubleWepIcon[1]
+  }</p></div>
+  <div class="weaponDiv"><img src="https://www.bungie.net${secondDoubleWepIcon[1]
   }"><p class="secondDoubleWepName">${
     secondDoubleWepIcon[0]
-  }</p></div>
+  }</p></div></div>
   
-  <div class="tripleWepDiv">Most Common Weapon Loadout<img src="https://www.bungie.net${firstTripleWepIcon[1]
+  <div class="tripleWepDiv">Most Common Full Loadout<div class="weaponDiv"><img src="https://www.bungie.net${firstTripleWepIcon[1]
   }"><p class="firstTripleWepName">${
     firstTripleWepIcon[0]
-  }</p><img src="https://www.bungie.net${secondTripleWepIcon[1]
+  }</p></div><div class="weaponDiv"><img src="https://www.bungie.net${secondTripleWepIcon[1]
   }"><p class="secondTripleWepName">${
     secondTripleWepIcon[0]
-  }</p><img src="https://www.bungie.net${thirdTripleWepIcon[1]
+  }</p></div><div class="weaponDiv"><img src="https://www.bungie.net${thirdTripleWepIcon[1]
   }"><p class="thirdTripleWepName">${
     thirdTripleWepIcon[0]
-  }</p></div>`)
+  }</p></div></div>`)
 });
 
 //first API query that gathers Bungie ID
