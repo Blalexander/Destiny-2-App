@@ -25,12 +25,13 @@ const app = express();
 
 
 //Middleware
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(morgan("common"));
 passport.use(localStrategy);
 passport.use(jwtStrategy);
-app.use(cors());
 app.use("/bungie", bungieRoute);
 app.use("/bungie2", bungieRoute2);
 app.use("/bungie3", bungieRoute3);
@@ -39,7 +40,6 @@ app.use("/loadouts", loadoutsRouter);
 
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
-app.use(express.json());
 app.use(express.static("public"));
 mongoose.Promise = global.Promise;
 

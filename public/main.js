@@ -80,7 +80,7 @@ $('#signup').submit(e => {
 });
 
 
-$("#saveButton").submit(event => {
+$("#saveLoadout").submit(event => {
   event.preventDefault();
   const itemHash = "fakeasshash";
   const itemName = "super duper wep";
@@ -92,7 +92,7 @@ $("#saveButton").submit(event => {
     url:"/loadouts",
     method: "POST",
     dataType: "JSON",
-    contentType: "application/json",
+    // contentType: "application/json",
     data: {
       "itemHash": itemHash,
       "itemName": itemName,

@@ -458,12 +458,12 @@ function displayWepVals(currentWeps) {
 
     //creates display weapon trends button
     $("#displayWepTrends").html(
-      `<button type="Submit" id="wepTrendsButton">Display Weapon Trends</button>`
+      `<button type="submit" id="wepTrendsButton">Display Weapon Trends</button>`
     );
 
     //creates the save button
     $("#saveLoadout").html(
-      `<button type="Submit" id="saveButton">Save loadout</button>`
+      `<button type="submit" id="saveButton">Save loadout</button>`
     );
 
     $(".js-search-results22").html("");
@@ -591,11 +591,6 @@ function watchSubmit() {
     $(".js-search-results3").html("");
     $(".js-search-results4").html("");
     searchByUsername(query, setIdFromUsername);
-    // window.location.replace("/character.html");
-    //if input box != empty, pass info
-    //have watchsubmit check value of inout box and if it is not an empty string, take value and pass as a request paramter in an ajax request
-    //on route that handles route, route that handles optional parameter, and if exists do whatever
-    //set value in response header.  res.set   
   });
 }
 
@@ -605,3 +600,34 @@ $(watchSubmit);
 $(document).ready(function() {
   $('#characterPage').hide();
 });
+
+// $("#saveLoadout").submit(event => {
+//   event.preventDefault();
+//   const itemHash = "fakeasshash";
+//   const itemName = "super duper wep";
+//   const itemThumbnail = "ew a thumbnail";
+//   const itemType = "a good one";
+//   const itemSlot = "main";
+
+//   const settings = {
+//     url:"/loadouts",
+//     method: "POST",
+//     dataType: "JSON",
+//     contentType: "application/json",
+//     data: {
+//       "itemHash": itemHash,
+//       "itemName": itemName,
+//       "itemThumbnail": itemThumbnail,
+//       "itemType": itemType,
+//       "itemSlot": itemSlot
+//     },
+//     success: function(data) {
+//       console.log("Success!", data);
+//     },
+//     error: function(data) {
+//       console.log("Error", data);
+//     }
+//   };
+
+//   $.ajax(settings);
+// })
