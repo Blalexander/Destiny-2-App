@@ -14,6 +14,7 @@ const bungieRoute = require("./routers/bungieRouter");
 const bungieRoute2 = require("./routers/bungieRouter2");
 const bungieRoute3 = require("./routers/bungieRouter3");
 const bungieRoute4 = require("./routers/bungieRouter4");
+const loadoutsRouter = require("./loadouts/loadoutRouter");
 
 
 const { router: usersRouter } = require("./users");
@@ -22,17 +23,19 @@ const jwtAuth = passport.authenticate("jwt", { session: false });
 const { PORT, DATABASE_URL, TEST_DATABASE_URL } = require("./config");
 const app = express();
 
+
 //Middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("common"));
 passport.use(localStrategy);
 passport.use(jwtStrategy);
-app.use(bodyParser.json());
 app.use(cors());
 app.use("/bungie", bungieRoute);
 app.use("/bungie2", bungieRoute2);
 app.use("/bungie3", bungieRoute3);
 app.use("/bungie4", bungieRoute4);
-
+app.use("/loadouts", loadoutsRouter);
 
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);

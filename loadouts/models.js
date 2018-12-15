@@ -1,22 +1,34 @@
-"use strict";
+'use strict';
 
 const mongoose = require("mongoose");
-
-const itemSlotSchema = mongoose.Schema({
-  itemHash: { type: String, required: true },
-  itemName: { type: String, required: true },
-  itemThumbnail: { type: String, required: true },
-  itemType: { type: String, required: true },
-  itemSlot: { type: String, required: true }
-});
-
+mongoose.Promise = global.Promise;
 
 const loadoutSchema = mongoose.Schema({
-  uid: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  title: { type: String, required: true },
-  items: [itemSlotSchema]
+  itemHash: String,
+  itemName: String,
+  itemThumbnail: String,
+  itemType: String,
+  itemSlot: String
 });
 
-const Loadout = mongoose.model('Loadout', loadoutSchema);
+// {type: String, required: true}
+// const loadoutSchema = mongoose.Schema({
+//   uid: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+//   title: String,
+//   items: {itemSlotSchema}
+// });
+
+// loadoutSchema.methods.serialize = function() {
+//   return {
+//     id: this._id,
+//     itemHash: this.itemHash,
+//     itemName: this.itemName,
+//     itemThumbnail: this.itemThumbnail,
+//     itemType: this.itemType,
+//     itemSlot: this.itemSlot
+//   };
+// };
+
+const Loadout = mongoose.model("Loadout", loadoutSchema);
 
 module.exports = { Loadout };

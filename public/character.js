@@ -98,7 +98,7 @@ $("#displayWepTrends").submit(event => {
     secondDoubleWepIcon[0]
   }</p></div></div>
   
-  <div class="tripleWepDiv">Most Common Full Loadout<div class="weaponDiv"><img src="https://www.bungie.net${firstTripleWepIcon[1]
+  <div class="tripleWepDiv">Most Common Three Weapons Used Together<div class="weaponDiv"><img src="https://www.bungie.net${firstTripleWepIcon[1]
   }"><p class="firstTripleWepName">${
     firstTripleWepIcon[0]
   }</p></div><div class="weaponDiv"><img src="https://www.bungie.net${secondTripleWepIcon[1]
@@ -580,6 +580,8 @@ function displayWepVals(currentWeps) {
 function watchSubmit() {
   $(".js-search-form").submit(event => {
     event.preventDefault();
+  $('#signupPage').hide();
+  $('#characterPage').show();
     let queryTarget = $(event.currentTarget).find(".js-query");
     let query = queryTarget.val();
     console.log(query);
@@ -597,4 +599,9 @@ function watchSubmit() {
   });
 }
 
+
 $(watchSubmit);
+
+$(document).ready(function() {
+  $('#characterPage').hide();
+});

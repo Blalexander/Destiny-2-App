@@ -24,7 +24,9 @@ $('#login').submit(e => {
     });
     localStorage.setItem("token", token.authToken);
     localStorage.setItem("user_id", token.user);
-    window.location.replace("/character.html");
+    $('#signupPage').hide();
+    $('#characterPage').show();
+    // window.location.replace("/character.html");
   })();
 });
 
@@ -71,11 +73,40 @@ $('#signup').submit(e => {
     });
     localStorage.setItem("token", token.authToken);
     localStorage.setItem("user_id", token.user);
-    window.location.replace("/character.html");
+    $('#signupPage').hide();
+    $('#characterPage').show();
+    // window.location.replace("/character.html");
   })();
 });
 
-// $('#saveButton').submit(e => {
-//   e.preventDefault();
 
-// })
+$("#saveButton").submit(event => {
+  event.preventDefault();
+  const itemHash = "fakeasshash";
+  const itemName = "super duper wep";
+  const itemThumbnail = "ew a thumbnail";
+  const itemType = "a good one";
+  const itemSlot = "main";
+
+  const settings = {
+    url:"/loadouts",
+    method: "POST",
+    dataType: "JSON",
+    contentType: "application/json",
+    data: {
+      "itemHash": itemHash,
+      "itemName": itemName,
+      "itemThumbnail": itemThumbnail,
+      "itemType": itemType,
+      "itemSlot": itemSlot
+    },
+    success: function(data) {
+      console.log("Success!", data);
+    },
+    error: function(data) {
+      console.log("Error", data);
+    }
+  };
+
+  $.ajax(settings);
+})

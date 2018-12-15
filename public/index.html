@@ -12,40 +12,92 @@
 </head>
 
 <body>
+    
+        <header role="banner">
+                <h1>Loadouts</h1>
+        </header>
+
     <main>
-        <form action="#" id="indexSearchForm" class="js-search-form">
-            <label>Type in your Xbox, Playstation, or Battlenet ID here</label>
-            <input type="text" class="js-query" value="mallard42#1742">
-            <select id="type">
-                <option value="4">Blizzard</option>
-                <option value="2">PSN</option>
-                <option value="1">Xbox</option>
-            </select>
-            <button type="submit">Search</button>
-        </form>
-
-
-        <section id="loginSignupContainer">
-            <form id="login" action="" method="post">
-                <fieldset id="loginFieldset">
-                    <label id="loginLabel">Login</label>
-                    <input type="email" name="logemail" placeholder="Email" aria-label="Email" />
-                    <input type="password" name="logpass" placeholder="Password" aria-label="Password" />
-                    <button id="loginButton" type="submit">Submit</button>
-                </fieldset>
+        <section id="signupPage">
+            <form action="#" id="indexSearchForm" class="js-search-form">
+                <label>Type in your Xbox, Playstation, or Battlenet ID here</label>
+                <input type="text" class="js-query" value="mallard42#1742">
+                <select id="type">
+                    <option value="4">Blizzard</option>
+                    <option value="2">PSN</option>
+                    <option value="1">Xbox</option>
+                </select>
+                <button type="submit">Search</button>
             </form>
 
-            <form id="signup" action="" method="post">
-                <fieldset id="signupFieldset">
-                    <label id="signupLabel">Signup</label>
-                    <input type="email" name="email" placeholder="Email" aria-label="Email" />
-                    <input type="password" name="pass" placeholder="Password" aria-label="Password" />
-                    <input type="password" name="cpass" placeholder="Confirm Password" aria-label="Confirm Password" />
-                    <button id="signupButton" type="submit">Submit</button>
-                </fieldset>
-            </form>
+
+            <section id="loginSignupContainer">
+                <form id="login" action="" method="post">
+                    <fieldset id="loginFieldset">
+                        <label id="loginLabel">Login</label>
+                        <input type="email" name="logemail" placeholder="Email" aria-label="Email" />
+                        <input type="password" name="logpass" placeholder="Password" aria-label="Password" />
+                        <button id="loginButton" type="submit">Submit</button>
+                    </fieldset>
+                </form>
+
+                <form id="signup" action="" method="post">
+                    <fieldset id="signupFieldset">
+                        <label id="signupLabel">Signup</label>
+                        <input type="email" name="email" placeholder="Email" aria-label="Email" />
+                        <input type="password" name="pass" placeholder="Password" aria-label="Password" />
+                        <input type="password" name="cpass" placeholder="Confirm Password" aria-label="Confirm Password" />
+                        <button id="signupButton" type="submit">Submit</button>
+                    </fieldset>
+                </form>
+            </section>
         </section>
 
+        <section id="characterPage">
+            <form action="#" class="js-search-form">
+                <label>Type in your Xbox, Playstation, or Battlenet ID here</label>
+                <input type="text" class="js-query" value="mallard42#1742">
+                <select id="type">
+                    <option value="4">Blizzard</option>
+                    <option value="2">PSN</option>
+                    <option value="1">Xbox</option>
+                </select>
+                <button type="submit">Search</button>
+            </form>
+    
+            <section class="js-search-results" aria-live="assertive">
+            </section>
+    
+            <form class="weaponForm" action="#">
+                <section class="js-search-results2" aria-live="assertive">
+                </section>
+                <section class="js-search-results22" aria-live="assertive">
+                </section>
+            </form>
+            <form class="weaponForm" action="#">
+                <section class="js-search-results3" aria-live="assertive">
+                </section>
+                <section class="js-search-results33" aria-live="assertive">
+                </section>
+            </form>
+            <form class="weaponForm" action="#">
+                <section class="js-search-results4" aria-live="assertive">
+                </section>
+                <section class="js-search-results44" aria-live="assertive">
+                </section>
+            </form>
+    
+            <form id="displayWepTrends" action="#">
+            </form>
+    
+            <form id="saveLoadout" method="POST" action="/loadouts">
+            </form>
+    
+    
+            <section id="weaponClusters">
+                
+            </section>
+        </section>
     </main>
     <script src="main.js"></script>
     <script src="character.js"></script>
