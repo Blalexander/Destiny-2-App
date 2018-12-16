@@ -5,6 +5,7 @@ let account = {};
 let overall = {};
 let objVals = [];
 let objKeys = [];
+let activityArray = [];
 let occuranceOfSingleWep = {};
 let occuranceOfTwoWeps = {};
 let occuranceOfThreeWeps = {};
@@ -37,6 +38,7 @@ $("#type").click(event => {
 
 $("#displayWepTrends").submit(event => {
   event.preventDefault();
+  $("#weaponClusters").html("");
   console.log(occuranceOfSingleWep);
   let highestSingleWep = 0;
   let highestSingleWepName = 0;
@@ -46,8 +48,8 @@ $("#displayWepTrends").submit(event => {
   let firstTripleWepName = 0;
 
   Object.keys(occuranceOfSingleWep).forEach(function(a,b) {
-    if(occuranceOfSingleWep[a] > highestSingleWep) {
-      highestSingleWep = occuranceOfSingleWep[a];
+    if(occuranceOfSingleWep[a].occurances > highestSingleWep) {
+      highestSingleWep = occuranceOfSingleWep[a].occurances;
       highestSingleWepName = a;
     }
   })
@@ -72,9 +74,9 @@ $("#displayWepTrends").submit(event => {
   console.log(highestSingleWepName, highestSingleWep);
   console.log(firstDoubleWepName, secondDoubleWepName);
   console.log(firstTripleWepName, secondTripleWepName, thirdTripleWepName);
-  console.log(occuranceOfTwoWeps);
-  console.log(occuranceOfThreeWeps);
+  console.log(occuranceOfSingleWep, occuranceOfTwoWeps, occuranceOfThreeWeps);
 
+  let counter = 1;
   let singleWepIcon = manifest[highestSingleWepName];
   let firstDoubleWepIcon = manifest[firstDoubleWepName];
   let secondDoubleWepIcon = manifest[secondDoubleWepName];
@@ -82,32 +84,73 @@ $("#displayWepTrends").submit(event => {
   let secondTripleWepIcon = manifest[secondTripleWepName];
   let thirdTripleWepIcon = manifest[thirdTripleWepName];
 
+  let singleMathResult = occuranceOfSingleWep[highestSingleWepName].winCount/occuranceOfSingleWep[highestSingleWepName].occurances;
+  let doubleMathResult = occuranceOfTwoWeps[firstDoubleWepName].winCount/occuranceOfTwoWeps[firstDoubleWepName].occurances;
+  let tripleMathResult = occuranceOfThreeWeps[firstTripleWepName].winCount/occuranceOfThreeWeps[firstTripleWepName].occurances;
+//trim MathResults down to 2 or 3 spaces
 
-  $('#weaponClusters').html(`
-  <div class="singleWepDiv">Most Common Primary Weapon<div class="weaponDiv"><img src="https://www.bungie.net${singleWepIcon[1]
-  }"><p class="singleWepName">${
-    singleWepIcon[0]
-  }</p></div><</div>
+  for(index in occuranceOfThreeWeps) {
+
+    tripleWepIcon1 = manifest[index];
+    tripleWepIcon2 = manifest[occuranceOfThreeWeps[index].secondaryWepKey];
+    tripleWepIcon3 = manifest[occuranceOfThreeWeps[index].tertiaryWepKey];
+
+    tripleMathResult = occuranceOfThreeWeps[index].winCount/occuranceOfThreeWeps[index].occurances;
+
+    $('#weaponClusters').append(`
+    <div class="singleWepDiv"><div class="weaponDiv"><img src="https://www.bungie.net${tripleWepIcon1[1]
+    }"><p class="singleWepName">${
+    tripleWepIcon1[0]
+    }</p></div><div class="weaponDiv">
+    <img src="https://www.bungie.net${tripleWepIcon2[1]
+    }"><p class="singleWepName">${
+    tripleWepIcon2[0]
+    }</p></div><div class="weaponDiv">
+    <img src="https://www.bungie.net${tripleWepIcon3[1]
+    }"><p class="singleWepName">${
+    tripleWepIcon3[0]
+    }</p></div><p class="timesUsed">Times Used: ${occuranceOfThreeWeps[index].occurances}</p>
+    <p class="wins">Win Count: ${occuranceOfThreeWeps[index].winCount}</p><p class="winRateDiv">Win Rate: ${tripleMathResult}</p></div>`);
+  }
+
+  // for(index in occuranceOfSingleWep) {
+
+  //   singleWepIcon = manifest[index];
+  //   singleMathResult = occuranceOfSingleWep[index].winCount/occuranceOfSingleWep[index].occurances;
+
+  //   $('#weaponClusters').append(`
+  //   <div class="singleWepDiv"><div class="weaponDiv"><img src="https://www.bungie.net${singleWepIcon[1]
+  //   }"><p class="singleWepName">${
+  //   singleWepIcon[0]
+  //   }</p><p class="timesUsed">Times Used: ${occuranceOfSingleWep[index].occurances}</p>
+  //   <p class="wins">Win Count: ${occuranceOfSingleWep[index].winCount}</p><p class="winRateDiv">Win Rate: ${singleMathResult}</p></div></div>`);
+  // }
+
+  // $('#weaponClusters2').html(`
+  // <div class="singleWepDiv">Most Common Primary Weapon<div class="weaponDiv"><img src="https://www.bungie.net${singleWepIcon[1]
+  // }"><p class="singleWepName">${
+  //   singleWepIcon[0]
+  // }</p></div><div class="winRateDiv">Win Rate: ${singleMathResult}</div></div>
   
-  <div class="doubleWepDiv">Most Common Weapon Duo<div class="weaponDiv"><img src="https://www.bungie.net${firstDoubleWepIcon[1]
-  }"><p class="firstDoubleWepName">${
-    firstDoubleWepIcon[0]
-  }</p></div>
-  <div class="weaponDiv"><img src="https://www.bungie.net${secondDoubleWepIcon[1]
-  }"><p class="secondDoubleWepName">${
-    secondDoubleWepIcon[0]
-  }</p></div></div>
+  // <div class="doubleWepDiv">Most Common Weapon Duo<div class="weaponDiv"><img src="https://www.bungie.net${firstDoubleWepIcon[1]
+  // }"><p class="firstDoubleWepName">${
+  //   firstDoubleWepIcon[0]
+  // }</p></div>
+  // <div class="weaponDiv"><img src="https://www.bungie.net${secondDoubleWepIcon[1]
+  // }"><p class="secondDoubleWepName">${
+  //   secondDoubleWepIcon[0]
+  // }</p></div><div class="winRateDiv">Win Rate: ${doubleMathResult}</div></div>
   
-  <div class="tripleWepDiv">Most Common Three Weapons Used Together<div class="weaponDiv"><img src="https://www.bungie.net${firstTripleWepIcon[1]
-  }"><p class="firstTripleWepName">${
-    firstTripleWepIcon[0]
-  }</p></div><div class="weaponDiv"><img src="https://www.bungie.net${secondTripleWepIcon[1]
-  }"><p class="secondTripleWepName">${
-    secondTripleWepIcon[0]
-  }</p></div><div class="weaponDiv"><img src="https://www.bungie.net${thirdTripleWepIcon[1]
-  }"><p class="thirdTripleWepName">${
-    thirdTripleWepIcon[0]
-  }</p></div></div>`)
+  // <div class="tripleWepDiv">Most Common Three Weapons Used Together<div class="weaponDiv"><img src="https://www.bungie.net${firstTripleWepIcon[1]
+  // }"><p class="firstTripleWepName">${
+  //   firstTripleWepIcon[0]
+  // }</p></div><div class="weaponDiv"><img src="https://www.bungie.net${secondTripleWepIcon[1]
+  // }"><p class="secondTripleWepName">${
+  //   secondTripleWepIcon[0]
+  // }</p></div><div class="weaponDiv"><img src="https://www.bungie.net${thirdTripleWepIcon[1]
+  // }"><p class="thirdTripleWepName">${
+  //   thirdTripleWepIcon[0]
+  // }</p></div><div class="winRateDiv">Win Rate: ${tripleMathResult}</div></div>`)
 });
 
 //first API query that gathers Bungie ID
@@ -203,7 +246,7 @@ function displayProfiles(data) {
     account.character1.light = character[Object.keys(character)[0]].light;
     account.character1.classType = character[Object.keys(character)[0]].classType;
     account.character1.emblemB =
-      character[Object.keys(character)[0]].emblemBackgroundPath;
+      character[Object.keys(character)[0]].emblemPath; //add "Background" between emblem and path for larger emblem
     account.character1.weapons.kinetic.kHash =
       equipment[account.character1.id].items[0].itemHash;
     account.character1.weapons.energy.eHash =
@@ -223,7 +266,7 @@ function displayProfiles(data) {
     account.character2.light = character[Object.keys(character)[1]].light;
     account.character2.classType = character[Object.keys(character)[1]].classType;
     account.character2.emblemB =
-      character[Object.keys(character)[1]].emblemBackgroundPath;
+      character[Object.keys(character)[1]].emblemPath;
     account.character2.weapons.kinetic.kHash =
       equipment[account.character2.id].items[0].itemHash;
     account.character2.weapons.energy.eHash =
@@ -243,7 +286,7 @@ function displayProfiles(data) {
     account.character3.light = character[Object.keys(character)[2]].light;
     account.character3.classType = character[Object.keys(character)[2]].classType;
     account.character3.emblemB =
-      character[Object.keys(character)[2]].emblemBackgroundPath;
+      character[Object.keys(character)[2]].emblemPath;
     account.character3.weapons.kinetic.kHash =
       equipment[account.character3.id].items[0].itemHash;
     account.character3.weapons.energy.eHash =
@@ -318,7 +361,7 @@ function getActivityStats(callback) {
 
 function processActivityStats(dataA) {
   console.log(dataA);
-  let activityArray = [];
+  activityArray = [];
   for(i=0;i<dataA.Response.activities.length;i++) {
     activityArray.push(dataA.Response.activities[i].activityDetails.instanceId);
   }
@@ -342,7 +385,8 @@ function forEachInstanceId(entry, callback) {
 }
 
 function sortThroughGamesPlayed(data) {
-  // console.log(data);
+  console.log(data);
+  // experimentalFunc(data);
   let players = data.Response.entries;
   for(i=0;i<players.length;i++) {
     if(players[i].extended.weapons) {
@@ -351,31 +395,42 @@ function sortThroughGamesPlayed(data) {
   }
 }
 
+// function experimentalFunc(data) {
+
+// }
+
 //creates weapon cluster object for seeing how many times two weapons are used in tandem with each other and weapon counter object to keep track of individual weapon occurances
 function storePlayerInfo(data) {
-  let primaryWepKey = data.extended.weapons[0].referenceId;
 
-  if(primaryWepKey in occuranceOfSingleWep) {
-    occuranceOfSingleWep[primaryWepKey] += 1;
-  }
-  else {
-    occuranceOfSingleWep[primaryWepKey] = 1;
-  }
+  //win rates are relatively low right now.  It seems like there's wins and losses (mostly wins) that are tracked, but weapons are untracked if they don't specifically get kills.  Since there's a smaller chance of getting kills with multiple weapons rather than a single weapon, there's proportionally a smaller winrate associated with those.  looking into this as a potential problem, though results are varied and hard to decipher without a deep look.
+  if(data.characterId == account.character1.id || data.characterId == account.character2.id || data.characterId == account.character3.id) {
+    let primaryWepKey = data.extended.weapons[0].referenceId;
 
-  if(occuranceOfTwoWeps[primaryWepKey] != null && occuranceOfTwoWeps[primaryWepKey].secondaryWepKey != null) {
-    occuranceOfTwoWeps[primaryWepKey].occurances++;
-  } //ASK JASON WHY ^^ IS NEEDED
+    if(occuranceOfSingleWep[primaryWepKey] != null) {
+      occuranceOfSingleWep[primaryWepKey].occurances++;
+      occuranceOfSingleWep[primaryWepKey].winCount += data.values.standing.basic.value;
+    }
+    else if(data.extended.weapons.length == 1) {
+      occuranceOfSingleWep[primaryWepKey] = {winCount: data.values.standing.basic.value, occurances: 1};
+    }
 
-  else if(data.extended.weapons.length == 2) {
-    occuranceOfTwoWeps[primaryWepKey] = {secondaryWepKey: data.extended.weapons[1].referenceId, occurances: 1};
-  }
+    if(occuranceOfTwoWeps[primaryWepKey] != null && occuranceOfTwoWeps[primaryWepKey].secondaryWepKey != null) {
+      occuranceOfTwoWeps[primaryWepKey].occurances++;
+      occuranceOfTwoWeps[primaryWepKey].winCount += data.values.standing.basic.value;
+    }
 
-  if(occuranceOfThreeWeps[primaryWepKey] != null && occuranceOfThreeWeps[primaryWepKey].secondaryWepKey != null && occuranceOfThreeWeps[primaryWepKey].tertiaryWepKey) {
-    occuranceOfThreeWeps[primaryWepKey].occurances++;
-  } 
+    else if(data.extended.weapons.length == 2) {
+      occuranceOfTwoWeps[primaryWepKey] = {secondaryWepKey: data.extended.weapons[1].referenceId, winCount: data.values.standing.basic.value, occurances: 1};
+    }
 
-  else if(data.extended.weapons.length == 3) {
-    occuranceOfThreeWeps[primaryWepKey] = {secondaryWepKey: data.extended.weapons[1].referenceId, tertiaryWepKey: data.extended.weapons[2].referenceId, occurances: 1};
+    if(occuranceOfThreeWeps[primaryWepKey] != null && occuranceOfThreeWeps[primaryWepKey].secondaryWepKey != null && occuranceOfThreeWeps[primaryWepKey].tertiaryWepKey) {
+      occuranceOfThreeWeps[primaryWepKey].occurances++;
+      occuranceOfThreeWeps[primaryWepKey].winCount += data.values.standing.basic.value;
+    } 
+
+    else if(data.extended.weapons.length == 3) {
+      occuranceOfThreeWeps[primaryWepKey] = {secondaryWepKey: data.extended.weapons[1].referenceId, tertiaryWepKey: data.extended.weapons[2].referenceId, winCount: data.values.standing.basic.value, occurances: 1};
+    }
   }
 }
 
@@ -418,6 +473,11 @@ function createCharacterTabs(
       `<form class="characterForm" action="#"><button class="warlock characterButton" type="submit" value="${charTab}"><img src="https://www.bungie.net${emblem}" alt="characterEmblem"><p class="classy">Character level: ${charLevel} </p><p class="classy">Light level: ${lightLevel} </p><p>ID: ${characterId}</p></button></form>`
     );
   }
+  if(charTab == 2) {
+    $(".js-search-results").append(
+      `<form class="characterForm" action="#"><button class="characterButton" type="submit" value="allChars"><p class="classy">All Characters</button></form>`
+    );
+  }
 }
 
 //creates the weapon tabs
@@ -457,123 +517,123 @@ function displayWepVals(currentWeps) {
     event.preventDefault();
 
     //creates display weapon trends button
-    $("#displayWepTrends").html(
-      `<button type="submit" id="wepTrendsButton">Display Weapon Trends</button>`
-    );
+    // $("#displayWepTrends").html(
+    //   `<button type="submit" id="wepTrendsButton">Display Weapon Trends</button>`
+    // );
 
     //creates the save button
     $("#saveLoadout").html(
       `<button type="submit" id="saveButton">Save loadout</button>`
     );
 
-    $(".js-search-results22").html("");
-    $(".js-search-results33").html("");
-    $(".js-search-results44").html("");
+//     $(".js-search-results22").html("");
+//     $(".js-search-results33").html("");
+//     $(".js-search-results44").html("");
 
-    let buttonValue = $(event.currentTarget).find(".weaponButton");
-    clickedWep = buttonValue.val();
-    console.log(clickedWep);
+//     let buttonValue = $(event.currentTarget).find(".weaponButton");
+//     clickedWep = buttonValue.val();
+//     console.log(clickedWep);
 
-    let wepType = manifest[clickedWep][2];
-    let wepSlot = manifest[clickedWep][3];
+//     let wepType = manifest[clickedWep][2];
+//     let wepSlot = manifest[clickedWep][3];
 
-    console.log(wepType, wepSlot);
+//     console.log(wepType, wepSlot);
 
-    let suggestionTab1 = 0;
-    let suggestionTab2 = 0;
-    let suggestionTab3 = 0;
+//     let suggestionTab1 = 0;
+//     let suggestionTab2 = 0;
+//     let suggestionTab3 = 0;
 
-    //considers if the weapon is Kinetic, Energy, or Power, and then assigns the proper containers based on that
-    if (wepSlot == 2) {
-      suggestionTab1 = ".js-search-results33";
-      suggestionTab2 = ".js-search-results44";
-      suggestionTab3 = ".js-search-results22";
-    }
-    if (wepSlot == 3) {
-      suggestionTab1 = ".js-search-results22";
-      suggestionTab2 = ".js-search-results44";
-      suggestionTab3 = ".js-search-results33";
-    }
-    if (wepSlot == 4) {
-      suggestionTab1 = ".js-search-results22";
-      suggestionTab2 = ".js-search-results33";
-      suggestionTab3 = ".js-search-results44";
-    }
+//     //considers if the weapon is Kinetic, Energy, or Power, and then assigns the proper containers based on that
+//     if (wepSlot == 2) {
+//       suggestionTab1 = ".js-search-results33";
+//       suggestionTab2 = ".js-search-results44";
+//       suggestionTab3 = ".js-search-results22";
+//     }
+//     if (wepSlot == 3) {
+//       suggestionTab1 = ".js-search-results22";
+//       suggestionTab2 = ".js-search-results44";
+//       suggestionTab3 = ".js-search-results33";
+//     }
+//     if (wepSlot == 4) {
+//       suggestionTab1 = ".js-search-results22";
+//       suggestionTab2 = ".js-search-results33";
+//       suggestionTab3 = ".js-search-results44";
+//     }
 
-    //can be read as "if weapon == kinetic, show Energy and Power suggestions"
-    if (wepSlot == 2) {
-      $(suggestionTab1).html(
-        `<div class="weaponSuggestion"><img src="https://www.bungie.net${
-          goodEHC[1]
-        }"  alt="weaponIcon" class="suggestionIcon"><p class="wepName">${
-          goodEHC[0]
-        }</p><p>Energy</p></div>`
-      );
+//     //can be read as "if weapon == kinetic, show Energy and Power suggestions"
+//     if (wepSlot == 2) {
+//       $(suggestionTab1).html(
+//         `<div class="weaponSuggestion"><img src="https://www.bungie.net${
+//           goodEHC[1]
+//         }"  alt="weaponIcon" class="suggestionIcon"><p class="wepName">${
+//           goodEHC[0]
+//         }</p><p>Energy</p></div>`
+//       );
 
-      $(suggestionTab2).html(
-        `<div class="weaponSuggestion"><img src="https://www.bungie.net${
-          goodRL[1]
-        }"  alt="weaponIcon" class="suggestionIcon"><p class="wepName">${
-          goodRL[0]
-        }</p><p>Power</p></div>`
-      );
+//       $(suggestionTab2).html(
+//         `<div class="weaponSuggestion"><img src="https://www.bungie.net${
+//           goodRL[1]
+//         }"  alt="weaponIcon" class="suggestionIcon"><p class="wepName">${
+//           goodRL[0]
+//         }</p><p>Power</p></div>`
+//       );
 
-      $(suggestionTab3).html(`<div class="weaponHolder"><img src="https://www.bungie.net${
-        currentWeps.kinetic.details[1]
-      }"  alt="weaponIcon"><p class="wepName">${
-        currentWeps.kinetic.details[0]
-      }</p><p>Kinetic</p></div>`)
-    }
+//       $(suggestionTab3).html(`<div class="weaponHolder"><img src="https://www.bungie.net${
+//         currentWeps.kinetic.details[1]
+//       }"  alt="weaponIcon"><p class="wepName">${
+//         currentWeps.kinetic.details[0]
+//       }</p><p>Kinetic</p></div>`)
+//     }
 
-    //can be read as "if weapon == energy, show Kinetic and Power suggestions"
-    if (wepSlot == 3) {
-      $(suggestionTab1).html(
-        `<div class="weaponSuggestion"><img src="https://www.bungie.net${
-          goodKHC[1]
-        }"  alt="weaponIcon" class="suggestionIcon"><p class="wepName">${
-          goodKHC[0]
-        }</p><p>Kinetic</p></div>`
-      );
+//     //can be read as "if weapon == energy, show Kinetic and Power suggestions"
+//     if (wepSlot == 3) {
+//       $(suggestionTab1).html(
+//         `<div class="weaponSuggestion"><img src="https://www.bungie.net${
+//           goodKHC[1]
+//         }"  alt="weaponIcon" class="suggestionIcon"><p class="wepName">${
+//           goodKHC[0]
+//         }</p><p>Kinetic</p></div>`
+//       );
 
-      $(suggestionTab2).html(
-        `<div class="weaponSuggestion"><img src="https://www.bungie.net${
-          goodRL[1]
-        }"  alt="weaponIcon" class="suggestionIcon"><p class="wepName">${
-          goodRL[0]
-        }</p><p>Power</p></div>`
-      );
+//       $(suggestionTab2).html(
+//         `<div class="weaponSuggestion"><img src="https://www.bungie.net${
+//           goodRL[1]
+//         }"  alt="weaponIcon" class="suggestionIcon"><p class="wepName">${
+//           goodRL[0]
+//         }</p><p>Power</p></div>`
+//       );
 
-      $(suggestionTab3).html(`<div class="weaponHolder"><img src="https://www.bungie.net${
-        currentWeps.energy.details[1]
-      }"  alt="weaponIcon"><p class="wepName">${
-        currentWeps.energy.details[0]
-      }</p><p>Energy</p></div>`)
-    }
+//       $(suggestionTab3).html(`<div class="weaponHolder"><img src="https://www.bungie.net${
+//         currentWeps.energy.details[1]
+//       }"  alt="weaponIcon"><p class="wepName">${
+//         currentWeps.energy.details[0]
+//       }</p><p>Energy</p></div>`)
+//     }
 
-    //same as the last two, but for "Power" ^
-    if (wepSlot == 4) {
-      $(suggestionTab1).html(
-        `<div class="weaponSuggestion"><img src="https://www.bungie.net${
-          goodKSG[1]
-        }"  alt="weaponIcon" class="suggestionIcon"><p class="wepName">${
-          goodKSG[0]
-        }</p><p>Kinetic</p></div>`
-      );
+//     //same as the last two, but for "Power" ^
+//     if (wepSlot == 4) {
+//       $(suggestionTab1).html(
+//         `<div class="weaponSuggestion"><img src="https://www.bungie.net${
+//           goodKSG[1]
+//         }"  alt="weaponIcon" class="suggestionIcon"><p class="wepName">${
+//           goodKSG[0]
+//         }</p><p>Kinetic</p></div>`
+//       );
 
-      $(suggestionTab2).html(
-        `<div class="weaponSuggestion"><img src="https://www.bungie.net${
-          goodEHC[1]
-        }"  alt="weaponIcon" class="suggestionIcon"><p class="wepName">${
-          goodEHC[0]
-        }</p><p>Energy</p></div>`
-      );
+//       $(suggestionTab2).html(
+//         `<div class="weaponSuggestion"><img src="https://www.bungie.net${
+//           goodEHC[1]
+//         }"  alt="weaponIcon" class="suggestionIcon"><p class="wepName">${
+//           goodEHC[0]
+//         }</p><p>Energy</p></div>`
+//       );
 
-      $(suggestionTab3).html(`<div class="weaponHolder"><img src="https://www.bungie.net${
-        currentWeps.power.details[1]
-      }"  alt="weaponIcon"><p class="wepName">${
-        currentWeps.power.details[0]
-      }</p><p>Power</p></div>`)
-    }
+//       $(suggestionTab3).html(`<div class="weaponHolder"><img src="https://www.bungie.net${
+//         currentWeps.power.details[1]
+//       }"  alt="weaponIcon"><p class="wepName">${
+//         currentWeps.power.details[0]
+//       }</p><p>Power</p></div>`)
+//     }
   });
 }
 
@@ -582,6 +642,9 @@ function watchSubmit() {
     event.preventDefault();
   $('#signupPage').hide();
   $('#characterPage').show();
+  $("#displayWepTrends").html(
+    `<button type="submit" id="wepTrendsButton">Display Weapon Trends</button>`
+  );
     let queryTarget = $(event.currentTarget).find(".js-query");
     let query = queryTarget.val();
     console.log(query);
@@ -594,40 +657,8 @@ function watchSubmit() {
   });
 }
 
-
 $(watchSubmit);
 
 $(document).ready(function() {
   $('#characterPage').hide();
 });
-
-// $("#saveLoadout").submit(event => {
-//   event.preventDefault();
-//   const itemHash = "fakeasshash";
-//   const itemName = "super duper wep";
-//   const itemThumbnail = "ew a thumbnail";
-//   const itemType = "a good one";
-//   const itemSlot = "main";
-
-//   const settings = {
-//     url:"/loadouts",
-//     method: "POST",
-//     dataType: "JSON",
-//     contentType: "application/json",
-//     data: {
-//       "itemHash": itemHash,
-//       "itemName": itemName,
-//       "itemThumbnail": itemThumbnail,
-//       "itemType": itemType,
-//       "itemSlot": itemSlot
-//     },
-//     success: function(data) {
-//       console.log("Success!", data);
-//     },
-//     error: function(data) {
-//       console.log("Error", data);
-//     }
-//   };
-
-//   $.ajax(settings);
-// })

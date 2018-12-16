@@ -2,6 +2,11 @@
   box-sizing: border-box;
 }
 
+html {
+  height: 100%;
+  width: 100%;
+}
+
 body {
   background-image: url("https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-Guardians-4k.jpg");
   background-size: cover;
@@ -44,10 +49,14 @@ body {
   flex-flow: column wrap;
 }
 
+.characterForm {
+  display: inline-flex;
+}
+
 .js-search-results {
   float: left;
-  height: 50vh;
-  width: 45vw;
+  /* height: 50vh; */
+  /* width: 45vw; */
   border: 1px solid black;
 }
 
@@ -154,13 +163,14 @@ button {
 
 .singleWepDiv, .doubleWepDiv, .tripleWepDiv {
   /* border: 1px solid gold; */
-  text-align: center;
-  height: 20vh;
-  width: 10vw;
+  /* text-align: center; */
+  /* height: 20vh; */
+  width: 80vw;
 }
 
 #weaponClusters {
-  display: flex;
+  /* display: flex; */
+  margin-top: 15vh;
   height: 50vh;
   width: 50vw;
 }
@@ -174,8 +184,14 @@ button {
   height: 5vh;
 }
 
-.weaponDiv {
+.singleWepDiv {
   border: 1px solid green;
+  display: flex;
+  justify-content: space-around;
+}
+
+.weaponDiv {
+/*   border: 1px solid green; */
 }
 
 header {
