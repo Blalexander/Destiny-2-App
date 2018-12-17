@@ -1,4 +1,3 @@
-"use strict";
 
 $('#login').submit(e => {
   e.preventDefault();
@@ -78,35 +77,3 @@ $('#signup').submit(e => {
     // window.location.replace("/character.html");
   })();
 });
-
-
-$("#saveLoadout").submit(event => {
-  event.preventDefault();
-  const itemHash = "fakeasshash";
-  const itemName = "super duper wep";
-  const itemThumbnail = "ew a thumbnail";
-  const itemType = "a good one";
-  const itemSlot = "main";
-
-  const settings = {
-    url:"/loadouts",
-    method: "POST",
-    dataType: "JSON",
-    // contentType: "application/json",
-    data: {
-      "itemHash": itemHash,
-      "itemName": itemName,
-      "itemThumbnail": itemThumbnail,
-      "itemType": itemType,
-      "itemSlot": itemSlot
-    },
-    success: function(data) {
-      console.log("Success!", data);
-    },
-    error: function(data) {
-      console.log("Error", data);
-    }
-  };
-
-  $.ajax(settings);
-})

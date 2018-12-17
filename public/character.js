@@ -21,13 +21,8 @@ const hunterBackground = "https://geek-prime.com/wp-content/uploads/2014/02/Dest
 const warlockBackground = "https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-warlock-4k.jpg";
 
 
-//placeholders for real suggestions
-let goodKHC = manifest[153979397];
-let goodKSG = manifest[636912560];
-let goodEHC = manifest[153979396];
-let goodESG = manifest[346136302];
-let goodRL = manifest[3740842661];
-let goodGL = manifest[218335759];
+
+
 
 //drop-down Membership Type selector
 $("#type").click(event => {
@@ -35,6 +30,10 @@ $("#type").click(event => {
   membsType = queryTarget2.val();
   console.log(membsType);
 });
+
+
+
+
 
 $("#displayWepTrends").submit(event => {
   event.preventDefault();
@@ -87,6 +86,9 @@ $("#displayWepTrends").submit(event => {
   let singleMathResult = occuranceOfSingleWep[highestSingleWepName].winCount/occuranceOfSingleWep[highestSingleWepName].occurances;
   let doubleMathResult = occuranceOfTwoWeps[firstDoubleWepName].winCount/occuranceOfTwoWeps[firstDoubleWepName].occurances;
   let tripleMathResult = occuranceOfThreeWeps[firstTripleWepName].winCount/occuranceOfThreeWeps[firstTripleWepName].occurances;
+
+  let tripleWepFreq = 0;
+  let tripleWepWins = 0;
 //trim MathResults down to 2 or 3 spaces
 
   for(index in occuranceOfThreeWeps) {
@@ -94,6 +96,8 @@ $("#displayWepTrends").submit(event => {
     tripleWepIcon1 = manifest[index];
     tripleWepIcon2 = manifest[occuranceOfThreeWeps[index].secondaryWepKey];
     tripleWepIcon3 = manifest[occuranceOfThreeWeps[index].tertiaryWepKey];
+    tripleWepFreq = occuranceOfThreeWeps[index].occurances;
+    tripleWepWins = occuranceOfThreeWeps[index].winCount;
 
     tripleMathResult = occuranceOfThreeWeps[index].winCount/occuranceOfThreeWeps[index].occurances;
 
@@ -113,45 +117,45 @@ $("#displayWepTrends").submit(event => {
     <p class="wins">Win Count: ${occuranceOfThreeWeps[index].winCount}</p><p class="winRateDiv">Win Rate: ${tripleMathResult}</p></div>`);
   }
 
-  // for(index in occuranceOfSingleWep) {
+  $("#saveLoadout").html(
+    `<button type="submit" id="saveButton">Save loadout</button>`
+  );
 
-  //   singleWepIcon = manifest[index];
-  //   singleMathResult = occuranceOfSingleWep[index].winCount/occuranceOfSingleWep[index].occurances;
 
-  //   $('#weaponClusters').append(`
-  //   <div class="singleWepDiv"><div class="weaponDiv"><img src="https://www.bungie.net${singleWepIcon[1]
-  //   }"><p class="singleWepName">${
-  //   singleWepIcon[0]
-  //   }</p><p class="timesUsed">Times Used: ${occuranceOfSingleWep[index].occurances}</p>
-  //   <p class="wins">Win Count: ${occuranceOfSingleWep[index].winCount}</p><p class="winRateDiv">Win Rate: ${singleMathResult}</p></div></div>`);
-  // }
+//////////////////////////////////////////////////////////////////////////////////////
 
-  // $('#weaponClusters2').html(`
-  // <div class="singleWepDiv">Most Common Primary Weapon<div class="weaponDiv"><img src="https://www.bungie.net${singleWepIcon[1]
-  // }"><p class="singleWepName">${
-  //   singleWepIcon[0]
-  // }</p></div><div class="winRateDiv">Win Rate: ${singleMathResult}</div></div>
+  $("#saveLoadout").submit(event => {
+    event.preventDefault();
+    let weaponObject = occuranceOfThreeWeps;
+    let characterId = membsId;
   
-  // <div class="doubleWepDiv">Most Common Weapon Duo<div class="weaponDiv"><img src="https://www.bungie.net${firstDoubleWepIcon[1]
-  // }"><p class="firstDoubleWepName">${
-  //   firstDoubleWepIcon[0]
-  // }</p></div>
-  // <div class="weaponDiv"><img src="https://www.bungie.net${secondDoubleWepIcon[1]
-  // }"><p class="secondDoubleWepName">${
-  //   secondDoubleWepIcon[0]
-  // }</p></div><div class="winRateDiv">Win Rate: ${doubleMathResult}</div></div>
+    const settings = {
+      url:"/loadouts",
+      method: "POST",
+      dataType: "JSON",
+      // contentType: "application/json",
+      data: {
+        "weaponObject": weaponObject,
+        "character": characterId
+      },
+      success: function(data) {
+        console.log("Success!", data);
+      },
+      error: function(data) {
+        console.log("Error", data);
+      }
+    };
   
-  // <div class="tripleWepDiv">Most Common Three Weapons Used Together<div class="weaponDiv"><img src="https://www.bungie.net${firstTripleWepIcon[1]
-  // }"><p class="firstTripleWepName">${
-  //   firstTripleWepIcon[0]
-  // }</p></div><div class="weaponDiv"><img src="https://www.bungie.net${secondTripleWepIcon[1]
-  // }"><p class="secondTripleWepName">${
-  //   secondTripleWepIcon[0]
-  // }</p></div><div class="weaponDiv"><img src="https://www.bungie.net${thirdTripleWepIcon[1]
-  // }"><p class="thirdTripleWepName">${
-  //   thirdTripleWepIcon[0]
-  // }</p></div><div class="winRateDiv">Win Rate: ${tripleMathResult}</div></div>`)
+    $.ajax(settings);
+  })
+
+////////////////////////////////////////////////////////////////////////////////////
+
 });
+
+
+
+
 
 //first API query that gathers Bungie ID
 function searchByUsername(searchTerm, callback) {
@@ -344,6 +348,13 @@ function displayProfiles(data) {
   getActivityStats(processActivityStats);
 }
 
+
+
+
+
+
+
+//ALLOW DYNAMIC CHARAID so that when character selected, updates weps with relevant games
 function getActivityStats(callback) {
   let charaId = account.character1.id;
   console.log(charaId, membsType, membsId);
@@ -386,7 +397,6 @@ function forEachInstanceId(entry, callback) {
 
 function sortThroughGamesPlayed(data) {
   console.log(data);
-  // experimentalFunc(data);
   let players = data.Response.entries;
   for(i=0;i<players.length;i++) {
     if(players[i].extended.weapons) {
@@ -394,10 +404,6 @@ function sortThroughGamesPlayed(data) {
     }
   }
 }
-
-// function experimentalFunc(data) {
-
-// }
 
 //creates weapon cluster object for seeing how many times two weapons are used in tandem with each other and weapon counter object to keep track of individual weapon occurances
 function storePlayerInfo(data) {
@@ -434,6 +440,9 @@ function storePlayerInfo(data) {
   }
 }
 
+
+
+
 function setBackground(bGround) {
   if (bGround == titanBackground) {
     document.body.style.backgroundImage = "url('https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-titan-4k.jpg')";
@@ -448,6 +457,10 @@ function setBackground(bGround) {
     document.body.style.backgroundImage = "url('https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-Guardians-4k.jpg')";
   }
 }
+
+
+
+
 
 //creates the character tabs
 function createCharacterTabs(
@@ -473,12 +486,11 @@ function createCharacterTabs(
       `<form class="characterForm" action="#"><button class="warlock characterButton" type="submit" value="${charTab}"><img src="https://www.bungie.net${emblem}" alt="characterEmblem"><p class="classy">Character level: ${charLevel} </p><p class="classy">Light level: ${lightLevel} </p><p>ID: ${characterId}</p></button></form>`
     );
   }
-  if(charTab == 2) {
-    $(".js-search-results").append(
-      `<form class="characterForm" action="#"><button class="characterButton" type="submit" value="allChars"><p class="classy">All Characters</button></form>`
-    );
-  }
 }
+
+
+
+
 
 //creates the weapon tabs
 function displayWepVals(currentWeps) {
@@ -637,10 +649,13 @@ function displayWepVals(currentWeps) {
   });
 }
 
+
+
+
+
 function watchSubmit() {
   $(".js-search-form").submit(event => {
     event.preventDefault();
-  $('#signupPage').hide();
   $('#characterPage').show();
   $("#displayWepTrends").html(
     `<button type="submit" id="wepTrendsButton">Display Weapon Trends</button>`
