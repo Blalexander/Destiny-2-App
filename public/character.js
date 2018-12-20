@@ -169,7 +169,7 @@ for(index in occuranceOfSingleWep) {
       method: "POST",
       dataType: "JSON",
       data: {
-        "character": characterId,
+        "character": 5000,
         "primaryWepKey": wepName1,
         "weaponObject": weaponObject,
       },
@@ -192,11 +192,10 @@ for(index in occuranceOfSingleWep) {
     console.log(weaponObject);
   
     const settings = {
-      url:`/loadouts/${characterId}`,
-      method: "PUT",
+      url:`/loadouts/5000`,
+      method: "PATCH",
       contentTypes: "application/json",
       data: {
-        "character": characterId,
         "primaryWepKey": wepName1,
         "weaponObject": {secondaryWepKey: 1231242, winCount: 1002, occurances: 921312}
       },

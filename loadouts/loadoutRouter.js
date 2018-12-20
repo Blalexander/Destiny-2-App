@@ -26,24 +26,26 @@ router.post('/', jsonParser, (req, res) => {
     });
 });
 
-router.put('/:characterId', (req, res) => {
-  // if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
-  //   res.status(400).json({
+router.patch('/:characterId', (req, res) => {
+  // if (!(req.params.id && req.body.characterId && req.params.id === req.body.characterId)) {
+  //   return res.status(400).json({
   //     error: 'Request path id and request body id values must match'
   //   });
   // }
 
-  const updated = {}; //finish update fields
-  const updateableFields = ['occurances', 'winCount'];
-  updateableFields.forEach(field => {
-    if (field in req.body.weaponObject) {
-      updated[field] = req.body.weaponObject[field];
-    }
-  });
-
+  // const updated = []; //finish update fields
+  // const updateableFields = ['occurances', 'winCount'];
+  // updateableFields.forEach(field => {
+  //   if (field in req.body.weaponObject) {
+  //     updated[field] = req.body.weaponObject[field];
+  //   }
+  // });
+  console.log(req.params);
   Loadout
-    .findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
-    .then(updatedLoadout => res.status(204))
+    .findOneAndUpdate({"character": req.params.characterId}, {$set: {"occurances": req.body.weaponObject.occurances, "winCount": req.body.weaponObject.winCount}}, {new: true})
+    // .find({"character":req.param.characterId})
+    .then(updatedLoadout => res.json(updatedLoadout))
+
     .catch(err => res.status(500).json({ message: 'Something went wrong' }));
 });
 
