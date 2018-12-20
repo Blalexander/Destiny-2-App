@@ -4,6 +4,7 @@ require("dotenv").config();
 //Dependencies
 const express = require("express");
 const mongoose = require("mongoose");
+// const mongodb = require("mongodb");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const morgan = require("morgan");
@@ -22,6 +23,14 @@ const { router: authRouter, localStrategy, jwtStrategy } = require("./auth");
 const jwtAuth = passport.authenticate("jwt", { session: false });
 const { PORT, DATABASE_URL, TEST_DATABASE_URL } = require("./config");
 const app = express();
+// var MongoClient = require('mongodb').MongoClient;
+// var db;
+
+// MongoClient.connect("mongodb://blake:blake1@ds131903.mlab.com:31903/node-capstone", function(err, database) {
+//   if(err) return console.error(err);
+
+//   db = database;
+// });
 
 
 //Middleware

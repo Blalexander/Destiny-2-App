@@ -50,75 +50,108 @@ $("#displayWepTrends").submit(event => {
     if(occuranceOfSingleWep[a].occurances > highestSingleWep) {
       highestSingleWep = occuranceOfSingleWep[a].occurances;
       highestSingleWepName = a;
+      highestSingleWepName1 = occuranceOfSingleWep[a].secondaryWepKey;
     }
   })
 
-  Object.keys(occuranceOfTwoWeps).forEach(function(a,b) {
-    if(occuranceOfTwoWeps[a].occurances > highestDoubleWep) {
-      highestDoubleWep = occuranceOfTwoWeps[a].occurances;
-      firstDoubleWepName = a;
-      secondDoubleWepName = occuranceOfTwoWeps[a].secondaryWepKey;
-    }
-  })
+  // Object.keys(occuranceOfTwoWeps).forEach(function(a,b) {
+  //   if(occuranceOfTwoWeps[a].occurances > highestDoubleWep) {
+  //     highestDoubleWep = occuranceOfTwoWeps[a].occurances;
+  //     firstDoubleWepName = a;
+  //     secondDoubleWepName = occuranceOfTwoWeps[a].secondaryWepKey;
+  //   }
+  // })
 
-  Object.keys(occuranceOfThreeWeps).forEach(function(a,b) {
-    if(occuranceOfThreeWeps[a].occurances > highestTripleWep) {
-      highestTripleWep = occuranceOfThreeWeps[a].occurances;
-      firstTripleWepName = a;
-      secondTripleWepName = occuranceOfThreeWeps[a].secondaryWepKey;
-      thirdTripleWepName = occuranceOfThreeWeps[a].tertiaryWepKey;
-    }
-  })
+  // Object.keys(occuranceOfThreeWeps).forEach(function(a,b) {
+  //   if(occuranceOfThreeWeps[a].occurances > highestTripleWep) {
+  //     highestTripleWep = occuranceOfThreeWeps[a].occurances;
+  //     firstTripleWepName = a;
+  //     secondTripleWepName = occuranceOfThreeWeps[a].secondaryWepKey;
+  //     thirdTripleWepName = occuranceOfThreeWeps[a].tertiaryWepKey;
+  //   }
+  // })
 
-  console.log(highestSingleWepName, highestSingleWep);
-  console.log(firstDoubleWepName, secondDoubleWepName);
-  console.log(firstTripleWepName, secondTripleWepName, thirdTripleWepName);
-  console.log(occuranceOfSingleWep, occuranceOfTwoWeps, occuranceOfThreeWeps);
+  // console.log(highestSingleWepName, highestSingleWep);
+  // console.log(firstDoubleWepName, secondDoubleWepName);
+  // console.log(firstTripleWepName, secondTripleWepName, thirdTripleWepName);
+  // console.log(occuranceOfSingleWep, occuranceOfTwoWeps, occuranceOfThreeWeps);
 
   let counter = 1;
   let singleWepIcon = manifest[highestSingleWepName];
-  let firstDoubleWepIcon = manifest[firstDoubleWepName];
-  let secondDoubleWepIcon = manifest[secondDoubleWepName];
-  let firstTripleWepIcon = manifest[firstTripleWepName];
-  let secondTripleWepIcon = manifest[secondTripleWepName];
-  let thirdTripleWepIcon = manifest[thirdTripleWepName];
+  let singleWepIcon1 = manifest[highestSingleWepName1];
+
+  // let firstDoubleWepIcon = manifest[firstDoubleWepName];
+  // let secondDoubleWepIcon = manifest[secondDoubleWepName];
+  // let firstTripleWepIcon = manifest[firstTripleWepName];
+  // let secondTripleWepIcon = manifest[secondTripleWepName];
+  // let thirdTripleWepIcon = manifest[thirdTripleWepName];
 
   let singleMathResult = occuranceOfSingleWep[highestSingleWepName].winCount/occuranceOfSingleWep[highestSingleWepName].occurances;
-  let doubleMathResult = occuranceOfTwoWeps[firstDoubleWepName].winCount/occuranceOfTwoWeps[firstDoubleWepName].occurances;
-  let tripleMathResult = occuranceOfThreeWeps[firstTripleWepName].winCount/occuranceOfThreeWeps[firstTripleWepName].occurances;
+  // let doubleMathResult = occuranceOfTwoWeps[firstDoubleWepName].winCount/occuranceOfTwoWeps[firstDoubleWepName].occurances;
+  // let tripleMathResult = occuranceOfThreeWeps[firstTripleWepName].winCount/occuranceOfThreeWeps[firstTripleWepName].occurances;
 
-  let tripleWepFreq = 0;
-  let tripleWepWins = 0;
+  let singleWepFreq = 0;
+  let singleWepWins = 0;
 //trim MathResults down to 2 or 3 spaces
 
-  for(index in occuranceOfThreeWeps) {
+for(index in occuranceOfSingleWep) {
 
-    tripleWepIcon1 = manifest[index];
-    tripleWepIcon2 = manifest[occuranceOfThreeWeps[index].secondaryWepKey];
-    tripleWepIcon3 = manifest[occuranceOfThreeWeps[index].tertiaryWepKey];
-    tripleWepFreq = occuranceOfThreeWeps[index].occurances;
-    tripleWepWins = occuranceOfThreeWeps[index].winCount;
+  // singleWepIcon = manifest[index];
+  if(occuranceOfSingleWep[index].secondaryWepKey) {
+    singleWepIcon = manifest[index];
+    singleWepIcon1 = manifest[occuranceOfSingleWep[index].secondaryWepKey];
+  
+    singleWepFreq = occuranceOfSingleWep[index].occurances;
+    singleWepWins = occuranceOfSingleWep[index].winCount;
 
-    tripleMathResult = occuranceOfThreeWeps[index].winCount/occuranceOfThreeWeps[index].occurances;
+    singleMathResult = (occuranceOfSingleWep[index].winCount/occuranceOfSingleWep[index].occurances).toFixed(2);
 
     $('#weaponClusters').append(`
-    <div class="singleWepDiv"><div class="weaponDiv"><img src="https://www.bungie.net${tripleWepIcon1[1]
+    <div class="singleWepDiv"><div class="weaponDiv"><img src="https://www.bungie.net${singleWepIcon[1]
     }"><p class="singleWepName">${
-    tripleWepIcon1[0]
-    }</p></div><div class="weaponDiv">
-    <img src="https://www.bungie.net${tripleWepIcon2[1]
-    }"><p class="singleWepName">${
-    tripleWepIcon2[0]
-    }</p></div><div class="weaponDiv">
-    <img src="https://www.bungie.net${tripleWepIcon3[1]
-    }"><p class="singleWepName">${
-    tripleWepIcon3[0]
-    }</p></div><p class="timesUsed">Times Used: ${occuranceOfThreeWeps[index].occurances}</p>
-    <p class="wins">Win Count: ${occuranceOfThreeWeps[index].winCount}</p><p class="winRateDiv">Win Rate: ${tripleMathResult}</p></div>`);
+    singleWepIcon[0]
+    }</p></div>
+    <div class="weaponDiv"><img src="https://www.bungie.net${singleWepIcon1[1]
+    }" alt="secondWepIcon"><p class="singleWepName">${
+    singleWepIcon1[0]
+    }</p></div><p class="timesUsed">Times Used: ${occuranceOfSingleWep[index].occurances}</p>
+    <p class="wins">Win Count: ${occuranceOfSingleWep[index].winCount}</p><p class="winRateDiv">Win Rate: ${singleMathResult}</p></div>`);
   }
+}
+
+
+  // for(index in occuranceOfThreeWeps) {
+
+  //   tripleWepIcon1 = manifest[index];
+  //   tripleWepIcon2 = manifest[occuranceOfThreeWeps[index].secondaryWepKey];
+  //   tripleWepIcon3 = manifest[occuranceOfThreeWeps[index].tertiaryWepKey];
+  //   tripleWepFreq = occuranceOfThreeWeps[index].occurances;
+  //   tripleWepWins = occuranceOfThreeWeps[index].winCount;
+
+  //   tripleMathResult = occuranceOfThreeWeps[index].winCount/occuranceOfThreeWeps[index].occurances;
+
+  //   $('#weaponClusters').append(`
+  //   <div class="singleWepDiv"><div class="weaponDiv"><img src="https://www.bungie.net${tripleWepIcon1[1]
+  //   }"><p class="singleWepName">${
+  //   tripleWepIcon1[0]
+  //   }</p></div><div class="weaponDiv">
+  //   <img src="https://www.bungie.net${tripleWepIcon2[1]
+  //   }"><p class="singleWepName">${
+  //   tripleWepIcon2[0]
+  //   }</p></div><div class="weaponDiv">
+  //   <img src="https://www.bungie.net${tripleWepIcon3[1]
+  //   }"><p class="singleWepName">${
+  //   tripleWepIcon3[0]
+  //   }</p></div><p class="timesUsed">Times Used: ${occuranceOfThreeWeps[index].occurances}</p>
+  //   <p class="wins">Win Count: ${occuranceOfThreeWeps[index].winCount}</p><p class="winRateDiv">Win Rate: ${tripleMathResult}</p></div>`);
+  // }
 
   $("#saveLoadout").html(
     `<button type="submit" id="saveButton">Save loadout</button>`
+  );
+
+  $("#updateLoadout").html(
+    `<button type="submit" id="updateButton">Update Loadout</button>`
   );
 
 
@@ -126,17 +159,19 @@ $("#displayWepTrends").submit(event => {
 
   $("#saveLoadout").submit(event => {
     event.preventDefault();
-    let weaponObject = occuranceOfThreeWeps;
+    let weaponObject = occuranceOfSingleWep[highestSingleWepName];
+    let wepName1 = highestSingleWepName;
     let characterId = membsId;
+    console.log(weaponObject);
   
     const settings = {
       url:"/loadouts",
       method: "POST",
       dataType: "JSON",
-      // contentType: "application/json",
       data: {
+        "character": characterId,
+        "primaryWepKey": wepName1,
         "weaponObject": weaponObject,
-        "character": characterId
       },
       success: function(data) {
         console.log("Success!", data);
@@ -147,7 +182,34 @@ $("#displayWepTrends").submit(event => {
     };
   
     $.ajax(settings);
-  })
+  });
+
+  $("#updateLoadout").submit(event => {
+    event.preventDefault();
+    let weaponObject = occuranceOfSingleWep[highestSingleWepName];
+    let wepName1 = highestSingleWepName;
+    let characterId = membsId;
+    console.log(weaponObject);
+  
+    const settings = {
+      url:`/loadouts/${characterId}`,
+      method: "PUT",
+      contentTypes: "application/json",
+      data: {
+        "character": characterId,
+        "primaryWepKey": wepName1,
+        "weaponObject": {secondaryWepKey: 1231242, winCount: 1002, occurances: 921312}
+      },
+      success: function(data) {
+        console.log("Success!", data);
+      },
+      error: function(data) {
+        console.log("Error", data);
+      }
+    };
+  
+    $.ajax(settings);
+  });
 
 ////////////////////////////////////////////////////////////////////////////////////
 
@@ -412,31 +474,41 @@ function storePlayerInfo(data) {
   if(data.characterId == account.character1.id || data.characterId == account.character2.id || data.characterId == account.character3.id) {
     let primaryWepKey = data.extended.weapons[0].referenceId;
 
+    //figure out how to add duplicates instead of new entry
+    
+
     if(occuranceOfSingleWep[primaryWepKey] != null) {
       occuranceOfSingleWep[primaryWepKey].occurances++;
       occuranceOfSingleWep[primaryWepKey].winCount += data.values.standing.basic.value;
     }
-    else if(data.extended.weapons.length == 1) {
+    else if(data.extended.weapons.length == 1 || data.extended.weapons.length == 2 || data.extended.weapons.length == 3) {
       occuranceOfSingleWep[primaryWepKey] = {winCount: data.values.standing.basic.value, occurances: 1};
     }
 
-    if(occuranceOfTwoWeps[primaryWepKey] != null && occuranceOfTwoWeps[primaryWepKey].secondaryWepKey != null) {
-      occuranceOfTwoWeps[primaryWepKey].occurances++;
-      occuranceOfTwoWeps[primaryWepKey].winCount += data.values.standing.basic.value;
+    if(occuranceOfSingleWep[primaryWepKey] != null && occuranceOfSingleWep[primaryWepKey].secondaryWepKey != null) {
+      occuranceOfSingleWep[primaryWepKey].occurances++;
+      occuranceOfSingleWep[primaryWepKey].winCount += data.values.standing.basic.value;
     }
 
     else if(data.extended.weapons.length == 2) {
-      occuranceOfTwoWeps[primaryWepKey] = {secondaryWepKey: data.extended.weapons[1].referenceId, winCount: data.values.standing.basic.value, occurances: 1};
+      if(primaryWepKey == data.extended.weapons[1].referenceId) {
+        let primaryWepKey = data.extended.weapons[1].referenceId;
+        occuranceOfSingleWep[primaryWepKey] = {secondaryWepKey: data.extended.weapons[0].referenceId, winCount: data.values.standing.basic.value, occurances: 1};
+      }
+      else {
+      let primaryWepKey = data.extended.weapons[0].referenceId;
+      occuranceOfSingleWep[primaryWepKey] = {secondaryWepKey: data.extended.weapons[1].referenceId, winCount: data.values.standing.basic.value, occurances: 1};
+      }
     }
 
-    if(occuranceOfThreeWeps[primaryWepKey] != null && occuranceOfThreeWeps[primaryWepKey].secondaryWepKey != null && occuranceOfThreeWeps[primaryWepKey].tertiaryWepKey) {
-      occuranceOfThreeWeps[primaryWepKey].occurances++;
-      occuranceOfThreeWeps[primaryWepKey].winCount += data.values.standing.basic.value;
-    } 
+    // if(occuranceOfThreeWeps[primaryWepKey] != null && occuranceOfThreeWeps[primaryWepKey].secondaryWepKey != null && occuranceOfThreeWeps[primaryWepKey].tertiaryWepKey) {
+    //   occuranceOfThreeWeps[primaryWepKey].occurances++;
+    //   occuranceOfThreeWeps[primaryWepKey].winCount += data.values.standing.basic.value;
+    // } 
 
-    else if(data.extended.weapons.length == 3) {
-      occuranceOfThreeWeps[primaryWepKey] = {secondaryWepKey: data.extended.weapons[1].referenceId, tertiaryWepKey: data.extended.weapons[2].referenceId, winCount: data.values.standing.basic.value, occurances: 1};
-    }
+    // else if(data.extended.weapons.length == 3) {
+    //   occuranceOfThreeWeps[primaryWepKey] = {secondaryWepKey: data.extended.weapons[1].referenceId, tertiaryWepKey: data.extended.weapons[2].referenceId, winCount: data.values.standing.basic.value, occurances: 1};
+    // }
   }
 }
 

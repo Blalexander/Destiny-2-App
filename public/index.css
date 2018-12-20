@@ -200,3 +200,7 @@ button {
 header {
   border: 1px solid blue;
 }
+
+[alt*="secondWepIcon"] {
+  height: 50%;
+}
