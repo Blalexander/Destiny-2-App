@@ -211,7 +211,8 @@ for(index in occuranceOfSingleWep) {
   });
 
 ////////////////////////////////////////////////////////////////////////////////////
-
+//account object holding all stats and separate weapons (easiest to configure with least weapon specificity)
+//weapon object holding all stats (possibly many, many objects.  possibly not useful unless high amount of data.)
 });
 
 
@@ -479,24 +480,37 @@ function storePlayerInfo(data) {
     if(occuranceOfSingleWep[primaryWepKey] != null) {
       occuranceOfSingleWep[primaryWepKey].occurances++;
       occuranceOfSingleWep[primaryWepKey].winCount += data.values.standing.basic.value;
+      occuranceOfSingleWep[primaryWepKey].kills += data.values.kills.basic.value;
+      occuranceOfSingleWep[primaryWepKey].deaths += data.values.deaths.basic.value;
+      occuranceOfSingleWep[primaryWepKey].assists += data.values.assists.basic.value;
+      occuranceOfSingleWep[primaryWepKey].grenadeKills += data.extended.values.weaponKillsGrenade.basic.value;
+      occuranceOfSingleWep[primaryWepKey].assists += data.extended.values.weaponKillsMelee.basic.value;
+      occuranceOfSingleWep[primaryWepKey].assists += data.extended.values.weaponKillsSuper.basic.value;
+
     }
     else if(data.extended.weapons.length == 1 || data.extended.weapons.length == 2 || data.extended.weapons.length == 3) {
-      occuranceOfSingleWep[primaryWepKey] = {winCount: data.values.standing.basic.value, occurances: 1};
+      occuranceOfSingleWep[primaryWepKey] = {winCount: data.values.standing.basic.value, occurances: 1, kills: data.values.kills.basic.value, deaths: data.values.deaths.basic.value, assists: data.values.assists.basic.value, grenadeKills: data.extended.values.weaponKillsGrenade.basic.value, meleeKills: data.extended.values.weaponKillsMelee.basic.value, superKills: data.extended.values.weaponKillsSuper.basic.values};
     }
 
     if(occuranceOfSingleWep[primaryWepKey] != null && occuranceOfSingleWep[primaryWepKey].secondaryWepKey != null) {
       occuranceOfSingleWep[primaryWepKey].occurances++;
       occuranceOfSingleWep[primaryWepKey].winCount += data.values.standing.basic.value;
+      occuranceOfSingleWep[primaryWepKey].kills += data.values.kills.basic.value;
+      occuranceOfSingleWep[primaryWepKey].deaths += data.values.deaths.basic.value;
+      occuranceOfSingleWep[primaryWepKey].assists += data.values.assists.basic.value;
+      occuranceOfSingleWep[primaryWepKey].grenadeKills += data.extended.values.weaponKillsGrenade.basic.value;
+      occuranceOfSingleWep[primaryWepKey].assists += data.extended.values.weaponKillsMelee.basic.value;
+      occuranceOfSingleWep[primaryWepKey].assists += data.extended.values.weaponKillsSuper.basic.value;
     }
 
     else if(data.extended.weapons.length == 2) {
-      if(primaryWepKey == data.extended.weapons[1].referenceId) {
+      if(primaryWepKey == data.extended.weapons[1].referenceId) { //if secondary key already exists
         let primaryWepKey = data.extended.weapons[1].referenceId;
-        occuranceOfSingleWep[primaryWepKey] = {secondaryWepKey: data.extended.weapons[0].referenceId, winCount: data.values.standing.basic.value, occurances: 1};
+        occuranceOfSingleWep[primaryWepKey] = {secondaryWepKey: data.extended.weapons[0].referenceId, winCount: data.values.standing.basic.value, occurances: 1, kills: data.values.kills.basic.value, deaths: data.values.deaths.basic.value, assists: data.values.assists.basic.value, grenadeKills: data.extended.values.weaponKillsGrenade.basic.value, meleeKills: data.extended.values.weaponKillsMelee.basic.value, superKills: data.extended.values.weaponKillsSuper.basic.values};
       }
       else {
-      let primaryWepKey = data.extended.weapons[0].referenceId;
-      occuranceOfSingleWep[primaryWepKey] = {secondaryWepKey: data.extended.weapons[1].referenceId, winCount: data.values.standing.basic.value, occurances: 1};
+      let primaryWepKey = data.extended.weapons[0].referenceId; //if secondary key does not exist
+      occuranceOfSingleWep[primaryWepKey] = {secondaryWepKey: data.extended.weapons[1].referenceId, winCount: data.values.standing.basic.value, occurances: 1, kills: data.values.kills.basic.value, deaths: data.values.deaths.basic.value, assists: data.values.assists.basic.value, grenadeKills: data.extended.values.weaponKillsGrenade.basic.value, meleeKills: data.extended.values.weaponKillsMelee.basic.value, superKills: data.extended.values.weaponKillsSuper.basic.values};
       }
     }
 

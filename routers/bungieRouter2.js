@@ -9,7 +9,7 @@ router.get("/", (req, res) => {
       `https://www.bungie.net/Platform/Destiny2/${
         req.query.membsType
       }/Profile/${req.query.membsId}/?components=200,205`,
-      {
+      { //currently querying for loadout information -- could be removed?
         headers: {
           "Content-Type": "application/json",
           "X-API-Key": "62261ab05c7b4f078c05a94f18124761"
