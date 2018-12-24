@@ -111,6 +111,7 @@ for(index in occuranceOfSingleWep) {
     singleWepMeleeKills = (occuranceOfSingleWep[index].meleeKills/occuranceOfSingleWep[index].kills*100).toFixed(2);
     singleWepSuperKills = (occuranceOfSingleWep[index].superKills/occuranceOfSingleWep[index].kills*100).toFixed(2);
     singleWeaponKills = (occuranceOfSingleWep[index].weaponKills/occuranceOfSingleWep[index].kills*100).toFixed(2);
+    singleWeaponPrecisionKills = (occuranceOfSingleWep[index].weaponPrecisionKills/occuranceOfSingleWep[index].weaponKills*100).toFixed(2);
     singleMathResult = ((1-(occuranceOfSingleWep[index].lossCount/occuranceOfSingleWep[index].occurances))*100).toFixed(2);
     singleScorePKill = (occuranceOfSingleWep[index].averageScorePerKill/occuranceOfSingleWep[index].occurances).toFixed(2);
     singleScorePLife = (occuranceOfSingleWep[index].averageScorePerLife/occuranceOfSingleWep[index].occurances).toFixed(2);
@@ -128,10 +129,11 @@ for(index in occuranceOfSingleWep) {
     <p class="stats">K/D: ${singleWepKd}</p>
     <p class="stats">KA/D: ${singleWepKda}</p>
     <p class="stats">Efficiency: ${singleEfficiency}</p>
-    <p class="stats">Kills vs Assists: ${singleWepKAssists}%</p>
     <p class="stats">Average Score per Kill: ${singleScorePKill}</p>
     <p class="stats">Average Score per Life: ${singleScorePLife}</p>
+    <p class="stats">Kills vs Assists: ${singleWepKAssists}%</p>
     <p class="stats">Weapon Kills: ${singleWeaponKills}%</p>
+    <p class="stats">Weapon Precision Kills: ${singleWeaponPrecisionKills}%</p>
     <p class="stats">Grenade Kills: ${singleWepNadeKills}%</p>
     <p class="stats">Melee Kills: ${singleWepMeleeKills}%</p>
     <p class="stats">Super Kills: ${singleWepSuperKills}%</p></div></div>`);
@@ -540,6 +542,7 @@ function storePlayerInfo(data) {
         occuranceOfSingleWep[primaryWepKey].averageScorePerLife += data.values.averageScorePerLife.basic.value;
         occuranceOfSingleWep[primaryWepKey].efficiency += data.values.efficiency.basic.value;
         occuranceOfSingleWep[primaryWepKey].weaponKills += data.extended.weapons[0].values.uniqueWeaponKills.basic.value;
+        occuranceOfSingleWep[primaryWepKey].weaponPrecisionKills += data.extended.weapons[0].values.uniqueWeaponPrecisionKills.basic.value;
         occuranceOfSingleWep[primaryWepKey].grenadeKills += data.extended.values.weaponKillsGrenade.basic.value;
         occuranceOfSingleWep[primaryWepKey].assists += data.extended.values.weaponKillsMelee.basic.value;
         occuranceOfSingleWep[primaryWepKey].assists += data.extended.values.weaponKillsSuper.basic.value;
@@ -555,6 +558,7 @@ function storePlayerInfo(data) {
         occuranceOfSingleWep[primaryWepKey].averageScorePerLife += data.values.averageScorePerLife.basic.value;
         occuranceOfSingleWep[primaryWepKey].efficiency += data.values.efficiency.basic.value;
         occuranceOfSingleWep[primaryWepKey].weaponKills += data.extended.weapons[1].values.uniqueWeaponKills.basic.value;
+        occuranceOfSingleWep[primaryWepKey].weaponPrecisionKills += data.extended.weapons[1].values.uniqueWeaponPrecisionKills.basic.value;
         occuranceOfSingleWep[primaryWepKey].grenadeKills += data.extended.values.weaponKillsGrenade.basic.value;
         occuranceOfSingleWep[primaryWepKey].assists += data.extended.values.weaponKillsMelee.basic.value;
         occuranceOfSingleWep[primaryWepKey].assists += data.extended.values.weaponKillsSuper.basic.value;
@@ -570,6 +574,7 @@ function storePlayerInfo(data) {
         occuranceOfSingleWep[primaryWepKey].averageScorePerLife += data.values.averageScorePerLife.basic.value;
         occuranceOfSingleWep[primaryWepKey].efficiency += data.values.efficiency.basic.value;
         occuranceOfSingleWep[primaryWepKey].weaponKills += data.extended.weapons[2].values.uniqueWeaponKills.basic.value;
+        occuranceOfSingleWep[primaryWepKey].weaponPrecisionKills += data.extended.weapons[2].values.uniqueWeaponPrecisionKills.basic.value;
         occuranceOfSingleWep[primaryWepKey].grenadeKills += data.extended.values.weaponKillsGrenade.basic.value;
         occuranceOfSingleWep[primaryWepKey].assists += data.extended.values.weaponKillsMelee.basic.value;
         occuranceOfSingleWep[primaryWepKey].assists += data.extended.values.weaponKillsSuper.basic.value;
@@ -577,7 +582,7 @@ function storePlayerInfo(data) {
     }
 
     else if(data.extended.weapons.length == 1 || data.extended.weapons.length == 2 || data.extended.weapons.length == 3) {
-      occuranceOfSingleWep[primaryWepKey] = {refId: data.extended.weapons[0].referenceId, lossCount: data.standing, occurances: 1, kills: data.values.kills.basic.value, deaths: data.values.deaths.basic.value, assists: data.values.assists.basic.value, averageScorePerKill: data.values.averageScorePerKill.basic.value, averageScorePerLife: data.values.averageScorePerLife.basic.value, efficiency: data.values.efficiency.basic.value, weaponKills: data.extended.weapons[0].values.uniqueWeaponKills.basic.value, grenadeKills: data.extended.values.weaponKillsGrenade.basic.value, meleeKills: data.extended.values.weaponKillsMelee.basic.value, superKills: data.extended.values.weaponKillsSuper.basic.value};
+      occuranceOfSingleWep[primaryWepKey] = {refId: data.extended.weapons[0].referenceId, lossCount: data.standing, occurances: 1, kills: data.values.kills.basic.value, deaths: data.values.deaths.basic.value, assists: data.values.assists.basic.value, averageScorePerKill: data.values.averageScorePerKill.basic.value, averageScorePerLife: data.values.averageScorePerLife.basic.value, efficiency: data.values.efficiency.basic.value, weaponKills: data.extended.weapons[0].values.uniqueWeaponKills.basic.value, weaponPrecisionKills: data.extended.weapons[0].values.uniqueWeaponPrecisionKills.basic.value, grenadeKills: data.extended.values.weaponKillsGrenade.basic.value, meleeKills: data.extended.values.weaponKillsMelee.basic.value, superKills: data.extended.values.weaponKillsSuper.basic.value};
     }
 
 
