@@ -6,9 +6,11 @@ let overall = {};
 let objVals = [];
 let objKeys = [];
 let activityArray = [];
-let occuranceOfSingleWep = {};
-let occuranceOfTwoWeps = {};
-let occuranceOfThreeWeps = {};
+let occurrenceOfSingleWep = {};
+let occurrenceOfTwoWeps = {};
+let occurrenceOfThreeWeps = {};
+let activitiesEntered = 0;
+let activitiesUsed = 0;
 let clickedChar = 0;
 let clickedWep = 0;
 let activeChar = 0;
@@ -38,7 +40,7 @@ $("#type").click(event => {
 $("#displayWepTrends").submit(event => {
   event.preventDefault();
   $("#weaponClusters").html("");
-  console.log(occuranceOfSingleWep);
+  console.log(occurrenceOfSingleWep);
   let highestSingleWep = 0;
   let highestSingleWepName = 0;
   let highestDoubleWep = 0;
@@ -46,35 +48,35 @@ $("#displayWepTrends").submit(event => {
   let highestTripleWep = 0;
   let firstTripleWepName = 0;
 
-  Object.keys(occuranceOfSingleWep).forEach(function(a,b) {
-    if(occuranceOfSingleWep[a].occurances > highestSingleWep) {
-      highestSingleWep = occuranceOfSingleWep[a].occurances;
+  Object.keys(occurrenceOfSingleWep).forEach(function(a,b) {
+    if(occurrenceOfSingleWep[a].occurrences > highestSingleWep) {
+      highestSingleWep = occurrenceOfSingleWep[a].occurrences;
       highestSingleWepName = a;
-      highestSingleWepName1 = occuranceOfSingleWep[a].secondaryWepKey;
+      highestSingleWepName1 = occurrenceOfSingleWep[a].secondaryWepKey;
     }
   })
 
-  // Object.keys(occuranceOfTwoWeps).forEach(function(a,b) {
-  //   if(occuranceOfTwoWeps[a].occurances > highestDoubleWep) {
-  //     highestDoubleWep = occuranceOfTwoWeps[a].occurances;
+  // Object.keys(occurrenceOfTwoWeps).forEach(function(a,b) {
+  //   if(occurrenceOfTwoWeps[a].occurrences > highestDoubleWep) {
+  //     highestDoubleWep = occurrenceOfTwoWeps[a].occurrences;
   //     firstDoubleWepName = a;
-  //     secondDoubleWepName = occuranceOfTwoWeps[a].secondaryWepKey;
+  //     secondDoubleWepName = occurrenceOfTwoWeps[a].secondaryWepKey;
   //   }
   // })
 
-  // Object.keys(occuranceOfThreeWeps).forEach(function(a,b) {
-  //   if(occuranceOfThreeWeps[a].occurances > highestTripleWep) {
-  //     highestTripleWep = occuranceOfThreeWeps[a].occurances;
+  // Object.keys(occurrenceOfThreeWeps).forEach(function(a,b) {
+  //   if(occurrenceOfThreeWeps[a].occurrences > highestTripleWep) {
+  //     highestTripleWep = occurrenceOfThreeWeps[a].occurrences;
   //     firstTripleWepName = a;
-  //     secondTripleWepName = occuranceOfThreeWeps[a].secondaryWepKey;
-  //     thirdTripleWepName = occuranceOfThreeWeps[a].tertiaryWepKey;
+  //     secondTripleWepName = occurrenceOfThreeWeps[a].secondaryWepKey;
+  //     thirdTripleWepName = occurrenceOfThreeWeps[a].tertiaryWepKey;
   //   }
   // })
 
   // console.log(highestSingleWepName, highestSingleWep);
   // console.log(firstDoubleWepName, secondDoubleWepName);
   // console.log(firstTripleWepName, secondTripleWepName, thirdTripleWepName);
-  // console.log(occuranceOfSingleWep, occuranceOfTwoWeps, occuranceOfThreeWeps);
+  // console.log(occurrenceOfSingleWep, occurrenceOfTwoWeps, occurrenceOfThreeWeps);
 
   let counter = 1;
   let singleWepIcon = manifest[highestSingleWepName];
@@ -86,36 +88,43 @@ $("#displayWepTrends").submit(event => {
   // let secondTripleWepIcon = manifest[secondTripleWepName];
   // let thirdTripleWepIcon = manifest[thirdTripleWepName];
 
-  let singleMathResult = occuranceOfSingleWep[highestSingleWepName].lossCount/occuranceOfSingleWep[highestSingleWepName].occurances;
-  // let doubleMathResult = occuranceOfTwoWeps[firstDoubleWepName].lossCount/occuranceOfTwoWeps[firstDoubleWepName].occurances;
-  // let tripleMathResult = occuranceOfThreeWeps[firstTripleWepName].lossCount/occuranceOfThreeWeps[firstTripleWepName].occurances;
+  let singleMathResult = occurrenceOfSingleWep[highestSingleWepName].lossCount/occurrenceOfSingleWep[highestSingleWepName].occurrences;
+  // let doubleMathResult = occurrenceOfTwoWeps[firstDoubleWepName].lossCount/occurrenceOfTwoWeps[firstDoubleWepName].occurrences;
+  // let tripleMathResult = occurrenceOfThreeWeps[firstTripleWepName].lossCount/occurrenceOfThreeWeps[firstTripleWepName].occurrences;
 
   let singleWepFreq = 0;
   let singleWepWins = 0;
 //trim MathResults down to 2 or 3 spaces
 
-for(index in occuranceOfSingleWep) {
+for(index in occurrenceOfSingleWep) {
 
   // singleWepIcon = manifest[index];
-  // if(occuranceOfSingleWep[index].secondaryWepKey) {
+  // if(occurrenceOfSingleWep[index].secondaryWepKey) {
     singleWepIcon = manifest[index];
-    singleWepIcon1 = manifest[occuranceOfSingleWep[index].secondaryWepKey];
+    singleWepIcon1 = manifest[occurrenceOfSingleWep[index].secondaryWepKey];
   
-    singleWepFreq = occuranceOfSingleWep[index].occurances;
-    singleWepWins = occuranceOfSingleWep[index].lossCount;
+    singleWepFreq = occurrenceOfSingleWep[index].occurrences;
+    singleWepWins = occurrenceOfSingleWep[index].lossCount;
 
-    singleWepKAssists = (occuranceOfSingleWep[index].assists/occuranceOfSingleWep[index].kills*100).toFixed(2);
-    singleWepKd = (occuranceOfSingleWep[index].kills/occuranceOfSingleWep[index].deaths).toFixed(2);
-    singleWepKda = ((occuranceOfSingleWep[index].kills+occuranceOfSingleWep[index].assists)/occuranceOfSingleWep[index].deaths).toFixed(2);
-    singleWepNadeKills = (occuranceOfSingleWep[index].grenadeKills/occuranceOfSingleWep[index].kills*100).toFixed(2);
-    singleWepMeleeKills = (occuranceOfSingleWep[index].meleeKills/occuranceOfSingleWep[index].kills*100).toFixed(2);
-    singleWepSuperKills = (occuranceOfSingleWep[index].superKills/occuranceOfSingleWep[index].kills*100).toFixed(2);
-    singleWeaponKills = (occuranceOfSingleWep[index].weaponKills/occuranceOfSingleWep[index].kills*100).toFixed(2);
-    singleWeaponPrecisionKills = (occuranceOfSingleWep[index].weaponPrecisionKills/occuranceOfSingleWep[index].weaponKills*100).toFixed(2);
-    singleMathResult = ((1-(occuranceOfSingleWep[index].lossCount/occuranceOfSingleWep[index].occurances))*100).toFixed(2);
-    singleScorePKill = (occuranceOfSingleWep[index].averageScorePerKill/occuranceOfSingleWep[index].occurances).toFixed(2);
-    singleScorePLife = (occuranceOfSingleWep[index].averageScorePerLife/occuranceOfSingleWep[index].occurances).toFixed(2);
-    singleEfficiency = (occuranceOfSingleWep[index].efficiency/occuranceOfSingleWep[index].occurances).toFixed(2);
+    singleWepKAssists = (occurrenceOfSingleWep[index].assists/occurrenceOfSingleWep[index].kills*100).toFixed(2);
+    singleWepKd = (occurrenceOfSingleWep[index].kills/occurrenceOfSingleWep[index].deaths).toFixed(2);
+    singleWepKda = ((occurrenceOfSingleWep[index].kills+occurrenceOfSingleWep[index].assists)/occurrenceOfSingleWep[index].deaths).toFixed(2);
+    singleWepNadeKills = (occurrenceOfSingleWep[index].grenadeKills/occurrenceOfSingleWep[index].kills*100).toFixed(2);
+    singleWepMeleeKills = (occurrenceOfSingleWep[index].meleeKills/occurrenceOfSingleWep[index].kills*100).toFixed(2);
+    singleWepSuperKills = (occurrenceOfSingleWep[index].superKills/occurrenceOfSingleWep[index].kills*100).toFixed(2);
+    singleWeaponKills = (occurrenceOfSingleWep[index].weaponKills/occurrenceOfSingleWep[index].kills*100).toFixed(2);
+    singleWeaponPrecisionKills = (occurrenceOfSingleWep[index].weaponPrecisionKills/occurrenceOfSingleWep[index].weaponKills*100).toFixed(2);
+    singleMathResult = ((1-(occurrenceOfSingleWep[index].lossCount/occurrenceOfSingleWep[index].occurrences))*100).toFixed(2);
+    singleScorePKill = (occurrenceOfSingleWep[index].averageScorePerKill/occurrenceOfSingleWep[index].occurrences).toFixed(2);
+    singleScorePLife = (occurrenceOfSingleWep[index].averageScorePerLife/occurrenceOfSingleWep[index].occurrences).toFixed(2);
+    singleEfficiency = (occurrenceOfSingleWep[index].efficiency/occurrenceOfSingleWep[index].occurrences).toFixed(2);
+
+    if(singleMathResult>100) {
+      singleMathResult = 100;
+    }
+    else if(singleMathResult<0) {
+      singleMathResult = 0;
+    }
 
 
     $('#weaponClusters').append(`
@@ -123,8 +132,7 @@ for(index in occuranceOfSingleWep) {
     }"><p class="singleWepName">${
     singleWepIcon[0]
     }</p></div><div class="statHolder">
-    <p class="stats">Times Used: ${occuranceOfSingleWep[index].occurances}</p>
-    <p class="stats">Defeat Count: ${occuranceOfSingleWep[index].lossCount}</p>
+    <p class="stats">Times Used: ${occurrenceOfSingleWep[index].occurrences}</p>
     <p class="stats">Win Rate: ${singleMathResult}%</p>
     <p class="stats">K/D: ${singleWepKd}</p>
     <p class="stats">KA/D: ${singleWepKda}</p>
@@ -141,15 +149,15 @@ for(index in occuranceOfSingleWep) {
 }
 
 
-  // for(index in occuranceOfThreeWeps) {
+  // for(index in occurrenceOfThreeWeps) {
 
   //   tripleWepIcon1 = manifest[index];
-  //   tripleWepIcon2 = manifest[occuranceOfThreeWeps[index].secondaryWepKey];
-  //   tripleWepIcon3 = manifest[occuranceOfThreeWeps[index].tertiaryWepKey];
-  //   tripleWepFreq = occuranceOfThreeWeps[index].occurances;
-  //   tripleWepWins = occuranceOfThreeWeps[index].lossCount;
+  //   tripleWepIcon2 = manifest[occurrenceOfThreeWeps[index].secondaryWepKey];
+  //   tripleWepIcon3 = manifest[occurrenceOfThreeWeps[index].tertiaryWepKey];
+  //   tripleWepFreq = occurrenceOfThreeWeps[index].occurrences;
+  //   tripleWepWins = occurrenceOfThreeWeps[index].lossCount;
 
-  //   tripleMathResult = occuranceOfThreeWeps[index].lossCount/occuranceOfThreeWeps[index].occurances;
+  //   tripleMathResult = occurrenceOfThreeWeps[index].lossCount/occurrenceOfThreeWeps[index].occurrences;
 
   //   $('#weaponClusters').append(`
   //   <div class="singleWepDiv"><div class="weaponDiv"><img src="https://www.bungie.net${tripleWepIcon1[1]
@@ -163,24 +171,25 @@ for(index in occuranceOfSingleWep) {
   //   <img src="https://www.bungie.net${tripleWepIcon3[1]
   //   }"><p class="singleWepName">${
   //   tripleWepIcon3[0]
-  //   }</p></div><p class="timesUsed">Times Used: ${occuranceOfThreeWeps[index].occurances}</p>
-  //   <p class="wins">Win Count: ${occuranceOfThreeWeps[index].lossCount}</p><p class="winRateDiv">Win Rate: ${tripleMathResult}</p></div>`);
+  //   }</p></div><p class="timesUsed">Times Used: ${occurrenceOfThreeWeps[index].occurrences}</p>
+  //   <p class="wins">Win Count: ${occurrenceOfThreeWeps[index].lossCount}</p><p class="winRateDiv">Win Rate: ${tripleMathResult}</p></div>`);
   // }
 
-  $("#saveLoadout").html(
-    `<button type="submit" id="saveButton">Save loadout</button>`
+  $("#saveProfile").html(
+    `<button type="submit" id="saveButton">Save Account</button>`
   );
 
-  $("#updateLoadout").html(
-    `<button type="submit" id="updateButton">Update Loadout</button>`
+  $("#displayProfile").html(
+    `<button type="submit" id="updateButton">Update Account</button>`
   );
 
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-  $("#saveLoadout").submit(event => {
+  //saves searched profile to account for long-term stats
+  $("#saveProfile").submit(event => {
     event.preventDefault();
-    let weaponObject = occuranceOfSingleWep[highestSingleWepName];
+    let weaponObject = occurrenceOfSingleWep[highestSingleWepName];
     let wepName1 = highestSingleWepName;
     let characterId = membsId;
     console.log(weaponObject);
@@ -205,20 +214,18 @@ for(index in occuranceOfSingleWep) {
     $.ajax(settings);
   });
 
-  $("#updateLoadout").submit(event => {
+
+  //will display the saved profile
+  $("#displayProfile").submit(event => {
     event.preventDefault();
-    let weaponObject = occuranceOfSingleWep[highestSingleWepName];
-    let wepName1 = highestSingleWepName;
-    let characterId = membsId;
-    console.log(weaponObject);
-  
+
     const settings = {
-      url:`/loadouts/5000`,
-      method: "PATCH",
-      contentTypes: "application/json",
+      url:`/bungie6`,
+      method: "GET",
       data: {
-        "primaryWepKey": wepName1,
-        "weaponObject": {secondaryWepKey: 1231242, lossCount: 1002, occurances: 921312}
+        membsType: membsType,
+        membsId: membsId,
+        characterId: charaId
       },
       success: function(data) {
         console.log("Success!", data);
@@ -235,6 +242,29 @@ for(index in occuranceOfSingleWep) {
 //account object holding all stats and separate weapons (easiest to configure with least weapon specificity)
 //weapon object holding all stats (possibly many, many objects.  possibly not useful unless high amount of data.)
 });
+
+function profileDataSorter(data) {
+  activitiesEntered = data.Response.mergedAllCharacters.results.allPvP.allTime.activitiesEntered.basic.value;
+  activitiesUsed = (activitiesEntered/25).toFixed(0);
+  console.log("Success!", data, activitiesEntered, activitiesUsed);
+  for(i=0;i!=null;i++) {
+    let charaId = account.character1.id;
+    $.ajax({
+      url: `/bungie6`,
+      type: "GET",
+      data: {
+        membsType: membsType,
+        membsId: membsId,
+        characterId: charaId,
+        page: i
+      },
+      success: function(data) {
+        overall[i] = data;
+        console.log(overall);
+      }
+    });
+  }
+}
 
 
 
@@ -488,15 +518,19 @@ function getActivityStats3(callback) {
 
 function processActivityStats(dataA) {
   console.log(dataA);
-  activityArray = [];
+  // activityArray = [];
+
   for(i=0;i<dataA.Response.activities.length;i++) {
     activityArray.push(dataA.Response.activities[i].activityDetails.instanceId);
   }
   console.log(activityArray);
 
-  for(i=0;i<activityArray.length;i++) {
-    let realEntry = activityArray[i];
-    forEachInstanceId(realEntry, sortThroughGamesPlayed);
+  if(activityArray.length == 75) {
+    //if activity array.length == 75 then //
+    for(i=0;i<activityArray.length;i++) {
+      let realEntry = activityArray[i];
+      forEachInstanceId(realEntry, sortThroughGamesPlayed);
+    }
   }
 }
 
@@ -521,7 +555,7 @@ function sortThroughGamesPlayed(data) {
   }
 }
 
-//creates weapon cluster object for seeing how many times two weapons are used in tandem with each other and weapon counter object to keep track of individual weapon occurances
+//creates weapon cluster object for seeing how many times two weapons are used in tandem with each other and weapon counter object to keep track of individual weapon occurrences
 function storePlayerInfo(data) {
 
   //win rates are relatively low right now.  It seems like there's wins and losses (mostly wins) that are tracked, but weapons are untracked if they don't specifically get kills.  Since there's a smaller chance of getting kills with multiple weapons rather than a single weapon, there's proportionally a smaller winrate associated with those.  looking into this as a potential problem, though results are varied and hard to decipher without a deep look.
@@ -531,68 +565,68 @@ function storePlayerInfo(data) {
     //figure out how to add duplicates instead of new entry
     
 
-    if(occuranceOfSingleWep[primaryWepKey] != null) {
-      if(occuranceOfSingleWep[primaryWepKey].refId == data.extended.weapons[0].referenceId) {
-        occuranceOfSingleWep[primaryWepKey].occurances++;
-        occuranceOfSingleWep[primaryWepKey].lossCount += data.standing;
-        occuranceOfSingleWep[primaryWepKey].kills += data.values.kills.basic.value;
-        occuranceOfSingleWep[primaryWepKey].deaths += data.values.deaths.basic.value;
-        occuranceOfSingleWep[primaryWepKey].assists += data.values.assists.basic.value;
-        occuranceOfSingleWep[primaryWepKey].averageScorePerKill += data.values.averageScorePerKill.basic.value;
-        occuranceOfSingleWep[primaryWepKey].averageScorePerLife += data.values.averageScorePerLife.basic.value;
-        occuranceOfSingleWep[primaryWepKey].efficiency += data.values.efficiency.basic.value;
-        occuranceOfSingleWep[primaryWepKey].weaponKills += data.extended.weapons[0].values.uniqueWeaponKills.basic.value;
-        occuranceOfSingleWep[primaryWepKey].weaponPrecisionKills += data.extended.weapons[0].values.uniqueWeaponPrecisionKills.basic.value;
-        occuranceOfSingleWep[primaryWepKey].grenadeKills += data.extended.values.weaponKillsGrenade.basic.value;
-        occuranceOfSingleWep[primaryWepKey].assists += data.extended.values.weaponKillsMelee.basic.value;
-        occuranceOfSingleWep[primaryWepKey].assists += data.extended.values.weaponKillsSuper.basic.value;
+    if(occurrenceOfSingleWep[primaryWepKey] != null) {
+      if(occurrenceOfSingleWep[primaryWepKey].refId == data.extended.weapons[0].referenceId) {
+        occurrenceOfSingleWep[primaryWepKey].occurrences++;
+        occurrenceOfSingleWep[primaryWepKey].lossCount += data.standing;
+        occurrenceOfSingleWep[primaryWepKey].kills += data.values.kills.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].deaths += data.values.deaths.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].assists += data.values.assists.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].averageScorePerKill += data.values.averageScorePerKill.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].averageScorePerLife += data.values.averageScorePerLife.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].efficiency += data.values.efficiency.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].weaponKills += data.extended.weapons[0].values.uniqueWeaponKills.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].weaponPrecisionKills += data.extended.weapons[0].values.uniqueWeaponPrecisionKills.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].grenadeKills += data.extended.values.weaponKillsGrenade.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].assists += data.extended.values.weaponKillsMelee.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].assists += data.extended.values.weaponKillsSuper.basic.value;
       }
     
-      else if(occuranceOfSingleWep[primaryWepKey].refId == data.extended.weapons[1].referenceId) {
-        occuranceOfSingleWep[primaryWepKey].occurances++;
-        occuranceOfSingleWep[primaryWepKey].lossCount += data.standing;
-        occuranceOfSingleWep[primaryWepKey].kills += data.values.kills.basic.value;
-        occuranceOfSingleWep[primaryWepKey].deaths += data.values.deaths.basic.value;
-        occuranceOfSingleWep[primaryWepKey].assists += data.values.assists.basic.value;
-        occuranceOfSingleWep[primaryWepKey].averageScorePerKill += data.values.averageScorePerKill.basic.value;
-        occuranceOfSingleWep[primaryWepKey].averageScorePerLife += data.values.averageScorePerLife.basic.value;
-        occuranceOfSingleWep[primaryWepKey].efficiency += data.values.efficiency.basic.value;
-        occuranceOfSingleWep[primaryWepKey].weaponKills += data.extended.weapons[1].values.uniqueWeaponKills.basic.value;
-        occuranceOfSingleWep[primaryWepKey].weaponPrecisionKills += data.extended.weapons[1].values.uniqueWeaponPrecisionKills.basic.value;
-        occuranceOfSingleWep[primaryWepKey].grenadeKills += data.extended.values.weaponKillsGrenade.basic.value;
-        occuranceOfSingleWep[primaryWepKey].assists += data.extended.values.weaponKillsMelee.basic.value;
-        occuranceOfSingleWep[primaryWepKey].assists += data.extended.values.weaponKillsSuper.basic.value;
+      else if(occurrenceOfSingleWep[primaryWepKey].refId == data.extended.weapons[1].referenceId) {
+        occurrenceOfSingleWep[primaryWepKey].occurrences++;
+        occurrenceOfSingleWep[primaryWepKey].lossCount += data.standing;
+        occurrenceOfSingleWep[primaryWepKey].kills += data.values.kills.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].deaths += data.values.deaths.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].assists += data.values.assists.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].averageScorePerKill += data.values.averageScorePerKill.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].averageScorePerLife += data.values.averageScorePerLife.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].efficiency += data.values.efficiency.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].weaponKills += data.extended.weapons[1].values.uniqueWeaponKills.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].weaponPrecisionKills += data.extended.weapons[1].values.uniqueWeaponPrecisionKills.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].grenadeKills += data.extended.values.weaponKillsGrenade.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].assists += data.extended.values.weaponKillsMelee.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].assists += data.extended.values.weaponKillsSuper.basic.value;
       }
 
-      else if(occuranceOfSingleWep[primaryWepKey].refId == data.extended.weapons[2].referenceId) {
-        occuranceOfSingleWep[primaryWepKey].occurances++;
-        occuranceOfSingleWep[primaryWepKey].lossCount += data.standing;
-        occuranceOfSingleWep[primaryWepKey].kills += data.values.kills.basic.value;
-        occuranceOfSingleWep[primaryWepKey].deaths += data.values.deaths.basic.value;
-        occuranceOfSingleWep[primaryWepKey].assists += data.values.assists.basic.value;
-        occuranceOfSingleWep[primaryWepKey].averageScorePerKill += data.values.averageScorePerKill.basic.value;
-        occuranceOfSingleWep[primaryWepKey].averageScorePerLife += data.values.averageScorePerLife.basic.value;
-        occuranceOfSingleWep[primaryWepKey].efficiency += data.values.efficiency.basic.value;
-        occuranceOfSingleWep[primaryWepKey].weaponKills += data.extended.weapons[2].values.uniqueWeaponKills.basic.value;
-        occuranceOfSingleWep[primaryWepKey].weaponPrecisionKills += data.extended.weapons[2].values.uniqueWeaponPrecisionKills.basic.value;
-        occuranceOfSingleWep[primaryWepKey].grenadeKills += data.extended.values.weaponKillsGrenade.basic.value;
-        occuranceOfSingleWep[primaryWepKey].assists += data.extended.values.weaponKillsMelee.basic.value;
-        occuranceOfSingleWep[primaryWepKey].assists += data.extended.values.weaponKillsSuper.basic.value;
+      else if(occurrenceOfSingleWep[primaryWepKey].refId == data.extended.weapons[2].referenceId) {
+        occurrenceOfSingleWep[primaryWepKey].occurrences++;
+        occurrenceOfSingleWep[primaryWepKey].lossCount += data.standing;
+        occurrenceOfSingleWep[primaryWepKey].kills += data.values.kills.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].deaths += data.values.deaths.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].assists += data.values.assists.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].averageScorePerKill += data.values.averageScorePerKill.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].averageScorePerLife += data.values.averageScorePerLife.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].efficiency += data.values.efficiency.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].weaponKills += data.extended.weapons[2].values.uniqueWeaponKills.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].weaponPrecisionKills += data.extended.weapons[2].values.uniqueWeaponPrecisionKills.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].grenadeKills += data.extended.values.weaponKillsGrenade.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].assists += data.extended.values.weaponKillsMelee.basic.value;
+        occurrenceOfSingleWep[primaryWepKey].assists += data.extended.values.weaponKillsSuper.basic.value;
       }
     }
 
     else if(data.extended.weapons.length == 1 || data.extended.weapons.length == 2 || data.extended.weapons.length == 3) {
-      occuranceOfSingleWep[primaryWepKey] = {refId: data.extended.weapons[0].referenceId, lossCount: data.standing, occurances: 1, kills: data.values.kills.basic.value, deaths: data.values.deaths.basic.value, assists: data.values.assists.basic.value, averageScorePerKill: data.values.averageScorePerKill.basic.value, averageScorePerLife: data.values.averageScorePerLife.basic.value, efficiency: data.values.efficiency.basic.value, weaponKills: data.extended.weapons[0].values.uniqueWeaponKills.basic.value, weaponPrecisionKills: data.extended.weapons[0].values.uniqueWeaponPrecisionKills.basic.value, grenadeKills: data.extended.values.weaponKillsGrenade.basic.value, meleeKills: data.extended.values.weaponKillsMelee.basic.value, superKills: data.extended.values.weaponKillsSuper.basic.value};
+      occurrenceOfSingleWep[primaryWepKey] = {refId: data.extended.weapons[0].referenceId, lossCount: data.standing, occurrences: 1, kills: data.values.kills.basic.value, deaths: data.values.deaths.basic.value, assists: data.values.assists.basic.value, averageScorePerKill: data.values.averageScorePerKill.basic.value, averageScorePerLife: data.values.averageScorePerLife.basic.value, efficiency: data.values.efficiency.basic.value, weaponKills: data.extended.weapons[0].values.uniqueWeaponKills.basic.value, weaponPrecisionKills: data.extended.weapons[0].values.uniqueWeaponPrecisionKills.basic.value, grenadeKills: data.extended.values.weaponKillsGrenade.basic.value, meleeKills: data.extended.values.weaponKillsMelee.basic.value, superKills: data.extended.values.weaponKillsSuper.basic.value};
     }
 
 
-    // if(occuranceOfThreeWeps[primaryWepKey] != null && occuranceOfThreeWeps[primaryWepKey].secondaryWepKey != null && occuranceOfThreeWeps[primaryWepKey].tertiaryWepKey) {
-    //   occuranceOfThreeWeps[primaryWepKey].occurances++;
-    //   occuranceOfThreeWeps[primaryWepKey].lossCount += data.values.standing.basic.value;
+    // if(occurrenceOfThreeWeps[primaryWepKey] != null && occurrenceOfThreeWeps[primaryWepKey].secondaryWepKey != null && occurrenceOfThreeWeps[primaryWepKey].tertiaryWepKey) {
+    //   occurrenceOfThreeWeps[primaryWepKey].occurrences++;
+    //   occurrenceOfThreeWeps[primaryWepKey].lossCount += data.values.standing.basic.value;
     // } 
 
     // else if(data.extended.weapons.length == 3) {
-    //   occuranceOfThreeWeps[primaryWepKey] = {secondaryWepKey: data.extended.weapons[1].referenceId, tertiaryWepKey: data.extended.weapons[2].referenceId, lossCount: data.values.standing.basic.value, occurances: 1};
+    //   occurrenceOfThreeWeps[primaryWepKey] = {secondaryWepKey: data.extended.weapons[1].referenceId, tertiaryWepKey: data.extended.weapons[2].referenceId, lossCount: data.values.standing.basic.value, occurrences: 1};
     // }
   }
 }
@@ -692,7 +726,7 @@ function displayWepVals(currentWeps) {
 
     //creates the save button
     $("#saveLoadout").html(
-      `<button type="submit" id="saveButton">Save loadout</button>`
+      `<button type="submit" id="saveButton">Save Account</button>`
     );
 
 //     $(".js-search-results22").html("");
@@ -813,10 +847,11 @@ function displayWepVals(currentWeps) {
 function watchSubmit() {
   $(".js-search-form").submit(event => {
     event.preventDefault();
-  $('#characterPage').show();
-  $("#displayWepTrends").html(
+    $('#characterPage').show();
+    $("#displayWepTrends").html(
     `<button type="submit" id="wepTrendsButton">Display Weapon Trends</button>`
-  );
+    );
+    activityArray = [];
     let queryTarget = $(event.currentTarget).find(".js-query");
     let query = queryTarget.val();
     console.log(query);

@@ -15,6 +15,8 @@ const bungieRoute = require("./routers/bungieRouter");
 const bungieRoute2 = require("./routers/bungieRouter2");
 const bungieRoute3 = require("./routers/bungieRouter3");
 const bungieRoute4 = require("./routers/bungieRouter4");
+const bungieRoute5 = require("./routers/bungieRouter5");
+const bungieRoute6 = require("./routers/bungieRouter6");
 const loadoutsRouter = require("./loadouts/loadoutRouter");
 
 
@@ -45,6 +47,8 @@ app.use("/bungie", bungieRoute);
 app.use("/bungie2", bungieRoute2);
 app.use("/bungie3", bungieRoute3);
 app.use("/bungie4", bungieRoute4);
+app.use("/bungie5", bungieRoute5);
+app.use("/bungie6", bungieRoute6);
 app.use("/loadouts", loadoutsRouter);
 
 app.use("/api/users", usersRouter);

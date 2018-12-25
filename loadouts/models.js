@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
 // const weaponSchema = mongoose.Schema({
-//   occurances: Number,
+//   occurrences: Number,
 //   secondaryWepKey: Number,
 //   winCount: Number
 // });
@@ -14,7 +14,7 @@ const loadoutSchema = mongoose.Schema({
   // weapons: { type: mongoose.Schema.Types.ObjectId, ref: 'Weapons' }
   primaryWepKey: Number,
   secondaryWepKey: Number,
-  occurances: Number,
+  occurrences: Number,
   winCount: Number
 });
 
