@@ -119,6 +119,7 @@ for(index in occurrenceOfSingleWep) {
     singleScorePLife = (occurrenceOfSingleWep[index].averageScorePerLife/occurrenceOfSingleWep[index].occurrences).toFixed(2);
     singleEfficiency = (occurrenceOfSingleWep[index].efficiency/occurrenceOfSingleWep[index].occurrences).toFixed(2);
 
+
     if(singleMathResult>100) {
       singleMathResult = 100;
     }
@@ -128,10 +129,13 @@ for(index in occurrenceOfSingleWep) {
 
 
     $('#weaponClusters').append(`
-    <div class="singleWepDiv"><div class="weaponDiv"><img src="https://www.bungie.net${singleWepIcon[1]
+    <button class="singleWepDiv" value="${index}"><div class="weaponDiv"><img src="https://www.bungie.net${singleWepIcon[1]
     }"><p class="singleWepName">${
     singleWepIcon[0]
-    }</p></div><div class="statHolder">
+    }</p></div></button>`);
+    
+    $('#weaponClusters2').append(`
+    <div class="statHolder" id="${index}">
     <p class="stats">Times Used: ${occurrenceOfSingleWep[index].occurrences}</p>
     <p class="stats">Win Rate: ${singleMathResult}%</p>
     <p class="stats">K/D: ${singleWepKd}</p>
@@ -144,36 +148,83 @@ for(index in occurrenceOfSingleWep) {
     <p class="stats">Weapon Precision Kills: ${singleWeaponPrecisionKills}%</p>
     <p class="stats">Grenade Kills: ${singleWepNadeKills}%</p>
     <p class="stats">Melee Kills: ${singleWepMeleeKills}%</p>
-    <p class="stats">Super Kills: ${singleWepSuperKills}%</p></div></div>`);
+    <p class="stats">Super Kills: ${singleWepSuperKills}%</p></div>`);
+  }
+  
+
+  $('.singleWepDiv').mouseenter(function(event) {
+    let a = $(event.currentTarget).val();
+    $('#weaponClusters2').html("");
+
+
+    singleWepIcon = manifest[a];
+    singleWepIcon1 = manifest[occurrenceOfSingleWep[a].secondaryWepKey];
+  
+    singleWepFreq = occurrenceOfSingleWep[a].occurrences;
+    singleWepWins = occurrenceOfSingleWep[a].lossCount;
+
+    singleWepKAssists = (occurrenceOfSingleWep[a].assists/occurrenceOfSingleWep[a].kills*100).toFixed(2);
+    singleWepKd = (occurrenceOfSingleWep[a].kills/occurrenceOfSingleWep[a].deaths).toFixed(2);
+    singleWepKda = ((occurrenceOfSingleWep[a].kills+occurrenceOfSingleWep[a].assists)/occurrenceOfSingleWep[a].deaths).toFixed(2);
+    singleWepNadeKills = (occurrenceOfSingleWep[a].grenadeKills/occurrenceOfSingleWep[a].kills*100).toFixed(2);
+    singleWepMeleeKills = (occurrenceOfSingleWep[a].meleeKills/occurrenceOfSingleWep[a].kills*100).toFixed(2);
+    singleWepSuperKills = (occurrenceOfSingleWep[a].superKills/occurrenceOfSingleWep[a].kills*100).toFixed(2);
+    singleWeaponKills = (occurrenceOfSingleWep[a].weaponKills/occurrenceOfSingleWep[a].kills*100).toFixed(2);
+    singleWeaponPrecisionKills = (occurrenceOfSingleWep[a].weaponPrecisionKills/occurrenceOfSingleWep[a].weaponKills*100).toFixed(2);
+    singleMathResult = ((1-(occurrenceOfSingleWep[a].lossCount/occurrenceOfSingleWep[a].occurrences))*100).toFixed(2);
+    singleScorePKill = (occurrenceOfSingleWep[a].averageScorePerKill/occurrenceOfSingleWep[a].occurrences).toFixed(2);
+    singleScorePLife = (occurrenceOfSingleWep[a].averageScorePerLife/occurrenceOfSingleWep[a].occurrences).toFixed(2);
+    singleEfficiency = (occurrenceOfSingleWep[a].efficiency/occurrenceOfSingleWep[a].occurrences).toFixed(2);
+
+
+    if(singleMathResult>100) {
+      singleMathResult = 100;
+    }
+    else if(singleMathResult<0) {
+      singleMathResult = 0;
+    }
+
+    $('#weaponClusters2').html(`
+    <div class="statHolder" id="${a}">
+    <p class="stats">Times Used: ${occurrenceOfSingleWep[a].occurrences}</p>
+    <p class="stats">Win Rate: ${singleMathResult}%</p>
+    <p class="stats">K/D: ${singleWepKd}</p>
+    <p class="stats">KA/D: ${singleWepKda}</p>
+    <p class="stats">Efficiency: ${singleEfficiency}</p>
+    <p class="stats">Average Score per Kill: ${singleScorePKill}</p>
+    <p class="stats">Average Score per Life: ${singleScorePLife}</p>
+    <p class="stats">Kills vs Assists: ${singleWepKAssists}%</p>
+    <p class="stats">Weapon Kills: ${singleWeaponKills}%</p>
+    <p class="stats">Weapon Precision Kills: ${singleWeaponPrecisionKills}%</p>
+    <p class="stats">Grenade Kills: ${singleWepNadeKills}%</p>
+    <p class="stats">Melee Kills: ${singleWepMeleeKills}%</p>
+    <p class="stats">Super Kills: ${singleWepSuperKills}%</p></div>`);
+  })
+
+  // var clicked = false, clickY;
+  // $("#weaponClusters").on({
+  //     'mousemove': function(e) {
+  //         clicked && updateScrollPos(e);
+  //     },
+  //     'mousedown': function(e) {
+  //         clicked = true;
+  //         clickY = e.pageY;
+  //     },
+  //     'mouseup': function() {
+  //         clicked = false;
+  //         $('#weaponClusters').css('cursor', 'auto');
+  //     }
+  // });
+  
+  // var updateScrollPos = function(e) {
+  //     $('#weaponClusters').css('cursor', 'row-resize');
+  //     $("#weaponClusters").scrollLeft($("#weaponClusters").scrollLeft() + (e.pageY - clickY));
   // }
-}
 
+  // $('.singleWepDiv').mouseleave(function(event) {
+  //   $('#weaponClusters2').html("");
+  // })
 
-  // for(index in occurrenceOfThreeWeps) {
-
-  //   tripleWepIcon1 = manifest[index];
-  //   tripleWepIcon2 = manifest[occurrenceOfThreeWeps[index].secondaryWepKey];
-  //   tripleWepIcon3 = manifest[occurrenceOfThreeWeps[index].tertiaryWepKey];
-  //   tripleWepFreq = occurrenceOfThreeWeps[index].occurrences;
-  //   tripleWepWins = occurrenceOfThreeWeps[index].lossCount;
-
-  //   tripleMathResult = occurrenceOfThreeWeps[index].lossCount/occurrenceOfThreeWeps[index].occurrences;
-
-  //   $('#weaponClusters').append(`
-  //   <div class="singleWepDiv"><div class="weaponDiv"><img src="https://www.bungie.net${tripleWepIcon1[1]
-  //   }"><p class="singleWepName">${
-  //   tripleWepIcon1[0]
-  //   }</p></div><div class="weaponDiv">
-  //   <img src="https://www.bungie.net${tripleWepIcon2[1]
-  //   }"><p class="singleWepName">${
-  //   tripleWepIcon2[0]
-  //   }</p></div><div class="weaponDiv">
-  //   <img src="https://www.bungie.net${tripleWepIcon3[1]
-  //   }"><p class="singleWepName">${
-  //   tripleWepIcon3[0]
-  //   }</p></div><p class="timesUsed">Times Used: ${occurrenceOfThreeWeps[index].occurrences}</p>
-  //   <p class="wins">Win Count: ${occurrenceOfThreeWeps[index].lossCount}</p><p class="winRateDiv">Win Rate: ${tripleMathResult}</p></div>`);
-  // }
 
   $("#saveProfile").html(
     `<button type="submit" id="saveButton">Save Account</button>`
@@ -218,25 +269,69 @@ for(index in occurrenceOfSingleWep) {
   //will display the saved profile
   $("#displayProfile").submit(event => {
     event.preventDefault();
+    sortAllTimeData();
+  });
 
-    const settings = {
-      url:`/bungie6`,
-      method: "GET",
+  function sortAllTimeData() {
+    let firstCharacter = account.character1.id;
+    let secondCharacter = account.character2.id;
+    let thirdCharacter = account.character3.id;
+
+    const settings1 = {
+      url:"/bungie6",
+      type: "GET",
       data: {
         membsType: membsType,
         membsId: membsId,
-        characterId: charaId
+        characterId: firstCharacter,
       },
       success: function(data) {
-        console.log("Success!", data);
+        let char1Obj = {data};
+        console.log("Success!", data, char1Obj);
+
       },
       error: function(data) {
         console.log("Error", data);
       }
     };
-  
-    $.ajax(settings);
-  });
+    $.ajax(settings1);
+
+    const settings2 = {
+      url:"/bungie6",
+      type: "GET",
+      data: {
+        membsType: membsType,
+        membsId: membsId,
+        characterId: secondCharacter,
+      },
+      success: function(data) {
+        let char2Obj = {data};
+        console.log("Success!", data, char2Obj);
+      },
+      error: function(data) {
+        console.log("Error", data);
+      }
+    };
+    $.ajax(settings2);
+
+    const settings3 = {
+      url:"/bungie6",
+      type: "GET",
+      data: {
+        membsType: membsType,
+        membsId: membsId,
+        characterId: thirdCharacter,
+      },
+      success: function(data) {
+        let char3Obj = {data};
+        console.log("Success!", data, char3Obj);
+      },
+      error: function(data) {
+        console.log("Error", data);
+      }
+    };
+    $.ajax(settings3);
+  }
 
 ////////////////////////////////////////////////////////////////////////////////////
 //account object holding all stats and separate weapons (easiest to configure with least weapon specificity)
@@ -557,13 +652,8 @@ function sortThroughGamesPlayed(data) {
 
 //creates weapon cluster object for seeing how many times two weapons are used in tandem with each other and weapon counter object to keep track of individual weapon occurrences
 function storePlayerInfo(data) {
-
-  //win rates are relatively low right now.  It seems like there's wins and losses (mostly wins) that are tracked, but weapons are untracked if they don't specifically get kills.  Since there's a smaller chance of getting kills with multiple weapons rather than a single weapon, there's proportionally a smaller winrate associated with those.  looking into this as a potential problem, though results are varied and hard to decipher without a deep look.
   if(data.characterId == account.character1.id || data.characterId == account.character2.id || data.characterId == account.character3.id) {
     let primaryWepKey = data.extended.weapons[0].referenceId;
-
-    //figure out how to add duplicates instead of new entry
-    
 
     if(occurrenceOfSingleWep[primaryWepKey] != null) {
       if(occurrenceOfSingleWep[primaryWepKey].refId == data.extended.weapons[0].referenceId) {
@@ -631,7 +721,7 @@ function storePlayerInfo(data) {
   }
 }
 
-
+//have thumbnails of loadout displayed + bground
 
 
 function setBackground(bGround) {
