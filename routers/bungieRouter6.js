@@ -7,7 +7,7 @@ router.get("/", (req, res) => {
   console.log(req.query.search)
   axios
     .get(
-      `https://www.bungie.net/Platform/Destiny2/${req.query.membsType}/Account/${req.query.membsId}/Character/${req.query.characterId}/Stats/Activities/?mode=5&count=10`,
+      `https://www.bungie.net/Platform/Destiny2/${req.query.membsType}/Account/${req.query.membsId}/Character/${req.query.characterId}/Stats/Activities/?mode=5&count=35`,
       {
         headers: {
           "Content-Type": "application/json",

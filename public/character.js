@@ -269,6 +269,8 @@ for(index in occurrenceOfSingleWep) {
   //will display the saved profile
   $("#displayProfile").submit(event => {
     event.preventDefault();
+    activityArray = [];
+    console.log("activity array cleared");
     sortAllTimeData();
   });
 
@@ -286,9 +288,8 @@ for(index in occurrenceOfSingleWep) {
         characterId: firstCharacter,
       },
       success: function(data) {
-        let char1Obj = {data};
-        console.log("Success!", data, char1Obj);
-
+        console.log("Success!", data);
+        processActivityStats1(data);
       },
       error: function(data) {
         console.log("Error", data);
@@ -305,8 +306,8 @@ for(index in occurrenceOfSingleWep) {
         characterId: secondCharacter,
       },
       success: function(data) {
-        let char2Obj = {data};
-        console.log("Success!", data, char2Obj);
+        console.log("Success!", data);
+        processActivityStats1(data);
       },
       error: function(data) {
         console.log("Error", data);
@@ -323,8 +324,8 @@ for(index in occurrenceOfSingleWep) {
         characterId: thirdCharacter,
       },
       success: function(data) {
-        let char3Obj = {data};
-        console.log("Success!", data, char3Obj);
+        console.log("Success!", data);
+        processActivityStats1(data);
       },
       error: function(data) {
         console.log("Error", data);
@@ -338,26 +339,45 @@ for(index in occurrenceOfSingleWep) {
 //weapon object holding all stats (possibly many, many objects.  possibly not useful unless high amount of data.)
 });
 
-function profileDataSorter(data) {
-  activitiesEntered = data.Response.mergedAllCharacters.results.allPvP.allTime.activitiesEntered.basic.value;
-  activitiesUsed = (activitiesEntered/25).toFixed(0);
-  console.log("Success!", data, activitiesEntered, activitiesUsed);
-  for(i=0;i!=null;i++) {
-    let charaId = account.character1.id;
-    $.ajax({
-      url: `/bungie6`,
-      type: "GET",
-      data: {
-        membsType: membsType,
-        membsId: membsId,
-        characterId: charaId,
-        page: i
-      },
-      success: function(data) {
-        overall[i] = data;
-        console.log(overall);
-      }
-    });
+function processActivityStats1(dataA) {
+  console.log(dataA);
+  // activityArray = [];
+
+  for(i=0;i<dataA.Response.activities.length;i++) {
+    activityArray.push(dataA.Response.activities[i].activityDetails.instanceId);
+  }
+  console.log(activityArray);
+
+  if(activityArray.length >= 75) {
+    //if activity array.length == 75 then //
+    for(i=0;i<activityArray.length;i++) {
+      let realEntry = activityArray[i];
+      forEachInstanceId1(realEntry, sortThroughGamesPlayed1);
+    }
+  }
+}
+
+function forEachInstanceId1(entry, callback) {
+  $.ajax({
+    url: "/bungie4",
+    type: "GET",
+    data: {
+      instId: entry
+    },
+    success: callback
+  });
+}
+
+function sortThroughGamesPlayed1(data) {
+  // console.log(data);
+  let gameId = data.Response.activityDetails.instanceId;
+  overall[gameId] = data; //save overall to account
+  console.log(overall);
+  let players = data.Response.entries;
+  for(i=0;i<players.length;i++) {
+    if(players[i].extended.weapons) {
+      storePlayerInfo(players[i]);
+    }
   }
 }
 
@@ -620,7 +640,7 @@ function processActivityStats(dataA) {
   }
   console.log(activityArray);
 
-  if(activityArray.length == 75) {
+  if(activityArray.length >= 75) {
     //if activity array.length == 75 then //
     for(i=0;i<activityArray.length;i++) {
       let realEntry = activityArray[i];

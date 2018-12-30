@@ -9,8 +9,9 @@ html {
 
 body {
   background-image: url("https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-Guardians-4k.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
   transition: .5s;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -57,20 +58,13 @@ body {
   flex-flow: column wrap;
 }
 
-.characterForm {
-  display: inline-flex;
-}
 
 .js-search-form {
-  margin-top: 5vh;
+  margin-bottom: 10vh;
+  text-align: center;
 }
 
-.js-search-results {
-  float: left;
-  /* height: 50vh; */
-  /* width: 45vw; */
-  border: 1px solid black;
-}
+
 
 /* .js-search-results2 {
   float: right;
@@ -173,18 +167,6 @@ button {
   background-color: lightgoldenrodyellow;
 }
 
-
-#weaponClusters {
-  /* display: flex; */
-  /* margin-top: 15vh; */
-  height: 50vh;
-  width: 30vw;
-  display: flex;
-  justify-content: space-between;
-  flex-flow: column nowrap;
-  overflow-x: scroll;
-}
-
 #displayWepTrends, #saveLoadout {
   display: inline;
 }
@@ -203,20 +185,84 @@ button {
 }
 
 header {
+  display: flex;
+  justify-content: space-between;
   border: 1px solid blue;
+  margin-bottom: 20vh;
+  height: 10vh;
+  text-align: center;
+  background-color: white;
+}
+
+h1 {
+  display: inline;
+  height: 50%;
+  width: 50%;
+}
+
+h3 {
+  display: inline;
+  margin: auto;
+  position: absolute;
+  top: 12vh;
+  height: 50%;
+  width: 50%;
 }
 
 [alt*="secondWepIcon"] {
   height: 50%;
 }
 
+#weaponClusters {
+  /* display: flex; */
+  /* margin-top: 15vh; */
+/*   height: 50vh; */
+  width: 15vw;
+  display: flex;
+  justify-content: space-between;
+  flex-flow: column nowrap;
+  overflow-y: scroll;
+}
+
 #weaponClusters2 {
   background-color: white;
-  height: 50vh;
+/*   height: 50vh; */
   width: 30vw;
   text-align: center;
+  display: flex;
+  flex-flow: column nowrap;
+/*   overflow-y: scroll; */
+}
+
+#clusters {
+  display: flex;
+  height: 70vh;
+  width: 45vw;
+}
+
+#centerButtons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 #characterPage {
   display: flex;
+  justify-content: space-evenly;
+}
+
+.js-search-results {
+/*   float: left; */
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  height: 70vh;
+  width: 30vw;
+  border: 1px solid black;
+  background-color: white;
+/*   overflow-y: scroll; */
+}
+
+.characterForm {
+/*   display: inline-flex; */
 }
