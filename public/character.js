@@ -36,11 +36,10 @@ $("#type").click(event => {
 
 
 
-
 $("#displayWepTrends").submit(event => {
   event.preventDefault();
-  $("#weaponClusters").html("");
   console.log(occurrenceOfSingleWep);
+  $("#weaponClusters").html("");
   let highestSingleWep = 0;
   let highestSingleWepName = 0;
   let highestDoubleWep = 0;
@@ -80,7 +79,7 @@ $("#displayWepTrends").submit(event => {
 
   let counter = 1;
   let singleWepIcon = manifest[highestSingleWepName];
-  let singleWepIcon1 = manifest[highestSingleWepName1];
+  // let singleWepIcon1 = manifest[highestSingleWepName1];
 
   // let firstDoubleWepIcon = manifest[firstDoubleWepName];
   // let secondDoubleWepIcon = manifest[secondDoubleWepName];
@@ -227,12 +226,35 @@ for(index in occurrenceOfSingleWep) {
 
 
   $("#saveProfile").html(
-    `<button type="submit" id="saveButton">Save Account</button>`
+    `<button type="submit" id="saveButton">Track Account</button>`
   );
 
   $("#displayProfile").html(
-    `<button type="submit" id="updateButton">Update Account</button>`
+    `<button type="submit" id="updateButton">Get Full Stats</button>`
   );
+
+  $("#checkTest").html(
+    `<button type="submit" id="checkTestBut">CHECKING</button>`
+  );
+
+  $("#checkTest").submit(event => {
+    event.preventDefault();
+  
+    const settings = {
+      url:`/loadouts/:${membsId}`,
+      method: "GET",
+      dataType: "JSON",
+
+      success: function(data) {
+        console.log("Success!", data);
+      },
+      error: function(data) {
+        console.log("Error", data);
+      }
+    };
+  
+    $.ajax(settings);
+  });
 
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -240,19 +262,15 @@ for(index in occurrenceOfSingleWep) {
   //saves searched profile to account for long-term stats
   $("#saveProfile").submit(event => {
     event.preventDefault();
-    let weaponObject = occurrenceOfSingleWep[highestSingleWepName];
-    let wepName1 = highestSingleWepName;
-    let characterId = membsId;
-    console.log(weaponObject);
+    console.log(occurrenceOfSingleWep);
   
     const settings = {
       url:"/loadouts",
       method: "POST",
       dataType: "JSON",
       data: {
-        "character": 5000,
-        "primaryWepKey": wepName1,
-        "weaponObject": weaponObject,
+        "character": membsId,
+        "weaponObject": occurrenceOfSingleWep
       },
       success: function(data) {
         console.log("Success!", data);
@@ -270,6 +288,7 @@ for(index in occurrenceOfSingleWep) {
   $("#displayProfile").submit(event => {
     event.preventDefault();
     activityArray = [];
+    occurrenceOfSingleWep = {};
     console.log("activity array cleared");
     sortAllTimeData();
   });
@@ -348,13 +367,13 @@ function processActivityStats1(dataA) {
   }
   console.log(activityArray);
 
-  if(activityArray.length >= 75) {
+  // if(activityArray.length >= 75) {
     //if activity array.length == 75 then //
     for(i=0;i<activityArray.length;i++) {
       let realEntry = activityArray[i];
       forEachInstanceId1(realEntry, sortThroughGamesPlayed1);
     }
-  }
+  // }
 }
 
 function forEachInstanceId1(entry, callback) {
@@ -371,8 +390,8 @@ function forEachInstanceId1(entry, callback) {
 function sortThroughGamesPlayed1(data) {
   // console.log(data);
   let gameId = data.Response.activityDetails.instanceId;
-  overall[gameId] = data; //save overall to account
-  console.log(overall);
+  overall[gameId] = data; //save overall to account OR save occuranceOfSingleWep to account
+  // console.log(overall);
   let players = data.Response.entries;
   for(i=0;i<players.length;i++) {
     if(players[i].extended.weapons) {
@@ -640,13 +659,13 @@ function processActivityStats(dataA) {
   }
   console.log(activityArray);
 
-  if(activityArray.length >= 75) {
+  // if(activityArray.length >= 75) {
     //if activity array.length == 75 then //
     for(i=0;i<activityArray.length;i++) {
       let realEntry = activityArray[i];
       forEachInstanceId(realEntry, sortThroughGamesPlayed);
     }
-  }
+  // }
 }
 
 function forEachInstanceId(entry, callback) {
@@ -677,7 +696,7 @@ function storePlayerInfo(data) {
 
     if(occurrenceOfSingleWep[primaryWepKey] != null) {
       if(occurrenceOfSingleWep[primaryWepKey].refId == data.extended.weapons[0].referenceId) {
-        occurrenceOfSingleWep[primaryWepKey].occurrences++;
+        occurrenceOfSingleWep[primaryWepKey].occurrences++; //make refid gameid + unique
         occurrenceOfSingleWep[primaryWepKey].lossCount += data.standing;
         occurrenceOfSingleWep[primaryWepKey].kills += data.values.kills.basic.value;
         occurrenceOfSingleWep[primaryWepKey].deaths += data.values.deaths.basic.value;

@@ -10,13 +10,22 @@ mongoose.Promise = global.Promise;
 // });
 
 const loadoutSchema = mongoose.Schema({
-  character: Number,
-  // weapons: { type: mongoose.Schema.Types.ObjectId, ref: 'Weapons' }
-  primaryWepKey: Number,
-  secondaryWepKey: Number,
-  occurrences: Number,
-  winCount: Number
+  character: String,
+  weaponObject: [{assists: Number, averageScorePerKill: Number, averageScorePerLife: Number, deaths: Number, efficiency: Number, grenadeKills: Number, kills: Number, lossCount: Number, meleeKills: Number, occurrences: Number, refId: Number, superKills: Number, weaponKills: Number, weaponPrecisionKills: Number}]
 });
+
+loadoutSchema.pre('find', function(next) {
+  this.populate('loadout');
+  next();
+})
+
+loadoutSchema.methods.serialize = function() {
+  return {
+    character: this.character,
+    // weapons: this.weaponObject
+  };
+};
+
 
 // let Weapons = mongoose.model("Weapons", weaponSchema);
 const Loadout = mongoose.model("Loadout", loadoutSchema);
