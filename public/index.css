@@ -7,10 +7,6 @@ html {
   width: 100%;
 }
 
-main {
-/*   background-color: black; */
-}
-
 body {
   background-color: gray;
 /*   background-image: url("https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-Guardians-4k.jpg"); */
@@ -198,7 +194,7 @@ h1 {
   color: white;
   display: inline;
 /*   height: 50%; */
-  width: 75%;
+  /* width: 75%; */
 }
 
 h3 {
@@ -208,7 +204,7 @@ h3 {
   position: absolute;
   top: 12vh;
 /*   height: 50%; */
-  width: 75%;
+  /* width: 75%; */
 }
 
 [alt*="secondWepIcon"] {

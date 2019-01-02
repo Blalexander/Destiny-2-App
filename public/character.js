@@ -17,6 +17,8 @@ let clickedWep = 0;
 let activeChar = 0;
 let charTab = 0;
 let count = 0;
+let qq = 0;
+
 
 
 const titanBackground = "https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-titan-4k.jpg";
@@ -394,7 +396,7 @@ for(index in occurrenceOfSingleWep) {
 
 function processActivityStats1(dataA) {
   console.log(dataA);
-  // activityArray = [];
+  // activityArray = [];  will reset completely on every entry
 
   for(i=0;i<dataA.Response.activities.length;i++) {
     activityArray.push(dataA.Response.activities[i].activityDetails.instanceId);
@@ -697,23 +699,46 @@ function processActivityStats(dataA) {
   }
   console.log(activityArray);
 
+  theDaySaver(qq);
+
+  // let qq = 0;
+  // while(qq<activityArray.length) { //will send constant duplicate copies
+  //   let realEntry = activityArray[i];
+  //   forEachInstanceId(realEntry, sortThroughGamesPlayed);
+  // }
+
   // if(activityArray.length >= 75) {
     //if activity array.length == 75 then //
-    for(i=0;i<activityArray.length;i++) {
-      let realEntry = activityArray[i];
-      forEachInstanceId(realEntry, sortThroughGamesPlayed);
-    }
+    // for(i=0;i<activityArray.length;i++) {
+    //   let realEntry = activityArray[i];
+    //   forEachInstanceId(realEntry, sortThroughGamesPlayed);
+    // }
   // }
 }
 
-function forEachInstanceId(entry, callback) {
+function theDaySaver(qq) {
+  // if(qq <= activityArray.length) {
+    let realEntry = activityArray[qq];
+    forEachInstanceId(realEntry);
+  // }
+  // else {
+  //   console.log("Done!");
+  // }
+}
+
+function forEachInstanceId(entry) {
   $.ajax({
     url: "/bungie4",
     type: "GET",
     data: {
       instId: entry
     },
-    success: callback
+    success: function(data) {
+      sortThroughGamesPlayed(data);
+    },
+    error: function(data) {
+      console.log(data);
+    }
   });
 }
 
@@ -724,6 +749,10 @@ function sortThroughGamesPlayed(data) {
     if(players[i].extended.weapons) {
       storePlayerInfo(players[i]);
     }
+  }
+  qq++;
+  if(qq <= activityArray.length) {
+  theDaySaver(qq);
   }
 }
 
@@ -1019,6 +1048,7 @@ function watchSubmit() {
     `<button type="submit" id="wepTrendsButton">Display Weapon Trends</button>`
     );
     activityArray = [];
+    uu = 1;
     let queryTarget = $(event.currentTarget).find(".js-query");
     let query = queryTarget.val();
     console.log(query);
@@ -1030,6 +1060,8 @@ function watchSubmit() {
     searchByUsername(query, setIdFromUsername);
   });
 }
+
+let uu = 0;
 
 $(watchSubmit);
 
