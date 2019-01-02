@@ -23,6 +23,7 @@ $('#login').submit(e => {
     });
     localStorage.setItem("token", token.authToken);
     localStorage.setItem("user_id", token.user);
+    console.log(token.user);
     $('#signupPage').hide();
     $('#characterPage').show();
     // window.location.replace("/character.html");
@@ -72,6 +73,7 @@ $('#signup').submit(e => {
     });
     localStorage.setItem("token", token.authToken);
     localStorage.setItem("user_id", token.user);
+    console.log(token.user);
     $('#signupPage').hide();
     $('#characterPage').show();
     // window.location.replace("/character.html");

@@ -296,7 +296,9 @@ for(index in occurrenceOfSingleWep) {
   $("#saveProfile").submit(event => {
     event.preventDefault();
     console.log(occurrenceOfSingleWep);
-    let emailIdentifier = $('[name="email"]').val();
+    // let emailIdentifier = $('[name="email"]').val(); //maybe no value found here, so crashes n restarts?
+
+    let emailIdentifier = localStorage.getItem("user_id");
 
   
     const settings = {
@@ -305,7 +307,7 @@ for(index in occurrenceOfSingleWep) {
       dataType: "JSON",
       data: {
         "character": membsId,
-        // "identifier": emailIdentifier,
+        "identifier": emailIdentifier,
         "weaponObject": occurrenceOfSingleWep
       },
       success: function(data) {
@@ -751,7 +753,7 @@ function sortThroughGamesPlayed(data) {
     }
   }
   qq++;
-  if(qq <= activityArray.length) {
+  if(qq < activityArray.length) {
   theDaySaver(qq);
   }
 }
