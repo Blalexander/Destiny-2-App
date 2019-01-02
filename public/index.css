@@ -7,9 +7,14 @@ html {
   width: 100%;
 }
 
+main {
+/*   background-color: black; */
+}
+
 body {
   background-color: gray;
 /*   background-image: url("https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-Guardians-4k.jpg"); */
+  background-image: url("https://media.playstation.com/is/image/SCEA/destiny-2-editions-page-section-background-01-ps4-us-28mar17?$native_nt$");
   background-size:cover;
   background-repeat:no-repeat;
   background-attachment:fixed;
@@ -61,6 +66,7 @@ body {
 
 
 .js-search-form {
+  background-color: white;
   margin-bottom: 5vh;
   text-align: center;
 /*   border: 1px solid blue; */
@@ -185,16 +191,18 @@ header {
   margin-bottom: 10vh;
   height: 10vh;
   text-align: center;
-  background-color: white;
+/*   background-color: white; */
 }
 
 h1 {
+  color: white;
   display: inline;
 /*   height: 50%; */
   width: 75%;
 }
 
 h3 {
+  background-color: white;
   display: inline;
   margin: auto;
   position: absolute;
@@ -205,6 +213,13 @@ h3 {
 
 [alt*="secondWepIcon"] {
   height: 50%;
+}
+
+[alt*="weaponStatsImg"] {
+  height: 20%;
+  margin-top: 2vh;
+  border: 3px solid gold;
+  border-radius: 5px;
 }
 
 #weaponClusters {
@@ -231,7 +246,7 @@ h3 {
 
 #clusters {
   display: flex;
-  height: 60vh;
+  height: 65vh;
   width: 45vw;
   margin-top: 8vh;
 }
@@ -307,4 +322,15 @@ h3 {
 /*   margin-top: 10vh; */
   display: flex;
   align-self: flex-end;
+}
+
+.statHolder {
+  height: 100%;
+/*   display: flex; */
+/*   flex-direction: column; */
+/*   justify-content: space-between; */
+}
+
+.stats {
+  height: 3%;
 }

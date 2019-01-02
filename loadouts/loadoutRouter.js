@@ -50,10 +50,10 @@ router.post('/', jsonParser, (req, res) => { //POST functioning
     // });
 });
 
-router.put('/:character', jsonParser, (req, res) => {
-  let useableId = req.params.character;
-  useableId = useableId.replace(":", "");
-  console.log(req.params, req.body, useableId);
+router.put('/', jsonParser, (req, res) => {
+  // let useableId = req.body.character;
+  // useableId = useableId.replace(":", "");
+  console.log(req.body);
 
   // const updated = {};
   // const updateableFields = ['occurrences', 'winCount'];
@@ -64,11 +64,10 @@ router.put('/:character', jsonParser, (req, res) => {
   // });
 
 
-  Loadout
-    .updateOne({character: useableId}, {$set: {character: useableId, weapons: req.body.weaponObject}})
+  Loadout.collection
+    .updateOne({"character": req.body.character}, {$set: {"character": req.body.character, "weapons": req.body.weaponObject}})
     // .find({"character":req.param.characterId})
     .then(updatedLoadout => res.json(updatedLoadout))
-
     // .catch(err => res.status(500).json({ message: 'Something went wrong' }));
 });
 

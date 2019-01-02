@@ -264,10 +264,15 @@ for(index in occurrenceOfSingleWep) {
     event.preventDefault();
   
     const settings = {
-      url:`/loadouts/:${membsId}`,
+      // url:`/loadouts/:${membsId}`,
+      url:"/loadouts",
       method: "PUT",
       dataType: "JSON",
+      // header: {
+      //   "Content-Type": "application/json"
+      // },
       data: {
+        "character": membsId,
         "weaponObject": occurrenceOfSingleWep
       },
 
@@ -289,6 +294,8 @@ for(index in occurrenceOfSingleWep) {
   $("#saveProfile").submit(event => {
     event.preventDefault();
     console.log(occurrenceOfSingleWep);
+    let emailIdentifier = $('[name="email"]').val();
+
   
     const settings = {
       url:"/loadouts",
@@ -296,6 +303,7 @@ for(index in occurrenceOfSingleWep) {
       dataType: "JSON",
       data: {
         "character": membsId,
+        // "identifier": emailIdentifier,
         "weaponObject": occurrenceOfSingleWep
       },
       success: function(data) {
