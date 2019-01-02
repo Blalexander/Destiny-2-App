@@ -11,7 +11,7 @@ mongoose.Promise = global.Promise;
 
 const loadoutSchema = mongoose.Schema({
   character: String,
-  weaponObject: [{assists: Number, averageScorePerKill: Number, averageScorePerLife: Number, deaths: Number, efficiency: Number, grenadeKills: Number, kills: Number, lossCount: Number, meleeKills: Number, occurrences: Number, refId: Number, superKills: Number, weaponKills: Number, weaponPrecisionKills: Number}]
+  weaponObject: {assists: Number, averageScorePerKill: Number, averageScorePerLife: Number, deaths: Number, efficiency: Number, grenadeKills: Number, kills: Number, lossCount: Number, meleeKills: Number, occurrences: Number, refId: Number, superKills: Number, weaponKills: Number, weaponPrecisionKills: Number}
 });
 
 loadoutSchema.pre('find', function(next) {
@@ -19,10 +19,15 @@ loadoutSchema.pre('find', function(next) {
   next();
 })
 
+loadoutSchema.pre('findOne', function(next) {
+  this.populate('loadout');
+  next();
+})
+
 loadoutSchema.methods.serialize = function() {
   return {
     character: this.character,
-    // weapons: this.weaponObject
+    weaponObject: this.weaponObject
   };
 };
 

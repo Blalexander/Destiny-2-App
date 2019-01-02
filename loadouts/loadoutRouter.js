@@ -10,17 +10,17 @@ const { Loadout } = require("./models");
 
 router.get('/:character', (req, res) => {
   console.log(req.params);
+  let useableId = req.params.character;
+  useableId = useableId.replace(":", "");
   Loadout
-    .find({ character: req.params.character}) //remove colon from :character and get req works
+    .find({ "character": useableId}) //remove colon from :character and get req works
     .then(loadout => {
       res.json({loadout})
     })
     // .catch(res.status(500).json({ message: 'Something went wrong' }));
 })
 
-
-
-router.post('/', jsonParser, (req, res) => {
+router.post('/', jsonParser, (req, res) => { //POST functioning
   console.log(req.body);
   // Loadout.collection.insert({character: req.body.character, weaponobject: req.body.weaponObject}, onInsert);
   let insertionObj = {character: req.body.character, weapons: req.body.weaponObject};
@@ -50,27 +50,37 @@ router.post('/', jsonParser, (req, res) => {
     // });
 });
 
-router.patch('/:characterId', (req, res) => {
-  // if (!(req.params.id && req.body.characterId && req.params.id === req.body.characterId)) {
-  //   return res.status(400).json({
-  //     error: 'Request path id and request body id values must match'
-  //   });
-  // }
+router.put('/:character', jsonParser, (req, res) => {
+  let useableId = req.params.character;
+  useableId = useableId.replace(":", "");
+  console.log(req.params, req.body, useableId);
 
-  // const updated = []; //finish update fields
+  // const updated = {};
   // const updateableFields = ['occurrences', 'winCount'];
   // updateableFields.forEach(field => {
   //   if (field in req.body.weaponObject) {
   //     updated[field] = req.body.weaponObject[field];
   //   }
   // });
-  console.log(req.params);
+
+
   Loadout
-    .findOneAndUpdate({"character": req.params.characterId}, {$set: {"occurrences": req.body.weaponObject.occurrences, "winCount": req.body.weaponObject.winCount}}, {new: true})
+    .updateOne({character: useableId}, {$set: {character: useableId, weapons: req.body.weaponObject}})
     // .find({"character":req.param.characterId})
     .then(updatedLoadout => res.json(updatedLoadout))
 
-    .catch(err => res.status(500).json({ message: 'Something went wrong' }));
+    // .catch(err => res.status(500).json({ message: 'Something went wrong' }));
+});
+
+router.delete('/:character', (req, res) => { //DELETE functioning
+  let useableId = req.params.character;
+  useableId = useableId.replace(":", "");
+  Loadout
+    .findOneAndDelete({ character: useableId })
+    .then(() => {
+      console.log(`Deleted id \`${useableId}\``);
+      res.status(204).end()
+    })
 });
 
 router.use('*', function (req, res) {

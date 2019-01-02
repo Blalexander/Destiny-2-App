@@ -1,6 +1,7 @@
 let queryTarget2 = $(".js-search-form").find("#type");
 let membsType = queryTarget2.val();
 let membsId = 0;
+let displayName = "";
 let account = {};
 let overall = {};
 let objVals = [];
@@ -135,6 +136,7 @@ for(index in occurrenceOfSingleWep) {
     
     $('#weaponClusters2').append(`
     <div class="statHolder" id="${index}">
+    <img src="https://www.bungie.net${singleWepIcon[1]}" alt="weaponStatsImg">
     <p class="stats">Times Used: ${occurrenceOfSingleWep[index].occurrences}</p>
     <p class="stats">Win Rate: ${singleMathResult}%</p>
     <p class="stats">K/D: ${singleWepKd}</p>
@@ -185,6 +187,7 @@ for(index in occurrenceOfSingleWep) {
 
     $('#weaponClusters2').html(`
     <div class="statHolder" id="${a}">
+    <img src="https://www.bungie.net${singleWepIcon[1]}" alt="weaponStatsImg">
     <p class="stats">Times Used: ${occurrenceOfSingleWep[a].occurrences}</p>
     <p class="stats">Win Rate: ${singleMathResult}%</p>
     <p class="stats">K/D: ${singleWepKd}</p>
@@ -225,8 +228,8 @@ for(index in occurrenceOfSingleWep) {
   // })
 
 
-  $("#saveProfile").html(
-    `<button type="submit" id="saveButton">Track Account</button>`
+  $("#deleteProfile").html(
+    `<button type="submit" id="deleteButton">Untrack Account</button>`
   );
 
   $("#displayProfile").html(
@@ -237,13 +240,36 @@ for(index in occurrenceOfSingleWep) {
     `<button type="submit" id="checkTestBut">CHECKING</button>`
   );
 
+
+  $("#deleteProfile").submit(event => {
+    event.preventDefault();
+  
+    const settings = {
+      url:`/loadouts/:${membsId}`,
+      method: "DELETE",
+      dataType: "JSON",
+
+      success: function(data) {
+        console.log("Success!", data);
+      },
+      error: function(data) {
+        console.log("Error", data);
+      }
+    };
+  
+    $.ajax(settings);
+  });
+
   $("#checkTest").submit(event => {
     event.preventDefault();
   
     const settings = {
       url:`/loadouts/:${membsId}`,
-      method: "GET",
+      method: "PUT",
       dataType: "JSON",
+      data: {
+        "weaponObject": occurrenceOfSingleWep
+      },
 
       success: function(data) {
         console.log("Success!", data);
@@ -426,6 +452,7 @@ function setIdFromUsername(data) {
   console.log("setIdFromUsername functioning");
   console.log(data);
   membsId = data.Response[0].membershipId;
+  displayName = data.Response[0].displayName;
   getProfiles(membsId, displayProfiles);
 }
 
@@ -553,6 +580,9 @@ function displayProfiles(data) {
   }
 
   console.log(account);
+  $(".js-search-results").prepend(`<h2 id="characterName">${displayName}</h2>`);
+  $(".js-search-results").append(`<form id="saveProfile"><button type="submit" id="saveButton">Track Account</button></form>`);
+
 
   //for loop that sends information to character tabs
   for (i = 0; i < 3; i++) {
