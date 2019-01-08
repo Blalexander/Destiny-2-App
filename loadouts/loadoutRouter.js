@@ -23,7 +23,7 @@ router.get('/:character', (req, res) => {
 router.post('/', jsonParser, (req, res) => { //POST functioning
   console.log(req.body);
   // Loadout.collection.insert({character: req.body.character, weaponobject: req.body.weaponObject}, onInsert);
-  let insertionObj = {character: req.body.character, emailIdentifier: req.body.emailIdentifier, weapons: req.body.weaponObject};
+  let insertionObj = {character: req.body.character, weapons: req.body.weaponObject};
   Loadout.collection.insert(insertionObj, onInsert);
 
 

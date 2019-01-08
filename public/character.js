@@ -4,12 +4,15 @@ let membsId = 0;
 let displayName = "";
 let account = {};
 let overall = {};
+let newObj = {};
+let extendedObj = {};
 let objVals = [];
 let objKeys = [];
 let activityArray = [];
 let occurrenceOfSingleWep = {};
 let occurrenceOfTwoWeps = {};
 let occurrenceOfThreeWeps = {};
+let refreshCounter = 0;
 let activitiesEntered = 0;
 let activitiesUsed = 0;
 let clickedChar = 0;
@@ -41,14 +44,12 @@ $("#type").click(event => {
 
 $("#displayWepTrends").submit(event => {
   event.preventDefault();
+// function loadWepStats() {
+  console.log(refreshCounter);
   console.log(occurrenceOfSingleWep);
   $("#weaponClusters").html("");
   let highestSingleWep = 0;
   let highestSingleWepName = 0;
-  let highestDoubleWep = 0;
-  let firstDoubleWepName = 0;
-  let highestTripleWep = 0;
-  let firstTripleWepName = 0;
 
   Object.keys(occurrenceOfSingleWep).forEach(function(a,b) {
     if(occurrenceOfSingleWep[a].occurrences > highestSingleWep) {
@@ -58,50 +59,12 @@ $("#displayWepTrends").submit(event => {
     }
   })
 
-  // Object.keys(occurrenceOfTwoWeps).forEach(function(a,b) {
-  //   if(occurrenceOfTwoWeps[a].occurrences > highestDoubleWep) {
-  //     highestDoubleWep = occurrenceOfTwoWeps[a].occurrences;
-  //     firstDoubleWepName = a;
-  //     secondDoubleWepName = occurrenceOfTwoWeps[a].secondaryWepKey;
-  //   }
-  // })
-
-  // Object.keys(occurrenceOfThreeWeps).forEach(function(a,b) {
-  //   if(occurrenceOfThreeWeps[a].occurrences > highestTripleWep) {
-  //     highestTripleWep = occurrenceOfThreeWeps[a].occurrences;
-  //     firstTripleWepName = a;
-  //     secondTripleWepName = occurrenceOfThreeWeps[a].secondaryWepKey;
-  //     thirdTripleWepName = occurrenceOfThreeWeps[a].tertiaryWepKey;
-  //   }
-  // })
-
-  // console.log(highestSingleWepName, highestSingleWep);
-  // console.log(firstDoubleWepName, secondDoubleWepName);
-  // console.log(firstTripleWepName, secondTripleWepName, thirdTripleWepName);
-  // console.log(occurrenceOfSingleWep, occurrenceOfTwoWeps, occurrenceOfThreeWeps);
-
-  let counter = 1;
   let singleWepIcon = manifest[highestSingleWepName];
-  // let singleWepIcon1 = manifest[highestSingleWepName1];
-
-  // let firstDoubleWepIcon = manifest[firstDoubleWepName];
-  // let secondDoubleWepIcon = manifest[secondDoubleWepName];
-  // let firstTripleWepIcon = manifest[firstTripleWepName];
-  // let secondTripleWepIcon = manifest[secondTripleWepName];
-  // let thirdTripleWepIcon = manifest[thirdTripleWepName];
 
   let singleMathResult = occurrenceOfSingleWep[highestSingleWepName].lossCount/occurrenceOfSingleWep[highestSingleWepName].occurrences;
-  // let doubleMathResult = occurrenceOfTwoWeps[firstDoubleWepName].lossCount/occurrenceOfTwoWeps[firstDoubleWepName].occurrences;
-  // let tripleMathResult = occurrenceOfThreeWeps[firstTripleWepName].lossCount/occurrenceOfThreeWeps[firstTripleWepName].occurrences;
 
-  let singleWepFreq = 0;
-  let singleWepWins = 0;
-//trim MathResults down to 2 or 3 spaces
 
 for(index in occurrenceOfSingleWep) {
-
-  // singleWepIcon = manifest[index];
-  // if(occurrenceOfSingleWep[index].secondaryWepKey) {
     singleWepIcon = manifest[index];
     singleWepIcon1 = manifest[occurrenceOfSingleWep[index].secondaryWepKey];
   
@@ -138,6 +101,7 @@ for(index in occurrenceOfSingleWep) {
     
     $('#weaponClusters2').append(`
     <div class="statHolder" id="${index}">
+    <div class="testClass"><p>${singleWepIcon[0]}</p></div>
     <img src="https://www.bungie.net${singleWepIcon[1]}" alt="weaponStatsImg">
     <p class="stats">Times Used: ${occurrenceOfSingleWep[index].occurrences}</p>
     <p class="stats">Win Rate: ${singleMathResult}%</p>
@@ -189,6 +153,7 @@ for(index in occurrenceOfSingleWep) {
 
     $('#weaponClusters2').html(`
     <div class="statHolder" id="${a}">
+    <div class="testClass"><p>${singleWepIcon[0]}</p></div>
     <img src="https://www.bungie.net${singleWepIcon[1]}" alt="weaponStatsImg">
     <p class="stats">Times Used: ${occurrenceOfSingleWep[a].occurrences}</p>
     <p class="stats">Win Rate: ${singleMathResult}%</p>
@@ -204,30 +169,6 @@ for(index in occurrenceOfSingleWep) {
     <p class="stats">Melee Kills: ${singleWepMeleeKills}%</p>
     <p class="stats">Super Kills: ${singleWepSuperKills}%</p></div>`);
   })
-
-  // var clicked = false, clickY;
-  // $("#weaponClusters").on({
-  //     'mousemove': function(e) {
-  //         clicked && updateScrollPos(e);
-  //     },
-  //     'mousedown': function(e) {
-  //         clicked = true;
-  //         clickY = e.pageY;
-  //     },
-  //     'mouseup': function() {
-  //         clicked = false;
-  //         $('#weaponClusters').css('cursor', 'auto');
-  //     }
-  // });
-  
-  // var updateScrollPos = function(e) {
-  //     $('#weaponClusters').css('cursor', 'row-resize');
-  //     $("#weaponClusters").scrollLeft($("#weaponClusters").scrollLeft() + (e.pageY - clickY));
-  // }
-
-  // $('.singleWepDiv').mouseleave(function(event) {
-  //   $('#weaponClusters2').html("");
-  // })
 
 
   $("#deleteProfile").html(
@@ -296,10 +237,6 @@ for(index in occurrenceOfSingleWep) {
   $("#saveProfile").submit(event => {
     event.preventDefault();
     console.log(occurrenceOfSingleWep);
-    // let emailIdentifier = $('[name="email"]').val(); //maybe no value found here, so crashes n restarts?
-
-    let emailIdentifier = localStorage.getItem("user_id");
-
   
     const settings = {
       url:"/loadouts",
@@ -307,7 +244,7 @@ for(index in occurrenceOfSingleWep) {
       dataType: "JSON",
       data: {
         "character": membsId,
-        "identifier": emailIdentifier,
+        // "userId": ,
         "weaponObject": occurrenceOfSingleWep
       },
       success: function(data) {
@@ -320,81 +257,91 @@ for(index in occurrenceOfSingleWep) {
   
     $.ajax(settings);
   });
+});
 
 
   //will display the saved profile
-  $("#displayProfile").submit(event => {
+$("#displayProfile").submit(event => {
     event.preventDefault();
     activityArray = [];
-    occurrenceOfSingleWep = {};
+    // occurrenceOfSingleWep = {};
     console.log("activity array cleared");
     sortAllTimeData();
-  });
+});
 
-  function sortAllTimeData() {
-    let firstCharacter = account.character1.id;
-    let secondCharacter = account.character2.id;
-    let thirdCharacter = account.character3.id;
+function sortAllTimeData() {
+  console.log("First Sort Firing");
+  let firstCharacter = account.character1.id;
 
-    const settings1 = {
-      url:"/bungie6",
-      type: "GET",
-      data: {
-        membsType: membsType,
-        membsId: membsId,
-        characterId: firstCharacter,
-      },
-      success: function(data) {
-        console.log("Success!", data);
-        processActivityStats1(data);
-      },
-      error: function(data) {
-        console.log("Error", data);
-      }
-    };
-    $.ajax(settings1);
 
-    const settings2 = {
-      url:"/bungie6",
-      type: "GET",
-      data: {
-        membsType: membsType,
-        membsId: membsId,
-        characterId: secondCharacter,
-      },
-      success: function(data) {
-        console.log("Success!", data);
-        processActivityStats1(data);
-      },
-      error: function(data) {
-        console.log("Error", data);
-      }
-    };
-    $.ajax(settings2);
 
-    const settings3 = {
-      url:"/bungie6",
-      type: "GET",
-      data: {
-        membsType: membsType,
-        membsId: membsId,
-        characterId: thirdCharacter,
-      },
-      success: function(data) {
-        console.log("Success!", data);
-        processActivityStats1(data);
-      },
-      error: function(data) {
-        console.log("Error", data);
-      }
-    };
-    $.ajax(settings3);
-  }
+  const settings1 = {
+    url:"/bungie6",
+    type: "GET",
+    data: {
+      membsType: membsType,
+      membsId: membsId,
+      characterId: firstCharacter,
+    },
+    success: function(data) {
+      extendedObj["charOneGameHistory"] = {data};
+      secondSort();
+    },
+    error: function(data) {
+      console.log("Error", data);
+    }
+  };
+  $.ajax(settings1);
+}
+
+function secondSort() {
+  console.log("Second Sort Firing");
+  let secondCharacter = account.character2.id;
+
+  const settings2 = {
+    url:"/bungie6",
+    type: "GET",
+    data: {
+      membsType: membsType,
+      membsId: membsId,
+      characterId: secondCharacter,
+    },
+    success: function(data) {
+      extendedObj["charTwoGameHistory"] = {data};
+      thirdSort();
+    },
+    error: function(data) {
+      console.log("Error", data);
+    }
+  };
+  $.ajax(settings2);
+}
+
+function thirdSort() {
+  console.log("Third Sort Firing");
+  let thirdCharacter = account.character3.id;
+
+  const settings3 = {
+    url:"/bungie6",
+    type: "GET",
+    data: {
+      membsType: membsType,
+      membsId: membsId,
+      characterId: thirdCharacter,
+    },
+    success: function(data) {
+      extendedObj["charThreeGameHistory"] = {data};
+      processActivityStats(extendedObj); //infinite loop somewhere here + initial errors in console
+    },
+    error: function(data) {
+      console.log("Error", data);
+    }
+  };
+  $.ajax(settings3);  
+}
 
 ////////////////////////////////////////////////////////////////////////////////////
-//account object holding all stats and separate weapons (easiest to configure with least weapon specificity)
-//weapon object holding all stats (possibly many, many objects.  possibly not useful unless high amount of data.)
-});
+// });
 
 function processActivityStats1(dataA) {
   console.log(dataA);
@@ -634,20 +581,13 @@ function displayProfiles(data) {
     }
   });
 
-  getActivityStats(processActivityStats);
-  getActivityStats2(processActivityStats);
-  getActivityStats3(processActivityStats);
+  getActivityStats();
+  // getActivityStats2();
+  // getActivityStats3();
 
 }
 
-
-
-
-
-
-
-//ALLOW DYNAMIC CHARAID so that when character selected, updates weps with relevant games
-function getActivityStats(callback) {
+function getActivityStats() {
   let charaId = account.character1.id;
   console.log(charaId, membsType, membsId);
   $.ajax({
@@ -658,11 +598,15 @@ function getActivityStats(callback) {
       membsId: membsId,
       characterId: charaId
     },
-    success: callback
+    success: function(data) {
+      newObj["charOneGameHistory"] = {data};
+      // processActivityStats(data);
+      getActivityStats2();
+    }
   });
 }
 
-function getActivityStats2(callback) {
+function getActivityStats2() {
   let charaId = account.character2.id;
   console.log(charaId, membsType, membsId);
   $.ajax({
@@ -673,11 +617,15 @@ function getActivityStats2(callback) {
       membsId: membsId,
       characterId: charaId
     },
-    success: callback
+    success: function(data) {
+      newObj["charTwoGameHistory"] = {data};
+      // processActivityStats(data);
+      getActivityStats3();
+    }
   });
 }
 
-function getActivityStats3(callback) {
+function getActivityStats3() {
   let charaId = account.character3.id;
   console.log(charaId, membsType, membsId);
   $.ajax({
@@ -688,20 +636,36 @@ function getActivityStats3(callback) {
       membsId: membsId,
       characterId: charaId
     },
-    success: callback
+    success: function(data) {
+      newObj["charThreeGameHistory"] = {data};
+      processActivityStats(newObj);
+    }
   });
 }
 
-function processActivityStats(dataA) {
-  console.log(dataA);
+function processActivityStats(currentObj) {
+  console.log(currentObj);
   // activityArray = [];
 
-  for(i=0;i<dataA.Response.activities.length;i++) {
-    activityArray.push(dataA.Response.activities[i].activityDetails.instanceId);
+  for(entry in currentObj) {
+    console.log(entry);
+    for(game in currentObj[entry].data.Response.activities) {
+      console.log(game);
+      let newEntry = currentObj[entry].data.Response.activities[game].activityDetails.instanceId
+      activityArray.push(newEntry);
+      // if(activityArray.length = 15) {
+      //   theDaySaver();
+      // }
+    // if(activityArray.length = 15) { //automatically sending at 1
+      // theDaySaver(activityArray);
+      
+    }
   }
   console.log(activityArray);
 
-  theDaySaver(qq);
+  // if(k = 15) { //automatically sending at 5, so this IF statement being automatically triggered
+  setTimeout(theDaySaver(), 3000);
+  // }
 
   // let qq = 0;
   // while(qq<activityArray.length) { //will send constant duplicate copies
@@ -718,13 +682,13 @@ function processActivityStats(dataA) {
   // }
 }
 
-function theDaySaver(qq) {
-  // if(qq <= activityArray.length) {
+function theDaySaver() {
+  // if(activityArray.length = 15) {
     let realEntry = activityArray[qq];
-    forEachInstanceId(realEntry);
+    forEachInstanceId(realEntry); //74 items being sent, so the 15 initially plus 30, 20, and 10
   // }
   // else {
-  //   console.log("Done!");
+    // console.log("Done!", activityArray);
   // }
 }
 
@@ -754,12 +718,14 @@ function sortThroughGamesPlayed(data) {
   }
   qq++;
   if(qq < activityArray.length) {
-  theDaySaver(qq);
+    theDaySaver();
   }
 }
 
-//creates weapon cluster object for seeing how many times two weapons are used in tandem with each other and weapon counter object to keep track of individual weapon occurrences
+//creates objects holding respective stats for each weapon used
 function storePlayerInfo(data) {
+  refreshCounter += 1;
+
   if(data.characterId == account.character1.id || data.characterId == account.character2.id || data.characterId == account.character3.id) {
     let primaryWepKey = data.extended.weapons[0].referenceId;
 
@@ -816,20 +782,10 @@ function storePlayerInfo(data) {
     else if(data.extended.weapons.length == 1 || data.extended.weapons.length == 2 || data.extended.weapons.length == 3) {
       occurrenceOfSingleWep[primaryWepKey] = {refId: data.extended.weapons[0].referenceId, lossCount: data.standing, occurrences: 1, kills: data.values.kills.basic.value, deaths: data.values.deaths.basic.value, assists: data.values.assists.basic.value, averageScorePerKill: data.values.averageScorePerKill.basic.value, averageScorePerLife: data.values.averageScorePerLife.basic.value, efficiency: data.values.efficiency.basic.value, weaponKills: data.extended.weapons[0].values.uniqueWeaponKills.basic.value, weaponPrecisionKills: data.extended.weapons[0].values.uniqueWeaponPrecisionKills.basic.value, grenadeKills: data.extended.values.weaponKillsGrenade.basic.value, meleeKills: data.extended.values.weaponKillsMelee.basic.value, superKills: data.extended.values.weaponKillsSuper.basic.value};
     }
-
-
-    // if(occurrenceOfThreeWeps[primaryWepKey] != null && occurrenceOfThreeWeps[primaryWepKey].secondaryWepKey != null && occurrenceOfThreeWeps[primaryWepKey].tertiaryWepKey) {
-    //   occurrenceOfThreeWeps[primaryWepKey].occurrences++;
-    //   occurrenceOfThreeWeps[primaryWepKey].lossCount += data.values.standing.basic.value;
-    // } 
-
-    // else if(data.extended.weapons.length == 3) {
-    //   occurrenceOfThreeWeps[primaryWepKey] = {secondaryWepKey: data.extended.weapons[1].referenceId, tertiaryWepKey: data.extended.weapons[2].referenceId, lossCount: data.values.standing.basic.value, occurrences: 1};
-    // }
   }
 }
 
-//have thumbnails of loadout displayed + bground
+
 
 
 function setBackground(bGround) {
@@ -913,7 +869,6 @@ function displayWepVals(currentWeps) {
     }</p><p>Power</p></button>`
   );
 
-  //each of the weapon tabs created ^ are buttons with unique values.  this watches for button submissions and updates recommended gear in response.
   $(".weaponForm").submit(event => {
     event.preventDefault();
 
@@ -1049,8 +1004,11 @@ function watchSubmit() {
     $("#displayWepTrends").html(
     `<button type="submit" id="wepTrendsButton">Display Weapon Trends</button>`
     );
+    let sbHeader = document.getElementById("searchBarHeader");
+    sbHeader.classList.remove("onLoadCentering");
+    let sb = document.getElementById("sb");
+    sb.classList.remove("sbOnLoadCentering");
     activityArray = [];
-    uu = 1;
     let queryTarget = $(event.currentTarget).find(".js-query");
     let query = queryTarget.val();
     console.log(query);
@@ -1062,8 +1020,6 @@ function watchSubmit() {
     searchByUsername(query, setIdFromUsername);
   });
 }
-
-let uu = 0;
 
 $(watchSubmit);
 
