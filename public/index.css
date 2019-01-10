@@ -203,6 +203,7 @@ h1 {
 
 h3 {
 /*   background: rgba(0,0,0,.8); */
+  text-shadow: 1px 1px 1px #000, 2px 2px 2px black;
   color: white;
   display: inline;
   margin: auto;
@@ -318,12 +319,11 @@ h3 {
   padding: 1vh;
   position: absolute;
   margin-top: 0;
-  margin-bottom: 2vh;
   background: rgba(0,0,0,.6);
   color: white;
-  font-size:xx-large;
+  font-size:x-large;
   width: inherit;
-  height: 6vh;
+  height: 5vh;
   
   
 /*! display: inline-flex; */
@@ -393,7 +393,7 @@ h3 {
 /*   writing-mode: vertical-rl; */
 /*   text-orientation: mixed; */
 /*   position: absolute; */
-  height: 13%;
+  height: 10%;
   width: inherit;
   display: flex;
   flex-direction: column;
@@ -405,7 +405,7 @@ h3 {
 #wepDisplayName {
   text-shadow: 1px 1px 1px #000, 4px 4px 4px black;
 /*   color: white; */
-  font-size: xx-large;
+  font-size: x-large;
   margin-top: 1vh;
   margin-left: 1vw;
   margin-bottom: 0;
@@ -415,7 +415,7 @@ h3 {
 #wepDisplayType {
   text-shadow: 1px 1px 1px #000, 4px 4px 4px black;
 /*   color: white; */
-  font-size: x-large;
+  font-size: large;
   margin-top: 0;
   margin-left: 1vw;
 /*   display: block; */
