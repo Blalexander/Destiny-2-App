@@ -101,7 +101,7 @@ for(index in occurrenceOfSingleWep) {
     
     $('#weaponClusters2').append(`
     <div class="statHolder" id="${index}">
-    <div class="testClass"><p>${singleWepIcon[0]}</p></div>
+    <div class="testClass"><p id="wepDisplayName">${singleWepIcon[0]}</p><p id="wepDisplayType">${singleWepIcon[2]}</p></div>
     <img src="https://www.bungie.net${singleWepIcon[1]}" alt="weaponStatsImg">
     <p class="stats">Times Used: ${occurrenceOfSingleWep[index].occurrences}</p>
     <p class="stats">Win Rate: ${singleMathResult}%</p>
@@ -153,7 +153,7 @@ for(index in occurrenceOfSingleWep) {
 
     $('#weaponClusters2').html(`
     <div class="statHolder" id="${a}">
-    <div class="testClass"><p>${singleWepIcon[0]}</p></div>
+    <div class="testClass"><p id="wepDisplayName">${singleWepIcon[0]}</p><p id="wepDisplayType">${singleWepIcon[2]}</p></div>
     <img src="https://www.bungie.net${singleWepIcon[1]}" alt="weaponStatsImg">
     <p class="stats">Times Used: ${occurrenceOfSingleWep[a].occurrences}</p>
     <p class="stats">Win Rate: ${singleMathResult}%</p>
@@ -171,17 +171,17 @@ for(index in occurrenceOfSingleWep) {
   })
 
 
-  $("#deleteProfile").html(
-    `<button type="submit" id="deleteButton">Untrack Account</button>`
-  );
+  // $("#deleteProfile").html(
+  //   `<button type="submit" id="deleteButton">Untrack Account</button>`
+  // );
 
-  $("#displayProfile").html(
-    `<button type="submit" id="updateButton">Get Full Stats</button>`
-  );
+  // $("#displayProfile").html(
+  //   `<button type="submit" id="updateButton">Get Full Stats</button>`
+  // );
 
-  $("#checkTest").html(
-    `<button type="submit" id="checkTestBut">CHECKING</button>`
-  );
+  // $("#checkTest").html(
+  //   `<button type="submit" id="checkTestBut">CHECKING</button>`
+  // );
 
 
   $("#deleteProfile").submit(event => {
@@ -540,7 +540,7 @@ function displayProfiles(data) {
 
   console.log(account);
   $(".js-search-results").prepend(`<h2 id="characterName">${displayName}</h2>`);
-  $(".js-search-results").append(`<form id="saveProfile"><button type="submit" id="saveButton">Track Account</button></form>`);
+  // $(".js-search-results").append(`<form id="saveProfile"><button type="submit" id="saveButton">Track Account</button></form>`);
 
 
   //for loop that sends information to character tabs
