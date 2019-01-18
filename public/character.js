@@ -39,11 +39,39 @@ $("#type").click(event => {
   console.log(membsType);
 });
 
+let fillErUp = [];
+let array1 = [];
+let array2 = [];
+let array3 = [];
+let array4 = [];
+let arrayObj = {};
+let q = 0;
+let highestYet = 0;
+let needsThis = "";
+function doSomeMath() {
+  for(needsMath in occurrenceOfSingleWep) {
+    needsThis = needsMath;
+    for(needsExtract in occurrenceOfSingleWep[needsMath]) {
+      array1.push(needsExtract);
+      array2.push(needsThis);
+      array3.push(occurrenceOfSingleWep[needsThis][needsExtract]);
+    }
+  }
+}
 
-
+function doSomeMore() {
+  let iterator = 0;
+  for(i=4;i<array1.length;i+=16) {
+    array4[iterator] = array3[i];
+    iterator++;
+  }
+}
 
 $("#displayWepTrends").submit(event => {
   event.preventDefault();
+  doSomeMath();
+  doSomeMore();
+  console.log(array1, array2, array3, array4);
 // function loadWepStats() {
   console.log(refreshCounter);
   console.log(occurrenceOfSingleWep);
@@ -100,22 +128,36 @@ for(index in occurrenceOfSingleWep) {
     }</p></div></button>`);
     
     $('#weaponClusters2').append(`
+    <div class="testClass"><p id="wepDisplayName">${singleWepIcon[0]}</p><p id="wepDisplayType">${singleWepIcon[2]}</p>
+    <img src="https://www.bungie.net${singleWepIcon[1]}" alt="weaponStatsImg"></div>
     <div class="statHolder" id="${index}">
-    <div class="testClass"><p id="wepDisplayName">${singleWepIcon[0]}</p><p id="wepDisplayType">${singleWepIcon[2]}</p></div>
-    <img src="https://www.bungie.net${singleWepIcon[1]}" alt="weaponStatsImg">
-    <p class="stats">Times Used: ${occurrenceOfSingleWep[index].occurrences}</p>
-    <p class="stats">Win Rate: ${singleMathResult}%</p>
-    <p class="stats">K/D: ${singleWepKd}</p>
-    <p class="stats">KA/D: ${singleWepKda}</p>
-    <p class="stats">Efficiency: ${singleEfficiency}</p>
-    <p class="stats">Average Score per Kill: ${singleScorePKill}</p>
-    <p class="stats">Average Score per Life: ${singleScorePLife}</p>
-    <p class="stats">Kills vs Assists: ${singleWepKAssists}%</p>
-    <p class="stats">Weapon Kills: ${singleWeaponKills}%</p>
-    <p class="stats">Weapon Precision Kills: ${singleWeaponPrecisionKills}%</p>
-    <p class="stats">Grenade Kills: ${singleWepNadeKills}%</p>
-    <p class="stats">Melee Kills: ${singleWepMeleeKills}%</p>
-    <p class="stats">Super Kills: ${singleWepSuperKills}%</p></div>`);
+    <p class="stats timesUsed">Times Used: ${occurrenceOfSingleWep[index].occurrences}</p>
+    <div class="lines line1"></div>
+    <p class="stats winRate">Win Rate: ${singleMathResult}%</p>
+    <div class="lines line2"></div>
+    <p class="stats kD">K/D: ${singleWepKd}</p>
+    <div class="lines line3"></div>
+    <p class="stats kaD">KA/D: ${singleWepKda}</p>
+    <div class="lines line4"></div>
+    <p class="stats efficiency">Efficiency: ${singleEfficiency}</p>
+    <div class="lines line5"></div>
+    <p class="stats averageScorePerKill">Average Score per Kill: ${singleScorePKill}</p>
+    <div class="lines line6"></div>
+    <p class="stats averageScorePerLife">Average Score per Life: ${singleScorePLife}</p>
+    <div class="lines line7"></div>
+    <p class="stats killsVAssists">Kills vs Assists: ${singleWepKAssists}%</p>
+    <div class="lines line8"></div>
+    <p class="stats weaponKills">Weapon Kills: ${singleWeaponKills}%</p>
+    <div class="lines line9"></div>
+    <p class="stats weaponPrecisionKills">Weapon Precision Kills: ${singleWeaponPrecisionKills}%</p>
+    <div class="lines line10"></div>
+    <p class="stats grenadeKills">Grenade Kills: ${singleWepNadeKills}%</p>
+    <div class="lines line11"></div>
+    <p class="stats meleeKills">Melee Kills: ${singleWepMeleeKills}%</p>
+    <div class="lines line12"></div>
+    <p class="stats superKills">Super Kills: ${singleWepSuperKills}%</p>
+    <div class="lines line13"></div>
+    </div>`);
   }
   
 
@@ -152,22 +194,36 @@ for(index in occurrenceOfSingleWep) {
     }
 
     $('#weaponClusters2').html(`
+    <div class="testClass"><p id="wepDisplayName">${singleWepIcon[0]}</p><p id="wepDisplayType">${singleWepIcon[2]}</p>
+    <img src="https://www.bungie.net${singleWepIcon[1]}" alt="weaponStatsImg"></div>
     <div class="statHolder" id="${a}">
-    <div class="testClass"><p id="wepDisplayName">${singleWepIcon[0]}</p><p id="wepDisplayType">${singleWepIcon[2]}</p></div>
-    <img src="https://www.bungie.net${singleWepIcon[1]}" alt="weaponStatsImg">
-    <p class="stats">Times Used: ${occurrenceOfSingleWep[a].occurrences}</p>
-    <p class="stats">Win Rate: ${singleMathResult}%</p>
-    <p class="stats">K/D: ${singleWepKd}</p>
-    <p class="stats">KA/D: ${singleWepKda}</p>
-    <p class="stats">Efficiency: ${singleEfficiency}</p>
-    <p class="stats">Average Score per Kill: ${singleScorePKill}</p>
-    <p class="stats">Average Score per Life: ${singleScorePLife}</p>
-    <p class="stats">Kills vs Assists: ${singleWepKAssists}%</p>
-    <p class="stats">Weapon Kills: ${singleWeaponKills}%</p>
-    <p class="stats">Weapon Precision Kills: ${singleWeaponPrecisionKills}%</p>
-    <p class="stats">Grenade Kills: ${singleWepNadeKills}%</p>
-    <p class="stats">Melee Kills: ${singleWepMeleeKills}%</p>
-    <p class="stats">Super Kills: ${singleWepSuperKills}%</p></div>`);
+    <p class="stats timesUsed">Times Used: ${occurrenceOfSingleWep[a].occurrences}</p>
+    <div class="lines line1"></div>
+    <p class="stats winRate">Win Rate: ${singleMathResult}%</p>
+    <div class="lines line2"></div>
+    <p class="stats kD">K/D: ${singleWepKd}</p>
+    <div class="lines line3"></div>
+    <p class="stats kaD">KA/D: ${singleWepKda}</p>
+    <div class="lines line4"></div>
+    <p class="stats efficiency">Efficiency: ${singleEfficiency}</p>
+    <div class="lines line5"></div>
+    <p class="stats averageScorePerKill">Average Score per Kill: ${singleScorePKill}</p>
+    <div class="lines line6"></div>
+    <p class="stats averageScorePerLife">Average Score per Life: ${singleScorePLife}</p>
+    <div class="lines line7"></div>
+    <p class="stats killsVAssists">Kills vs Assists: ${singleWepKAssists}%</p>
+    <div class="lines line8"></div>
+    <p class="stats weaponKills">Weapon Kills: ${singleWeaponKills}%</p>
+    <div class="lines line9"></div>
+    <p class="stats weaponPrecisionKills">Weapon Precision Kills: ${singleWeaponPrecisionKills}%</p>
+    <div class="lines line10"></div>
+    <p class="stats grenadeKills">Grenade Kills: ${singleWepNadeKills}%</p>
+    <div class="lines line11"></div>
+    <p class="stats meleeKills">Melee Kills: ${singleWepMeleeKills}%</p>
+    <div class="lines line12"></div>
+    <p class="stats superKills">Super Kills: ${singleWepSuperKills}%</p>
+    <div class="lines line13"></div>
+    </div>`);
   })
 
 
@@ -780,7 +836,7 @@ function storePlayerInfo(data) {
     }
 
     else if(data.extended.weapons.length == 1 || data.extended.weapons.length == 2 || data.extended.weapons.length == 3) {
-      occurrenceOfSingleWep[primaryWepKey] = {refId: data.extended.weapons[0].referenceId, lossCount: data.standing, occurrences: 1, kills: data.values.kills.basic.value, deaths: data.values.deaths.basic.value, assists: data.values.assists.basic.value, averageScorePerKill: data.values.averageScorePerKill.basic.value, averageScorePerLife: data.values.averageScorePerLife.basic.value, efficiency: data.values.efficiency.basic.value, weaponKills: data.extended.weapons[0].values.uniqueWeaponKills.basic.value, weaponPrecisionKills: data.extended.weapons[0].values.uniqueWeaponPrecisionKills.basic.value, grenadeKills: data.extended.values.weaponKillsGrenade.basic.value, meleeKills: data.extended.values.weaponKillsMelee.basic.value, superKills: data.extended.values.weaponKillsSuper.basic.value};
+      occurrenceOfSingleWep[primaryWepKey] = {refId: data.extended.weapons[0].referenceId, wepType: manifest[primaryWepKey][2], wepSlot: manifest[primaryWepKey][3], lossCount: data.standing, occurrences: 1, kills: data.values.kills.basic.value, deaths: data.values.deaths.basic.value, assists: data.values.assists.basic.value, averageScorePerKill: data.values.averageScorePerKill.basic.value, averageScorePerLife: data.values.averageScorePerLife.basic.value, efficiency: data.values.efficiency.basic.value, weaponKills: data.extended.weapons[0].values.uniqueWeaponKills.basic.value, weaponPrecisionKills: data.extended.weapons[0].values.uniqueWeaponPrecisionKills.basic.value, grenadeKills: data.extended.values.weaponKillsGrenade.basic.value, meleeKills: data.extended.values.weaponKillsMelee.basic.value, superKills: data.extended.values.weaponKillsSuper.basic.value};
     }
   }
 }
