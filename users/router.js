@@ -7,7 +7,9 @@ const router = express.Router();
 const jsonParser = bodyParser.json();
 const jwtAuth = passport.authenticate("jwt", { session: false });
 
-// Post to register a new user
+// @route   POST api/users
+// @desc    Register a new user
+// @access  Public
 router.post("/", jsonParser, (req, res) => {
   const requiredFields = ["email", "password"];
   const missingField = requiredFields.find(field => !(field in req.body));
@@ -113,6 +115,9 @@ router.post("/", jsonParser, (req, res) => {
     });
 });
 
+// @route   GET 
+// @desc    Returns user.serialize
+// @access  Public
 router.get("/:id", jwtAuth, (req, res) => {
   User.findById(req.params.id).exec(function(err, user) {
     if (err) {
