@@ -17,6 +17,7 @@ let averagesNames = [];
 let weaponStatBank = {};
 let weaponTypes = ["Sidearm", "Auto Rifle", "Pulse Rifle", "Combat Bow", "Scout Rifle", "Hand Cannon", "Sniper Rifle", "Submachine Gun", "Trace Rifle", "Linear Fusion Rifle", "Grenade Launcher", "Shotgun", "Rocket Launcher", "Sword", "Machine Gun"];
 let refreshCounter = 0;
+let currentCounter = 0;
 let activitiesEntered = 0;
 let activitiesUsed = 0;
 let clickedChar = 0;
@@ -228,6 +229,13 @@ function forEachInstanceId(entry) {
 
 function sortThroughGamesPlayed(data) {
   console.log("Response from Bungie4", data);
+
+  currentCounter++;
+  if(currentCounter == 15) {
+    saveEverything();
+    // sortEverything();
+  }
+
   let players = data.Response.entries;
   for(i=0;i<players.length;i++) {
     if(players[i].extended.weapons) {
@@ -238,6 +246,35 @@ function sortThroughGamesPlayed(data) {
   if(qq < activityArray.length) {
     theDaySaver();
   }
+}
+
+let emptyArray = [];
+
+function sortEverything() {
+  for(index in weaponStatBank) {
+    saveEverything(weaponStatBank[index]);
+  }
+}
+
+function saveEverything(theObj) {
+  console.log("Save Everything");
+
+  const settings = {
+    url:"/loadouts",
+    method: "POST",
+    dataType: "JSON",
+    data: {
+      "weaponObject": weaponStatBank
+    },
+    success: function(data) {
+      console.log("Success!", data);
+    },
+    error: function(data) {
+      console.log("Error", data);
+    }
+  };
+
+  $.ajax(settings);
 }
 
 //creates objects holding respective stats for each weapon used
@@ -299,23 +336,10 @@ function storePlayerInfo(data) {
     }
 
     else if(data.extended.weapons.length == 1 || data.extended.weapons.length == 2 || data.extended.weapons.length == 3) {
-      weaponStatBank[primaryWepKey] = {refId: data.extended.weapons[0].referenceId, wepType: manifest[primaryWepKey][2], wepSlot: manifest[primaryWepKey][3], lossCount: data.standing, occurrences: 1, kills: data.values.kills.basic.value, deaths: data.values.deaths.basic.value, assists: data.values.assists.basic.value, averageScorePerKill: data.values.averageScorePerKill.basic.value, averageScorePerLife: data.values.averageScorePerLife.basic.value, efficiency: data.values.efficiency.basic.value, weaponKills: data.extended.weapons[0].values.uniqueWeaponKills.basic.value, weaponPrecisionKills: data.extended.weapons[0].values.uniqueWeaponPrecisionKills.basic.value, grenadeKills: data.extended.values.weaponKillsGrenade.basic.value, meleeKills: data.extended.values.weaponKillsMelee.basic.value, superKills: data.extended.values.weaponKillsSuper.basic.value};
+      weaponStatBank[primaryWepKey] = {characterReference: displayName, refId: data.extended.weapons[0].referenceId, wepType: manifest[primaryWepKey][2], wepSlot: manifest[primaryWepKey][3], lossCount: data.standing, occurrences: 1, kills: data.values.kills.basic.value, deaths: data.values.deaths.basic.value, assists: data.values.assists.basic.value, averageScorePerKill: data.values.averageScorePerKill.basic.value, averageScorePerLife: data.values.averageScorePerLife.basic.value, efficiency: data.values.efficiency.basic.value, weaponKills: data.extended.weapons[0].values.uniqueWeaponKills.basic.value, weaponPrecisionKills: data.extended.weapons[0].values.uniqueWeaponPrecisionKills.basic.value, grenadeKills: data.extended.values.weaponKillsGrenade.basic.value, meleeKills: data.extended.values.weaponKillsMelee.basic.value, superKills: data.extended.values.weaponKillsSuper.basic.value};
     }
   }
 }
-
-function sortFunction(index) {
-  for(item in weaponStatBank[index]) {
-    // let valueRN = weaponStatBank[index][item];
-    overall[item] = 0;
-  }
-
-  // for(indexx in weaponStatBank) {
-
-  // }
-}
-
-
 
 
 
@@ -355,43 +379,19 @@ $("#displayWepTrends").submit(event => {
   for(index in weaponStatBank) {
     manifestShortcut = manifest[index];
     wepFreq = weaponStatBank[index].occurrences;
-    let currentType = weaponStatBank[index].wepType;
-    console.log("currentType: ", currentType);
-
-    $('#weaponClusters').append(`
-    <button class="singleWepDiv" value="${index}"><div class="weaponDiv"><img src="https://www.bungie.net${manifestShortcut[1]
-    }"><p class="singleWepName">${
-    manifestShortcut[0]
-    }</p></div></button>`);
-
-    averagesArray.push(currentType);
-    averagesNames.push(index);
-  }
-
-  averagesNames.forEach(sortFunction);
-  
-  console.log("averagesArray: ", averagesArray);
-  console.log("averagesNames: ", averagesNames);
-  console.log("overall: ", overall);
-
-  $('.singleWepDiv').mouseenter(function(event) {
-    let a = $(event.currentTarget).val();
-    $('#weaponClusters2').html("");
-    manifestShortcut = manifest[a];
-    wepFreq = weaponStatBank[a].occurrences;
-    wepWins = weaponStatBank[a].lossCount;
-    weaponKillsandAssists = (weaponStatBank[a].assists/weaponStatBank[a].kills*100).toFixed(2);
-    kD = (weaponStatBank[a].kills/weaponStatBank[a].deaths).toFixed(2);
-    kDa = ((weaponStatBank[a].kills+weaponStatBank[a].assists)/weaponStatBank[a].deaths).toFixed(2);
-    grenadeKills = (weaponStatBank[a].grenadeKills/weaponStatBank[a].kills*100).toFixed(2);
-    meleeKills = (weaponStatBank[a].meleeKills/weaponStatBank[a].kills*100).toFixed(2);
-    superKills = (weaponStatBank[a].superKills/weaponStatBank[a].kills*100).toFixed(2);
-    gunKills = (weaponStatBank[a].weaponKills/weaponStatBank[a].kills*100).toFixed(2);
-    gunPrecisionKills = (weaponStatBank[a].weaponPrecisionKills/weaponStatBank[a].weaponKills*100).toFixed(2);
-    winRate = ((1-(weaponStatBank[a].lossCount/weaponStatBank[a].occurrences))*100).toFixed(2);
-    avScorePerKill = (weaponStatBank[a].averageScorePerKill/weaponStatBank[a].occurrences).toFixed(2);
-    avScorePerLife = (weaponStatBank[a].averageScorePerLife/weaponStatBank[a].occurrences).toFixed(2);
-    eff = (weaponStatBank[a].efficiency/weaponStatBank[a].occurrences).toFixed(2);
+    wepWins = weaponStatBank[index].lossCount;
+    weaponKillsandAssists = (weaponStatBank[index].assists/weaponStatBank[index].kills*100).toFixed(2);
+    kD = (weaponStatBank[index].kills/weaponStatBank[index].deaths).toFixed(2);
+    kDa = ((weaponStatBank[index].kills+weaponStatBank[index].assists)/weaponStatBank[index].deaths).toFixed(2);
+    grenadeKills = (weaponStatBank[index].grenadeKills/weaponStatBank[index].kills*100).toFixed(2);
+    meleeKills = (weaponStatBank[index].meleeKills/weaponStatBank[index].kills*100).toFixed(2);
+    superKills = (weaponStatBank[index].superKills/weaponStatBank[index].kills*100).toFixed(2);
+    gunKills = (weaponStatBank[index].weaponKills/weaponStatBank[index].kills*100).toFixed(2);
+    gunPrecisionKills = (weaponStatBank[index].weaponPrecisionKills/weaponStatBank[index].weaponKills*100).toFixed(2);
+    winRate = ((1-(weaponStatBank[index].lossCount/weaponStatBank[index].occurrences))*100).toFixed(2);
+    avScorePerKill = (weaponStatBank[index].averageScorePerKill/weaponStatBank[index].occurrences).toFixed(2);
+    avScorePerLife = (weaponStatBank[index].averageScorePerLife/weaponStatBank[index].occurrences).toFixed(2);
+    eff = (weaponStatBank[index].efficiency/weaponStatBank[index].occurrences).toFixed(2);
 
 
     if(winRate>100) {
@@ -401,11 +401,11 @@ $("#displayWepTrends").submit(event => {
       winRate = 0;
     }
 
-    $('#weaponClusters2').html(`
+    $('#weaponClusters2').append(`
     <div class="testClass"><p id="wepDisplayName">${manifestShortcut[0]}</p><p id="wepDisplayType">${manifestShortcut[2]}</p>
     <img src="https://www.bungie.net${manifestShortcut[1]}" alt="weaponStatsImg"></div>
-    <div class="statHolder" id="${a}">
-    <p class="stats timesUsed">Times Used: ${weaponStatBank[a].occurrences}</p>
+    <div class="statHolder" id="${index}">
+    <p class="stats timesUsed">Times Used: ${weaponStatBank[index].occurrences}</p>
     <div class="lines line1"></div>
     <p class="stats winRate">Win Rate: ${winRate}%</p>
     <div class="lines line2"></div>
@@ -432,7 +432,7 @@ $("#displayWepTrends").submit(event => {
     <p class="stats superKills">Super Kills: ${superKills}%</p>
     <div class="lines line13"></div>
     </div>`);
-  })
+  }
 
 
   $("#deleteProfile").submit(event => {
@@ -606,9 +606,11 @@ function watchSubmit() {
     let signupCentering = document.getElementById("loginSignupContainer");
     signupCentering.classList.remove("onLoadCentering");
     activityArray = [];
+    currentCounter = 0;
     let queryTarget = $(event.currentTarget).find(".js-query");
     let query = queryTarget.val();
     console.log(query);
+    getEverything(query);
     membsType = queryTarget2.val();
     $(".js-search-results").html("");
     $(".js-search-results2").html("");
@@ -616,6 +618,27 @@ function watchSubmit() {
     $(".js-search-results4").html("");
     searchByUsername(query, setIdFromUsername);
   });
+}
+
+function getEverything(query) {
+  console.log("Get Everything");
+
+  const settings = {
+    url:"/loadouts",
+    method: "GET",
+    dataType: "JSON",
+    data: {
+      "characterName": query
+    },
+    success: function(data) {
+      console.log("Success!", data);
+    },
+    error: function(data) {
+      console.log("Error", data);
+    }
+  };
+
+  $.ajax(settings);
 }
 
 $(watchSubmit);

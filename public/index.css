@@ -388,10 +388,10 @@ button {
 }
 
 .statHolder {
-  height: 100%;
+/*   height: 100%; */
   
   display: flex;
-  flex-direction: column;
+/*   flex-direction: column; */
 /*   justify-content: flex-end; */
   align-items: flex-end;
 /*   justify-content: space-between; */
@@ -399,142 +399,62 @@ button {
 
 .stats {
   border: 1px solid red;
-  width: 20vw;
+/*   width: 20vw; */
   background: rgba(0,0,0,.7);
   text-shadow: 1px 1px 1px #000, 4px 4px 4px black;
   color: white;
 /*   float: right; */
-  height: 3%;
+/*   height: 3%; */
 }
 
-/* .timesUsed {
-  background: rgba(0,0,0,.2);
+.timesUsed {
+
 }
 
 .winRate {
-  background: rgba(250,250,50,.5);
+
 }
 
 .kD {
-  background: rgba(150,0,0,.5);
-} */
+
+}
 
 .kaD {
-  /* background: rgba(150,0,0,.5); */
-  margin-right: 1vw;
+
 }
 
 .efficiency {
-/*   background: rgba(150,50,50,.5); */
-  margin-right: 2vw;
+
 }
 
 .averageScorePerKill {
-  margin-right: 4vw;
+
 }
 
 .averageScorePerLife {
-  margin-right: 6vw;
+
 }
 
 .killsVAssists {
-  margin-right: 9vw;
 }
 
 .weaponKills {
-/*   background: rgba(80,180,0,.5); */
-  margin-right: 14vw;
+
 }
 
 .weaponPrecisionKills {
-/*   background: rgba(80,180,0,.5); */
-  margin-right: 20vw;
+
 }
 
 .grenadeKills {
-/*   background: rgba(250,250,50,.5); */
-  margin-right: 27vw;
+
 }
 
 .meleeKills {
-/*   background: rgba(250,250,50,.5); */
-  margin-right: 35vw;
+
 }
 
 .superKills {
-/*   background: rgba(250,250,50,.5); */
-  margin-right: 44vw;
-}
-
-
-
-
-
-
-
-/* LINES-------------------------------------------- */
-.lines {
-/*   position: absolute; */
-/*   display: flex; */
-/*   flex-flow: column nowrap; */
-/*   height: inherit; */
-  width: 50%;
-  border: 1px solid red;
-  z-index: -1;
-  margin-left: 20vw;
-/*   margin-top: 6vh; */
-/*   border-bottom: 2px solid black; */
-/*   border-left: 2px solid black; */
-}
-
-/* .line1 {
 
 }
 
-.line2 {
-
-}
-
-.line3 {
-
-} */
-
-.line4 {
-  margin-right: 1vw;
-}
-
-.line5 {
-  margin-right: 2vw;
-}
-
-.line6 {
-  margin-right: 4vw;
-}
-
-.line7 {
-  margin-right: 6vw;
-}
-
-.line8 {
-  margin-right: 9vw;
-}
-
-.line9 {
-  margin-right: 14vw;
-}
-
-.line10 {
-  margin-right: 20vw;
-}
-
-.line11 {
-  margin-right: 27vw;
-}
-
-.line12 {
-  margin-right: 35vw;
-}
-
-.line13 {
-  margin-right: 44vw;
-}

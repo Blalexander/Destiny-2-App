@@ -8,26 +8,46 @@ const jsonParser = bodyParser.json();
 const { Loadout } = require("./models");
 
 
-router.get('/:character', (req, res) => {
-  console.log(req.params);
-  let useableId = req.params.character;
-  useableId = useableId.replace(":", "");
+router.get('/', (req, res) => {
+  console.log(req.body);
+  let useableId = req.body.characterReference;
+  // useableId = useableId.replace(":", "");
   Loadout
-    .find({ "character": useableId}) //remove colon from :character and get req works
+    .find({ "characterReference": useableId}) //remove colon from :character and get req works
+    // .then(loadout => {
+    //   var obj = loadout.weapons;
+    //   obj.map(rObj => {
+    //     var rrObj = {};
+    //     rrObj[rObj.key] = rObj.value;
+    //     res.json({rrObj})
+    //   })
+    // })
+
     .then(loadout => {
       res.json({loadout})
     })
+
     // .catch(res.status(500).json({ message: 'Something went wrong' }));
 })
 
 router.post('/', jsonParser, (req, res) => { //POST functioning
   console.log(req.body);
   // Loadout.collection.insert({character: req.body.character, weaponobject: req.body.weaponObject}, onInsert);
-  let insertionObj = {character: req.body.character, weapons: req.body.weaponObject};
+  let insertionObj = {weapons: req.body.weaponObject};
   Loadout.collection.insert(insertionObj, onInsert);
-
-
-  // Loadout.collection.insert(req.body.weaponObject, onInsert);
+  // for(req.body in req.body.weaponObject) {
+  //   console.log(req.body);
+  // Loadout.collection.createIndex({
+  //   characterReference: req.body.characterReference, assists: req.body.assists, averageScorePerKill: req.body.averageScorePerKill, averageScorePerLife: req.body.averageScorePerLife, deaths: req.body.deaths, efficiency: req.body.efficiency, grenadeKills: req.body.grenadeKills, kills: req.body.kills, lossCount: req.body.lossCount, meleeKills: req.body.meleeKills, occurrences: req.body.occurrences, refId: req.body.refId, superKills: req.body.superKills, weaponKills: req.body.weaponKills, weaponPrecisionKills: req.body.weaponPrecisionKills
+  // }, {unique: true})
+  // .then(loadout => {
+  //   res.status(201).json(loadout.serialize())
+  // })
+  // .catch(err => {
+  //   console.error(err);
+  //   res.status(500).json({ message: 'Internal server error' });
+  // });
+    // characterReference: index.characterReference, assists: index.assists, averageScorePerKill: index.averageScorePerKill, averageScorePerLife: index.averageScorePerLife, deaths: index.deaths, efficiency: index.efficiency, grenadeKills: index.grenadeKills, kills: index.kills, lossCount: index.lossCount, meleeKills: index.meleeKills, occurrences: index.occurrences, refId: index.refId, superKills: index.superKills, weaponKills: index.weaponKills, weaponPrecisionKills: index.weaponPrecisionKills
 
 
   function onInsert(err, docs) {
