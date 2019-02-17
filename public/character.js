@@ -355,9 +355,10 @@ function storePlayerInfo(data) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-$("#displayWepTrends").submit(event => {
-  event.preventDefault();
-// function loadWepStats() {
+// $("#displayWepTrends").submit(event => {
+//   event.preventDefault();
+function loadWepStats(dataInStore) {
+  weaponStatBank = dataInStore.loadout[0].weapons;
   console.log("weaponStatBank: ", weaponStatBank);
   $("#weaponClusters").html("");
   let mostOccurrences = 0;
@@ -503,7 +504,7 @@ $("#displayWepTrends").submit(event => {
   
     $.ajax(settings);
   });
-});
+}
 
 
   //will display the saved profile
@@ -577,7 +578,7 @@ function thirdSort() {
     },
     success: function(data) {
       extendedObj["charThreeGameHistory"] = {data};
-      processActivityStats(extendedObj); //infinite loop somewhere here + initial errors in console
+      processActivityStats(extendedObj); 
     },
     error: function(data) {
       console.log("Error", data);
@@ -616,7 +617,7 @@ function watchSubmit() {
     $(".js-search-results2").html("");
     $(".js-search-results3").html("");
     $(".js-search-results4").html("");
-    searchByUsername(query, setIdFromUsername);
+    // searchByUsername(query, setIdFromUsername);
   });
 }
 
@@ -631,6 +632,14 @@ function getEverything(query) {
       "characterName": query
     },
     success: function(data) {
+      if(data.loadout.length == 1) {
+        console.log("Load Wep Stats");
+        loadWepStats(data);
+      }
+      else if(data.loadout.length != 1) {
+        console.log("Search By Username");
+        searchByUsername(query, setIdFromUsername);
+      }
       console.log("Success!", data);
     },
     error: function(data) {
