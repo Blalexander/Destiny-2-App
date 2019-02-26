@@ -133,8 +133,7 @@ function displayProfiles(data) {
   getActivityStats();
 }
 
-//   FOR(KEY IN OBJECT) {ARRAY.PUSH(OBJECT.KEY), ARRAY2.PUSH(OBJECT.KEY.VALUE)}
-//MAKE PROMISES FOR GETACTIVITYSTATS TO MAKE LOOK CLEANER AND PRACTICE?
+//shortcut for obj of games played: charOneGameHistory.data.Response.activities[0 - 5]
 function getActivityStats() {
   let charaId = testArrayForKeys[0];
   console.log("Character ID: ", charaId, "Membership Type: ", membsType, "Membership ID: ", membsId);
@@ -148,7 +147,6 @@ function getActivityStats() {
     },
     success: function(data) {
       allCharGameHistories["charOneGameHistory"] = {data};
-      // processActivityStats(data);
       getActivityStats2();
     }
   });
@@ -167,7 +165,6 @@ function getActivityStats2() {
     },
     success: function(data) {
       allCharGameHistories["charTwoGameHistory"] = {data};
-      // processActivityStats(data);
       getActivityStats3();
     }
   });
@@ -186,9 +183,23 @@ function getActivityStats3() {
     },
     success: function(data) {
       allCharGameHistories["charThreeGameHistory"] = {data};
-      processActivityStats(allCharGameHistories);
+      // processActivityStats(allCharGameHistories);
+      //send 3 char object to new function to be saved to DB
+      saveGameHistories(allCharGameHistories);
     }
   });
+}
+
+function saveGameHistories(histories) {
+  let arr1 = histories.charOneGameHistory.data.Response.activities;
+  let arr2 = histories.charTwoGameHistory.data.Response.activities;
+  let arr3 = histories.charThreeGameHistory.data.Response.activities;
+
+  let masterArr = arr1.concat(arr2, arr3);
+  console.log(masterArr);
+  //this ^ now works.  
+  //try testing to see if you can push these changes
+  //after you can save changes, save each game individually to DB for later access
 }
 
 function processActivityStats(currentObj) {
@@ -230,11 +241,10 @@ function forEachInstanceId(entry) {
 function sortThroughGamesPlayed(data) {
   console.log("Response from Bungie4", data);
 
-  currentCounter++;
-  if(currentCounter == 15) {
-    saveEverything();
-    // sortEverything();
-  }
+  // currentCounter++;
+  // if(currentCounter == 15) {
+  //   saveEverything();
+  // }
 
   let players = data.Response.entries;
   for(i=0;i<players.length;i++) {
@@ -355,8 +365,11 @@ function storePlayerInfo(data) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// $("#displayWepTrends").submit(event => {
-//   event.preventDefault();
+$("#displayWepTrends").submit(event => {
+  event.preventDefault();
+  loadWepStats();
+})
+
 function loadWepStats(dataInStore) {
   weaponStatBank = dataInStore.loadout[0].weapons;
   console.log("weaponStatBank: ", weaponStatBank);
@@ -611,13 +624,13 @@ function watchSubmit() {
     let queryTarget = $(event.currentTarget).find(".js-query");
     let query = queryTarget.val();
     console.log(query);
-    getEverything(query);
+    // getEverything(query);
     membsType = queryTarget2.val();
     $(".js-search-results").html("");
     $(".js-search-results2").html("");
     $(".js-search-results3").html("");
     $(".js-search-results4").html("");
-    // searchByUsername(query, setIdFromUsername);
+    searchByUsername(query, setIdFromUsername);
   });
 }
 
