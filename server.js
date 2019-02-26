@@ -70,7 +70,7 @@ app.use(function(req, res, next) {
 //Test Protected endpoint
 app.get("/api/protected", jwtAuth, (req, res) => {
   return res.json({
-    data: "Snoopy"
+    data: "lifefindsaway"
   });
 });
 

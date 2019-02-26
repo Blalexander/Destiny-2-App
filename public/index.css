@@ -39,9 +39,9 @@ body {
 
 }
 
-/* #characterPage {
-
-} */
+#characterPage {
+  
+}
 
 
 
@@ -64,7 +64,7 @@ header {
 h1 {
 /*   color: white; */
   text-shadow: 1px 1px 1px white, 2px 2px 2px white;
-  font-family: "Trebuchet MS", Helvetica, sans-serif;
+/*   font-family: "Trebuchet MS", Helvetica, sans-serif; */
 /*   background-color: rgba(0,0,0,.8); */
   padding: 2vh;
 /*   text-align: left; */
@@ -186,7 +186,7 @@ h3 {
 /*   align-items:center; */
 /*   margin-top: 8vh; */
 /*   height: 70vh; */
-  border: 1px solid black;
+/*   border: 1px solid black; */
 /*   background-color: white; */
 /*   overflow-y: scroll; */
 }
@@ -217,21 +217,21 @@ h3 {
   border: 1px solid black;
 }
 
-.titan {
+.Titan {
   background-image: url("https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-titan-4k.jpg");
   background-size:cover;
   background-repeat:no-repeat;
   width: 25vw;
 }
 
-.warlock {
+.Warlock {
   background-image: url("https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-warlock-4k.jpg");
   background-size:cover;
   background-repeat:no-repeat;
   width: 25vw;
 }
 
-.hunter {
+.Hunter {
   background-image: url("https://geek-prime.com/wp-content/uploads/2014/02/Destiny-2-4k-hd-wallpaper-Hunter-4k.jpg");
   background-size:cover;
   background-repeat:no-repeat;
@@ -296,7 +296,7 @@ button {
 #weaponClusters {
   box-shadow: inset 0 0 100px #000;
   
-  border: 1px solid black;
+/*   border: 1px solid black; */
    /* vertical weapon name along right side of clusters1, transparent stylized */
   /* margin-top: 15vh; */
 /*   height: 50vh; */
@@ -307,7 +307,7 @@ button {
   display: flex;
 /*   justify-content: space-between; */
   flex-flow: row nowrap;
-  overflow-x: scroll;
+  overflow-x: hidden;
   overflow-y: hidden;
   background: rgba(0,0,0,.5);
 }
@@ -333,21 +333,21 @@ button {
 /*   border: 10px solid black; */
 /*   background-color: white; */
 /*   background: rgba(0,0,0,.5); */
-/*   height: 50vh; */
+  height: 50vh;
   width: 85vw;
   text-align: center;
 /*   display: flex; */
 /*   flex-flow: column nowrap; */
 /*   padding-left: 5vw; */
   margin-left: 6vw;
-/*   overflow-y: scroll; */
+  overflow-y: scroll;
 }
 
 [alt*="weaponStatsImg"] {
-  float: left;
-  width: 12vw;
-  height: 15vh;
-/*   margin-top: 2vh; */
+/*   float: left; */
+  width: 100px;
+  height: 100px;
+  margin-left: 2vw;
   border: 3px solid gold;
   border-radius: 5px;
 }
@@ -355,56 +355,68 @@ button {
 .testClass {
   background: rgba(0,0,0,.7);
   color: white;
+  border: 3px solid black;
+  border-radius: 2px;
 /*   writing-mode: vertical-rl; */
 /*   text-orientation: mixed; */
 /*   position: absolute; */
-  height: 9vh;
-  width: 20vw;
-  position: absolute;
+  height: 20vh;
+/*   width: 13vw; */
+/*   position: absolute; */
   display: flex;
-  flex-direction: column;
-  align-items:baseline
+/*   justify-content: space-evenly; */
+/*   flex-direction: column; */
+  align-items:center;
 /*   align-content: flex-start; */
 /*   font-size:xx-large; */
+    margin-bottom: 2vh;
 }
 
 #wepDisplayName {
   text-shadow: 1px 1px 1px #000, 4px 4px 4px black;
+  min-width: 20vw;
 /*   color: white; */
   font-size: x-large;
   margin-top: 1vh;
-  margin-left: 1vw;
-  margin-bottom: 0;
+/*   margin-left: 1vw; */
+  margin-bottom: 10vh;
 /*   display: block; */
+  position: relative;
 }
 
 #wepDisplayType {
   text-shadow: 1px 1px 1px #000, 4px 4px 4px black;
+  min-width: 10vw;
 /*   color: white; */
   font-size: large;
-  margin-top: 0;
-  margin-left: 1vw;
-/*   display: block; */
+  margin-top: 5vh;
+  margin-left: -15vw;
 }
 
 .statHolder {
-/*   height: 100%; */
-  
+/*   height: 30%; */
+/*   position: absolute; */
+  margin-left: 4vw;
+  margin-right: 4vw;
   display: flex;
+  flex-flow: row wrap;
 /*   flex-direction: column; */
 /*   justify-content: flex-end; */
-  align-items: flex-end;
+/*   align-items: flex-end; */
 /*   justify-content: space-between; */
 }
 
 .stats {
-  border: 1px solid red;
+  display: flex;
+  justify-content:space-evenly;
+  margin-right: 2vw;
+/*   border: 1px solid red; */
 /*   width: 20vw; */
   background: rgba(0,0,0,.7);
   text-shadow: 1px 1px 1px #000, 4px 4px 4px black;
   color: white;
 /*   float: right; */
-/*   height: 3%; */
+/*   height: 8vh; */
 }
 
 .timesUsed {

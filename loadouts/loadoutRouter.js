@@ -10,7 +10,12 @@ const { Loadout } = require("./models");
 
 router.get('/', (req, res) => {
   console.log(req.body);
-  let useableId = req.body.characterReference;
+  console.log(req.params);
+
+  let useableId = req.body.character;
+  console.log(useableId);
+  // useableId = useableId.replace("%23", "#");
+
   // useableId = useableId.replace(":", "");
   Loadout
     .find({ "characterReference": useableId}) //remove colon from :character and get req works
@@ -24,16 +29,18 @@ router.get('/', (req, res) => {
     // })
 
     .then(loadout => {
-      res.json({loadout})
+      res.json(loadout[0].weapons)
     })
-
-    // .catch(res.status(500).json({ message: 'Something went wrong' }));
-})
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({ message: 'Something went wrong' });
+  })
+});
 
 router.post('/', jsonParser, (req, res) => { //POST functioning
   console.log(req.body);
   // Loadout.collection.insert({character: req.body.character, weaponobject: req.body.weaponObject}, onInsert);
-  let insertionObj = {weapons: req.body.weaponObject};
+  let insertionObj = {weapons: req.body.weaponObject}; 
   Loadout.collection.insert(insertionObj, onInsert);
   // for(req.body in req.body.weaponObject) {
   //   console.log(req.body);

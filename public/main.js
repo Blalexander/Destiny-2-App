@@ -1,5 +1,6 @@
 
 $('#login').submit(e => {
+  console.log("Hello from Login");
   e.preventDefault();
   let email = $('[name="logemail"]').val();
   let password = $('[name="logpass"]').val();
@@ -31,6 +32,7 @@ $('#login').submit(e => {
 });
 
 $('#signup').submit(e => {
+  console.log("Hello from Signup");
   e.preventDefault();
   let email = $('[name="email"]').val();
   let password = $('[name="pass"]').val();

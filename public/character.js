@@ -133,6 +133,7 @@ function displayProfiles(data) {
   getActivityStats();
 }
 
+
 //   FOR(KEY IN OBJECT) {ARRAY.PUSH(OBJECT.KEY), ARRAY2.PUSH(OBJECT.KEY.VALUE)}
 //MAKE PROMISES FOR GETACTIVITYSTATS TO MAKE LOOK CLEANER AND PRACTICE?
 function getActivityStats() {
@@ -358,7 +359,7 @@ function storePlayerInfo(data) {
 // $("#displayWepTrends").submit(event => {
 //   event.preventDefault();
 function loadWepStats(dataInStore) {
-  weaponStatBank = dataInStore.loadout[0].weapons;
+  weaponStatBank = dataInStore[0].weapons;
   console.log("weaponStatBank: ", weaponStatBank);
   $("#weaponClusters").html("");
   let mostOccurrences = 0;
@@ -404,35 +405,22 @@ function loadWepStats(dataInStore) {
 
     $('#weaponClusters2').append(`
     <div class="testClass"><p id="wepDisplayName">${manifestShortcut[0]}</p><p id="wepDisplayType">${manifestShortcut[2]}</p>
-    <img src="https://www.bungie.net${manifestShortcut[1]}" alt="weaponStatsImg"></div>
-    <div class="statHolder" id="${index}">
+    <img src="https://www.bungie.net${manifestShortcut[1]}" alt="weaponStatsImg">
+    <div class="statHolder">
     <p class="stats timesUsed">Times Used: ${weaponStatBank[index].occurrences}</p>
-    <div class="lines line1"></div>
     <p class="stats winRate">Win Rate: ${winRate}%</p>
-    <div class="lines line2"></div>
     <p class="stats kD">K/D: ${kD}</p>
-    <div class="lines line3"></div>
     <p class="stats kaD">KA/D: ${kDa}</p>
-    <div class="lines line4"></div>
     <p class="stats efficiency">Efficiency: ${eff}</p>
-    <div class="lines line5"></div>
     <p class="stats averageScorePerKill">Average Score per Kill: ${avScorePerKill}</p>
-    <div class="lines line6"></div>
     <p class="stats averageScorePerLife">Average Score per Life: ${avScorePerLife}</p>
-    <div class="lines line7"></div>
     <p class="stats killsVAssists">Kills vs Assists: ${weaponKillsandAssists}%</p>
-    <div class="lines line8"></div>
     <p class="stats weaponKills">Weapon Kills: ${gunKills}%</p>
-    <div class="lines line9"></div>
     <p class="stats weaponPrecisionKills">Weapon Precision Kills: ${gunPrecisionKills}%</p>
-    <div class="lines line10"></div>
     <p class="stats grenadeKills">Grenade Kills: ${grenadeKills}%</p>
-    <div class="lines line11"></div>
     <p class="stats meleeKills">Melee Kills: ${meleeKills}%</p>
-    <div class="lines line12"></div>
     <p class="stats superKills">Super Kills: ${superKills}%</p>
-    <div class="lines line13"></div>
-    </div>`);
+    </div></div>`);
   }
 
 
@@ -617,7 +605,7 @@ function watchSubmit() {
     $(".js-search-results2").html("");
     $(".js-search-results3").html("");
     $(".js-search-results4").html("");
-    // searchByUsername(query, setIdFromUsername);
+    searchByUsername(query, setIdFromUsername);
   });
 }
 
@@ -629,15 +617,15 @@ function getEverything(query) {
     method: "GET",
     dataType: "JSON",
     data: {
-      "characterName": query
+      "characterReference": query
     },
     success: function(data) {
-      if(data.loadout.length == 1) {
-        console.log("Load Wep Stats");
+      if(data[0].weapons) {
+        console.log("Load Wep Stats", data);
         loadWepStats(data);
       }
-      else if(data.loadout.length != 1) {
-        console.log("Search By Username");
+      else {
+        console.log("Search By Username", data);
         searchByUsername(query, setIdFromUsername);
       }
       console.log("Success!", data);
